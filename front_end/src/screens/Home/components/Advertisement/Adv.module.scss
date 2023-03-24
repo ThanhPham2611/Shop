@@ -1,0 +1,40 @@
+.advertisement {
+  width: 100%;
+  .wrapperImageAd {
+    position: relative;
+    .imageAdvertisement {
+      height: 34vh;
+      width: 100%;
+      border-radius: 5px;
+    }
+    .buttonImage {
+      position: absolute;
+      top: 35%;
+      opacity: 0;
+      background-color: rgba(0, 0, 0, 0.18);
+      height: 100px;
+      border: none;
+      &.next {
+        right: 5px;
+      }
+      &.prev {
+        left: 5px;
+      }
+    }
+    &:hover {
+      .buttonImage {
+        opacity: 1;
+      }
+    }
+  }
+  .wrapperSubImage {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    .subImageAdvertisement {
+      height: 16.7vh;
+      width: 100%;
+      border-radius: 5px;
+    }
+  }
+}

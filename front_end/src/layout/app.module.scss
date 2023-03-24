@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Roboto:ital,wght@0,100;1,100&display=swap");
+
+.wrapperHeader {
+  height: 120px;
+  background-color: #d0011b;
+  padding: 15px 25px;
+  a {
+    color: white;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+  .searchBarContainer {
+    margin: 20px 25px 0px 25px;
+    .wrapperLogo {
+      display: flex;
+      align-items: center;
+      width: 150px;
+      justify-content: space-between;
+      cursor: pointer;
+      .logo {
+        height: 40px;
+      }
+      .textLogo {
+        font-size: 25px;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 1.2;
+      }
+    }
+    .searchBar {
+      width: 500px;
+      display: flex;
+      align-items: center;
+      .inputSearch {
+        width: 400px;
+      }
+      .iconShoppingCart {
+        font-size: 30px;
+        color: white;
+        margin-left: 25px;
+      }
+    }
+  }
+}
+
+.wrapperContent {
+  padding: 15px 8.75rem;
+}
