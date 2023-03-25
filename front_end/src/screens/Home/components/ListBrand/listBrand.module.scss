@@ -4,4 +4,64 @@
   .imageBrand {
     height: 39.5vh;
   }
+
+  .rowItem {
+    background-color: white;
+    padding: 0.5rem 1rem;
+    .itemBrand {
+      box-shadow: 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 0 10px;
+      &:hover {
+        transform: scale(1.1);
+        transition: 0.4s;
+      }
+      .imageItemBrand {
+        border-radius: 5px;
+        margin-bottom: 10px;
+        height: 200px;
+      }
+      .nameItemBrand {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 200px;
+        margin-bottom: 5px;
+        padding-left: 5px;
+      }
+      .wrapperPrice {
+        padding: 0 0.5rem;
+        margin-bottom: 10px;
+        .priceOld {
+          color: rgba(0, 0, 0, 0.54);
+          font-size: 0.75rem;
+          line-height: 0.875rem;
+        }
+        .priceNew {
+          color: #ee4d2d;
+          font-size: 1rem;
+        }
+        .iconShopping {
+          color: white;
+          font-size: 16px;
+          border-radius: 50% 50%;
+          background-color: #d0011b;
+          padding: 10px;
+        }
+        .multiPrice {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          width: 140px;
+        }
+      }
+      .wrapperTicket {
+        margin-bottom: 10px;
+        padding-left: 5px;
+      }
+    }
+  }
 }

@@ -1,3 +1,28 @@
 .wrapperCoupons {
   background-color: rgb(246, 145, 19);
+  padding: 2px 4px;
+  position: relative;
+  .textCoupons {
+    font-size: 11px;
+    color: white;
+    font-weight: bold;
+  }
+  .circle {
+    background-color: white;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    position: absolute;
+    &.circle1 {
+      top: 10px;
+      right: 0px;
+    }
+  }
+}
+
+.wrapperTag {
+  border: 1px solid #ee4d2d;
+  color: #ee4d2d;
+  padding: 3px;
+  font-size: 10px;
 }

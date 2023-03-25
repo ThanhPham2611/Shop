@@ -1,7 +1,7 @@
 import { Col, Image, Row } from "antd";
 import React from "react";
 
-import { listCategory, listProductLaneige } from "../../../../utils/dummyData";
+import { listCategory, listProduct } from "../../../../utils/dummyData";
 import ListBrand from "../ListBrand";
 
 import styles from './category.module.scss';
@@ -11,8 +11,8 @@ const Category = () => {
     <div className={styles.itemContainer}>
       <h2>Danh mục</h2>
       <Row className={styles.rowItem} justify='space-between'>
-        {listCategory.map(data => (
-          <Col className={styles.wrapperItem}>
+        {listCategory.map((data, index) => (
+          <Col key={index} className={styles.wrapperItem}>
             <div style={{ height: 100 }}>
               <Image className={styles.imageItem} src={data.image} preview={false} />
             </div>
@@ -21,8 +21,8 @@ const Category = () => {
         ))}
       </Row>
       <h1 className={styles.titleBrand}>Thương hiệu nổi bật trong ngày</h1>
-      {listProductLaneige?.map(data => (
-        <ListBrand imageBrand={data.imageBrand} altImageBrand={data.altImageBrand} categoryProduct={data.products} />
+      {listProduct?.map((data) => (
+        <ListBrand key={data._id} imageBrand={data.imageBrand} altImageBrand={data.altImageBrand} categoryProduct={data.products} />
       ))}
     </div >
   )

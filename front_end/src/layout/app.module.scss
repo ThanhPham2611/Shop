@@ -4,6 +4,9 @@
   height: 120px;
   background-color: #d0011b;
   padding: 15px 25px;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
   a {
     color: white;
     &:hover {
@@ -45,5 +48,5 @@
 }
 
 .wrapperContent {
-  padding: 15px 8.75rem;
+  padding: 9rem 8.75rem;
 }
