@@ -53,25 +53,122 @@ export const listCategory = [
   },
 ]
 
-export const listProductLaneige = [
+export const listProduct = [
   {
-    imageBrand: '	https://cf.shopee.vn/file/vn-50009109-b67439b8ccb97eb52e95891e113d5eec',
-    altImageBrand: 'laneige',
+    _id: '3912391029301920391',
+    imageBrand: 'https://cf.shopee.vn/file/vn-50009109-e496bbfc4696791e89adef462e10d338',
+    altImageBrand: 'huawei',
     products: [
       {
         id: '1231231',
-        src: 'https://cf.shopee.vn/file/vn-11134201-23030-b9y6y2flh4nvd8_tn',
-        alt: '[NHẬP MÃ COSLAN3100 -100K] Kem Dưỡng Ẩm Cho Da Dầu Da Hỗn Hợp Laneige WaterBank Blue HA Cream 50ml',
-        name: '[NHẬP MÃ COSLAN3100 -100K] Kem Dưỡng Ẩm Cho Da Dầu Da Hỗn Hợp Laneige WaterBank Blue HA Cream 50ml',
+        src: 'https://cf.shopee.vn/file/vn-11134207-7qukw-lepjae5xt19u53_tn',
+        alt: 'Bàn Chải Điện P/S S100 PRO - Công Nghệ Sóng Âm, Chải Sạch Mảng Bám Tới 10X - Đen Nhám/ Tím thời thượng',
+        name: 'Bàn Chải Điện P/S S100 PRO - Công Nghệ Sóng Âm, Chải Sạch Mảng Bám Tới 10X - Đen Nhám/ Tím thời thượng',
         tagTicket: [
           {
-            type: typeTicket.coupons,
-            value: 12
-          },
-          {
-            type: typeTicket.tagDeal
+            id: 'abcd',
+            type: typeTicket.tag,
+            value: 'Mua kèm deal sốc'
           }
-        ]
+        ],
+        showSale: true,
+        multiPrice: true,
+        multiPriceOld: [1300000, 0],
+        multiPriceNew: [799000, 804000]
+      },
+      {
+        id: '1231230',
+        src: 'https://cf.shopee.vn/file/vn-11134207-7qukw-lepj9rmmsaszd5_tn',
+        alt: 'Bàn Chải Điện P/S S100 PRO - Công Nghệ Sóng Âm, Chải Sạch Mảng Bám Tới 10X - Trắng Sáng',
+        name: 'Bàn Chải Điện P/S S100 PRO - Công Nghệ Sóng Âm, Chải Sạch Mảng Bám Tới 10X - Trắng Sáng',
+        tagTicket: [
+          {
+            id: 'abcs',
+            type: typeTicket.tag,
+            value: 'Mua kèm deal sốc'
+          }
+        ],
+        showSale: true,
+        priceOld: 1300000,
+        priceNew: 820000
+      },
+      {
+        id: '1231211',
+        src: 'https://cf.shopee.vn/file/vn-11134207-7qukw-lepjazqk8k3730_tn',
+        alt: 'Bàn Chải Điện P/S S100 PRO - Công Nghệ Sóng Âm, Chải Sạch Mảng Bám Tới 10X - Xanh Ombre',
+        name: 'Bàn Chải Điện P/S S100 PRO - Công Nghệ Sóng Âm, Chải Sạch Mảng Bám Tới 10X - Xanh Ombre',
+        tagTicket: [
+          {
+            id: 'absa',
+            type: typeTicket.tag,
+            value: 'Mua kèm deal sốc'
+          }
+        ],
+        showSale: true,
+        priceOld: 1300000,
+        priceNew: 804000
+      },
+      {
+        id: '1232312',
+        src: 'https://cf.shopee.vn/file/vn-11134207-7qukw-lepilhgc196a25_tn',
+        alt: 'Bộ 2 đầu bàn chải điện P/S - Sạch Sâu Màu Đen',
+        name: 'Bộ 2 đầu bàn chải điện P/S - Sạch Sâu Màu Đen',
+        tagTicket: [
+          {
+            id: 'abwa',
+            type: typeTicket.tag,
+            value: 'Mua để nhận quà'
+          }
+        ],
+        showSale: true,
+        priceOld: 250000,
+        priceNew: 215000,
+      },
+      {
+        id: '12231212',
+        src: 'https://cf.shopee.vn/file/vn-11134207-23030-2v4dyjtrszov66_tn',
+        alt: 'Bộ 2 đầu bàn chải điện P/S - Sạch Sâu Màu Trắng (Thay đầu bàn chải mỗi 3 tháng)',
+        name: 'Bộ 2 đầu bàn chải điện P/S - Sạch Sâu Màu Trắng (Thay đầu bàn chải mỗi 3 tháng)',
+        tagTicket: [
+          {
+            id: 'abwqsa',
+            type: typeTicket.tag,
+            value: 'Mua để nhận quà'
+          }
+        ],
+        showSale: true,
+        priceOld: 250000,
+        priceNew: 215000,
+      },
+      {
+        id: '2113122',
+        src: 'https://cf.shopee.vn/file/vn-11134207-7qukw-lepim2tqrc1f65_tn',
+        alt: 'Bộ 2 đầu bàn chải điện P/S - Trắng Răng Tự Nhiên',
+        name: 'Bộ 2 đầu bàn chải điện P/S - Trắng Răng Tự Nhiên',
+        tagTicket: [
+          {
+            id: 'abwqsaa',
+            type: typeTicket.tag,
+            value: 'Mua để nhận quà'
+          }
+        ],
+        showSale: true,
+        priceOld: 250000,
+        priceNew: 215000,
+      },
+      {
+        id: '231441',
+        src: 'https://cf.shopee.vn/file/vn-11134207-7qukw-lepjbf57ow4z9d_tn',
+        alt: 'Bộ Bàn Chải Điện P/S S100 PRO màu trắng & Bộ 2 đầu chải thay thế Sạch Sâu',
+        name: 'Bộ Bàn Chải Điện P/S S100 PRO màu trắng & Bộ 2 đầu chải thay thế Sạch Sâu',
+        tagTicket: [
+          {
+            id: 'abwqsaa',
+            type: typeTicket.tag,
+            value: 'Mua kèm deal sốc'
+          }
+        ],
+        priceNew: 1550000,
       }
     ]
   }

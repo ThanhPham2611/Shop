@@ -5,7 +5,25 @@ import styles from './ticket.module.scss';
 export const Coupons = ({ number }) => {
   return (
     <div className={styles.wrapperCoupons}>
-      {number}% Giảm
+      <span className={styles.textCoupons}>{number}% Giảm</span>
+      <div className={[styles.circle]} style={{ top: 0, right: -1.5 }}></div>
+      <div className={[styles.circle]} style={{ top: 4, right: -1.5 }}></div>
+      <div className={[styles.circle]} style={{ top: 8, right: -1.5 }}></div>
+      <div className={[styles.circle]} style={{ top: 12, right: -1.5 }}></div>
+      <div className={[styles.circle]} style={{ top: 16, right: -1.5 }}></div>
+      <div className={[styles.circle]} style={{ top: 0, left: -1.5 }}></div>
+      <div className={[styles.circle]} style={{ top: 4, left: -1.5 }}></div>
+      <div className={[styles.circle]} style={{ top: 8, left: -1.5 }}></div>
+      <div className={[styles.circle]} style={{ top: 12, left: -1.5 }}></div>
+      <div className={[styles.circle]} style={{ top: 16, left: -1.5 }}></div>
+    </div>
+  )
+}
+
+export const Tags = ({ value }) => {
+  return (
+    <div className={styles.wrapperTag}>
+      {value}
     </div>
   )
 }

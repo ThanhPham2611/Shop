@@ -52,7 +52,7 @@ const App = (props) => {
         <Row justify='space-between' align='middle' className={styles.searchBarContainer}>
           <Col className={styles.wrapperLogo}>
             <Image src={logo} alt='Logo' preview={false} className={styles.logo} />
-            <text className={styles.textLogo}>pt mall</text>
+            <span className={styles.textLogo}>pt mall</span>
           </Col>
 
           <Col className={[styles.searchBar, 'search']}>
@@ -69,7 +69,6 @@ const App = (props) => {
             </Badge>
           </Col>
         </Row>
-
       </div>
       <div className={styles.wrapperContent}>
         {renderRouter()}
