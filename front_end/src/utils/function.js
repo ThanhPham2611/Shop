@@ -19,3 +19,13 @@ export const formatMultiCurrency = (value1, value2) => {
     return `${formatter.format(value1)}`
   }
 }
+
+export const formatAmoutProductSold = (value) => {
+  if (value > 999 && value <= 9999) {
+    return Math.sign(value) * ((Math.abs(value) / 1000).toFixed(1)) + 'K'
+  } else if (Math.abs(value) > 9999) {
+    return Math.sign(value) * ((Math.abs(value) / 1000000).toFixed(3)) + 'M'
+  } else {
+    return value
+  }
+}
