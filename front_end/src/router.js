@@ -10,6 +10,7 @@ import PageNotFound from "./screens/PageNotFound";
 //local
 import { STORAGEKEY } from './service/cookie/index'
 import { checkPermission } from "./service/cookie/JWT";
+import DetailProduct from "./screens/DetailProduct";
 
 
 export const routers = [
@@ -34,7 +35,18 @@ export const routers = [
       hidden: false,
       child: false,
     }
-  }
+  },
+  {
+    name: 'Detail Product',
+    path: '/detail/:id',
+    component: DetailProduct,
+    meta: {
+      role: '*',
+      isPrivate: false,
+      hidden: false,
+      child: false,
+    }
+  },
 ];
 
 const PrivateRouter = (props) => {
@@ -58,7 +70,7 @@ const PrivateRouter = (props) => {
 };
 
 const WhiteListRoute = (props) => {
-  const whiteList = ['/login', '/'];
+  const whiteList = ['/login', '/', '/detail/:id'];
   const [cookies] = useCookies([STORAGEKEY.ACCESS_TOKEN]);
   const isWhiteList = (path) =>
     !cookies[STORAGEKEY.ACCESS_TOKEN] && whiteList.indexOf(path) >= 0;
@@ -108,7 +120,7 @@ const renderRouter = (routers) => {
 }
 
 const routes = () => {
-  const whiteList = ["/login", '/'];
+  const whiteList = ["/login", '/', '/detail:id'];
   const path = window.location.pathname;
   const isWhiteList = whiteList.includes(path);
   return (

@@ -171,5 +171,23 @@ export const listProduct = [
         priceNew: 1550000,
       }
     ]
-  }
-]
+  },
+];
+
+export const detailProduct = {
+  id: '12345',
+  titleProduct: 'Vòng Tay Cặp Minco Accessories Lắc tay đôi nam nữ màu bạc 925 khắc tên theo yêu cầu phụ kiện thời trang nam nữ đẹp LT01',
+  rate: 4.5,
+  listImage: [
+    {
+      url: 'https://cvf.shopee.vn/file/da1b01816801b7ac4648761019f6c74b',
+      type: 'vid',
+      urlImagePreview: 'https://down-vn.img.susercontent.com/file/3cb81f67c9af6db41d91dad2685b3a3b_tn'
+    },
+  ],
+  evaluate: 100,
+  sold: 1134,
+  showSale: true,
+  priceOld: 160000,
+  priceNew: 80000,
+}

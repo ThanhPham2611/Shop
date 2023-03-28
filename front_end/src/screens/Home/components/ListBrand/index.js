@@ -9,16 +9,19 @@ import { formatCurrency, formatMultiCurrency } from "../../../../utils/function"
 
 import styles from './listBrand.module.scss';
 import { typeTicket } from "../../../../utils/typeTicket";
+import { useHistory } from "react-router-dom";
 
 const { Text } = Typography
 
 const ListBrand = ({ imageBrand, altImageBrand, categoryProduct }) => {
+  const history = useHistory()
+
   return (
     <div className={styles.wrapperProduct}>
       <Image className={styles.imageBrand} src={imageBrand} alt={altImageBrand} preview={false} />
       <Row gutter={[0, 16]} className={styles.rowItem}>
         {categoryProduct?.map(data => (
-          <Col key={data.id} className={styles.itemBrand}>
+          <Col key={data.id} className={styles.itemBrand} onClick={() => history.push(`/detail/${data.id}`)}>
             <Image className={styles.imageItemBrand} src={data.src} alt={data.alt} preview={false} />
             <div className={styles.nameItemBrand}>{data.name}</div>
             {data.tagTicket.length > 0 ? (
