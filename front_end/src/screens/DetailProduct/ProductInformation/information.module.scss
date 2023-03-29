@@ -47,7 +47,6 @@
   }
 
   .wrapperPrice {
-    margin-top: 20px;
     padding: 15px 20px;
     background-color: #fafafa;
     .textPriceOld {
@@ -71,4 +70,49 @@
       margin-left: 20px;
     }
   }
+
+  .wrapperFlashSale {
+    background: url("../../../asset/image/flash_sale.jpg");
+    height: 40px;
+    border-radius: 5px;
+    position: relative;
+    padding: 0px 15px;
+    display: flex;
+    justify-content: space-between;
+    .iconFlashSale {
+      position: absolute;
+      top: -17px;
+      height: 50px;
+      width: 50px;
+    }
+    .textFlashSale {
+      color: white;
+      text-transform: uppercase;
+      margin-left: 10px;
+    }
+  }
+}
+
+.wrapperCountDown {
+  color: white;
+  .textCountdown {
+    background-color: #222;
+    color: white;
+    padding: 5px;
+    margin: 0 3px;
+    border-radius: 5px;
+  }
+}
+
+.borderClassImage {
+  border: 2px solid #d0011b;
+}
+
+.noneBorderClassImage {
+  border: 2px solid transparent;
+}
+
+.listImage {
+  margin-right: 5px;
+  cursor: pointer;
 }
