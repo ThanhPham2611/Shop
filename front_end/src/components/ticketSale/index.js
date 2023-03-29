@@ -1,6 +1,6 @@
 import React from "react";
 
-import styles from './ticket.module.scss';
+import styles from "./ticket.module.scss";
 
 export const Coupons = ({ number }) => {
   return (
@@ -17,13 +17,25 @@ export const Coupons = ({ number }) => {
       <div className={[styles.circle]} style={{ top: 12, left: -1.5 }}></div>
       <div className={[styles.circle]} style={{ top: 16, left: -1.5 }}></div>
     </div>
-  )
-}
+  );
+};
+
+export const CoupounsShop = ({ number }) => {
+  <div className={styles.wrapperCouponsShop}>
+    <span className={styles.textCouponsShop}>{number}% Giảm</span>
+    <div className={[styles.circleShop]} style={{ top: 0, right: -1.5 }}></div>
+    <div className={[styles.circleShop]} style={{ top: 4, right: -1.5 }}></div>
+    <div className={[styles.circleShop]} style={{ top: 8, right: -1.5 }}></div>
+    <div className={[styles.circleShop]} style={{ top: 12, right: -1.5 }}></div>
+    <div className={[styles.circleShop]} style={{ top: 16, right: -1.5 }}></div>
+    <div className={[styles.circleShop]} style={{ top: 0, left: -1.5 }}></div>
+    <div className={[styles.circleShop]} style={{ top: 4, left: -1.5 }}></div>
+    <div className={[styles.circleShop]} style={{ top: 8, left: -1.5 }}></div>
+    <div className={[styles.circleShop]} style={{ top: 12, left: -1.5 }}></div>
+    <div className={[styles.circleShop]} style={{ top: 16, left: -1.5 }}></div>
+  </div>;
+};
 
 export const Tags = ({ value }) => {
-  return (
-    <div className={styles.wrapperTag}>
-      {value}
-    </div>
-  )
-}
+  return <div className={styles.wrapperTag}>{value}</div>;
+};

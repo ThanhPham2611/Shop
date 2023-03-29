@@ -5,6 +5,23 @@
     height: 39.5vh;
   }
 
+  .wrapperSoldOff {
+    position: relative;
+    .iconSoldOff {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.65);
+      border-radius: 50%;
+      padding: 25px 10px;
+      color: white;
+      white-space: nowrap;
+      font-size: 0.75rem;
+      text-align: center;
+    }
+  }
+
   .rowItem {
     background-color: white;
     padding: 0.5rem 1rem;
