@@ -180,14 +180,22 @@ export const detailProduct = {
   rate: 4.5,
   listImage: [
     {
+      id: 'asnd',
       url: 'https://cvf.shopee.vn/file/da1b01816801b7ac4648761019f6c74b',
       type: 'vid',
       urlImagePreview: 'https://down-vn.img.susercontent.com/file/3cb81f67c9af6db41d91dad2685b3a3b_tn'
     },
+    {
+      id: 'asnds',
+      url: 'https://down-vn.img.susercontent.com/file/vn-11134201-23030-vbfwjk2wv6nv01_tn',
+      type: 'img'
+    }
   ],
   evaluate: 100,
   sold: 1134,
   showSale: true,
   priceOld: 160000,
   priceNew: 80000,
+  flaseSale: true,
+  timeEndSale: '2023-03-29T17:00:00+07:00'
 }

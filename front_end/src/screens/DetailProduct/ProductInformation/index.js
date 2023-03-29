@@ -1,16 +1,46 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+// import { useParams } from "react-router-dom";
 import { Col, Image, Rate, Row, Typography } from "antd";
 import ReactPlayer from 'react-player'
+import CountDown from 'react-countdown';
+import moment from 'moment'
+
+import { detailProduct } from "../../../utils/dummyData";
+import { formatAmoutProductSold, formatCurrency, formatSalePercent } from "../../../utils/function";
+import FlashSaleIcon from '../../../asset/image/flash_sale_icon.png'
 
 import styles from './information.module.scss';
-import { detailProduct } from "../../../utils/dummyData";
-import { formatAmoutProductSold, formatCurrency } from "../../../utils/function";
+import { OClock } from "../../../asset/image/svg/oclock";
 
 const { Text } = Typography
 
 const ProductInformation = () => {
   // const { id } = useParams()
+  const [hover, setHover] = useState(false)
+
+  const renderer = ({ hours, minutes, seconds, completed }) => {
+    if (completed) {
+      return (
+        <div className={styles.wrapperCountDown}>
+          <span className={styles.textCountdown}>{hours}</span> :
+          <span className={styles.textCountdown}>{minutes}</span> :
+          <span className={styles.textCountdown}>{seconds}</span>
+        </div>
+      );
+    } else {
+      return (
+        <div className={styles.wrapperCountDown}>
+          <span className={styles.textCountdown}>{hours < 10 ? `0${hours}` : hours}</span> :
+          <span className={styles.textCountdown}>{minutes < 10 ? `0${minutes}` : minutes}</span> :
+          <span className={styles.textCountdown}>{seconds < 10 ? `0${seconds}` : seconds}</span>
+        </div>
+      )
+    }
+  };
+
+  const hoverMouse = (e) => {
+    console.log(e)
+  }
 
   return (
     <Row className={styles.wrapperInformation}>
@@ -20,20 +50,35 @@ const ProductInformation = () => {
             <ReactPlayer url={detailProduct.listImage[0].url} height={500} width={500} playing={true} volume={0} /> :
             <Image url={detailProduct.listImage[0].url} height={400} />
         }
-        <div style={{ height: 100 }}>
+        <Row style={{ marginTop: 10 }} align='middle'>
           {
             detailProduct.listImage.map(dataImage => {
-              dataImage.type === 'vid' ? (
-                <div>
-                  <Image src={dataImage.urlImagePreview} height={100} />
+              return dataImage.type === 'vid' ? (
+                <div key={dataImage.id} className={styles.listImage}>
+                  <Image
+                    className={[hover ? styles.borderClassImage : styles.noneBorderClassImage]}
+                    onMouseEnter={(e) => hoverMouse(e)}
+                    onMouseLeave={() => setHover(false)}
+                    src={dataImage.urlImagePreview}
+                    height={100}
+                    preview={false}
+                  />
                 </div>
               ) : (
-                <Image src={dataImage.url} height={100} />
+                <Image
+                  key={dataImage.id}
+                  className={styles.listImage}
+                  src={dataImage.url}
+                  height={100}
+                  preview={false}
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}
+                />
               )
             }
             )
           }
-        </div>
+        </Row>
       </Col>
       <Col xxl={15}>
         <span className={styles.titleProduct}>{detailProduct.titleProduct}</span>
@@ -57,11 +102,23 @@ const ProductInformation = () => {
           </Col>
         </Row>
         {detailProduct.showSale && (
-          <Row className={styles.wrapperPrice} align='middle'>
-            <Text className={styles.textPriceOld} delete>{formatCurrency(detailProduct.priceOld)}</Text>
-            <Text className={styles.textPriceNew}>{formatCurrency(detailProduct.priceNew)}</Text>
-            <div className={styles.showSale}>{(detailProduct.priceNew / detailProduct.priceOld) * 100}% giảm</div>
-          </Row>
+          <div style={{ marginTop: 20 }}>
+            {detailProduct.flaseSale && (
+              <div className={styles.wrapperFlashSale}>
+                <Image className={styles.iconFlashSale} src={FlashSaleIcon} alt='Flash sale' preview={false} />
+                <Row align='middle'>
+                  <OClock />
+                  <span className={styles.textFlashSale}>Kết thúc trong</span>
+                  <CountDown date={moment(detailProduct.timeEndSale).format()} renderer={renderer} zeroPadTime={2} />
+                </Row>
+              </div>
+            )}
+            <Row className={styles.wrapperPrice} align='middle'>
+              <Text className={styles.textPriceOld} delete>{formatCurrency(detailProduct.priceOld)}</Text>
+              <Text className={styles.textPriceNew}>{formatCurrency(detailProduct.priceNew)}</Text>
+              <div className={styles.showSale}>{formatSalePercent(detailProduct.priceOld, detailProduct.priceNew)}% giảm</div>
+            </Row>
+          </div>
         )}
 
       </Col>
