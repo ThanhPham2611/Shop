@@ -21,7 +21,7 @@
 }
 
 .wrapperCouponsShop {
-  background-color: rgba(208,1,27,.08);
+  background-color: rgba(208, 1, 27, 0.08);
   padding: 5px 10px;
   position: relative;
   .textCouponsShop {
@@ -31,8 +31,8 @@
   }
   .circleShop {
     background-color: white;
-    width: 4px;
-    height: 4px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     position: absolute;
     &.circle1Shop {

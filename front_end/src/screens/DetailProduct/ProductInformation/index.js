@@ -10,9 +10,12 @@ import {
   formatSalePercent,
 } from "../../../utils/function";
 
-import styles from "./information.module.scss";
 import { FlashSale } from "../../../components/flashSale";
 import { CoupounsShop } from "../../../components/ticketSale";
+import { FlashShip, Shipping } from "../../../asset/image/svg/iconSvg";
+import freeShip from '../../../asset/image/free-shipping.png'
+
+import styles from "./information.module.scss";
 
 const { Text } = Typography;
 
@@ -132,6 +135,42 @@ const ProductInformation = () => {
                   <CoupounsShop key={coupons.id} number={coupons.value} />
                 </Col>
               ))}
+            </Row>
+          </Col>
+        </Row>
+
+        <Row className={styles.wrapperListCoupons} >
+          <Col xxl={5}>
+            <span className={styles.textLabelInfo}>Bảo hiểm</span>
+          </Col>
+          <Col xxl={19}>
+            <span>Bảo hiểm quyền lợi người tiêu dùng</span>
+            <a className={styles.linkText}>Tìm hiểu thêm</a>
+          </Col>
+        </Row>
+
+        <Row className={styles.wrapperListCoupons}>
+          <Col xxl={5}>
+            <span className={styles.textLabelInfo}>Vận chuyển</span>
+          </Col>
+          <Col xxl={19}>
+            <Row align='middle'>
+              <FlashShip height={25} width={30} />
+              <span className={styles.textTitleSub}>Xử lý đơn hàng bởi shoppe</span>
+            </Row>
+            <Row align='middle' style={{ margin: '10px 0' }}>
+              <Image src={freeShip} style={{ height: 30 }} preview={false} />
+              <span className={styles.textTitleSub} style={{ color: '#000' }}>Miễn phí vận chuyển</span>
+            </Row>
+            <Row align='middle'>
+              <Shipping height={25} width={30} />
+              <span className={styles.textTitleSub} style={{ textTransform: 'capitalize' }}>Vận chuyển tới</span>
+              <span style={{ textTransform: 'capitalize' }}>Phường tràng tiền, quận hoàn kiếm</span>
+            </Row>
+            <Row align='middle' style={{ margin: '10px 0' }}>
+              <div style={{ width: 30 }} />
+              <span className={styles.textTitleSub} style={{ textTransform: 'capitalize' }}>Phí vận chuyển</span>
+              <span style={{ textTransform: 'capitalize' }}>{formatCurrency(0)}</span>
             </Row>
           </Col>
         </Row>
