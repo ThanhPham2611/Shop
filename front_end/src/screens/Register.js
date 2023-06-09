@@ -5,7 +5,7 @@ import { FaFacebookSquare, FaGoogle } from 'react-icons/fa'
 
 import styles from '../asset/scss/login.module.scss';
 
-const Login = () => {
+const Register = () => {
   const [form] = Form.useForm()
 
   const handleLogin = (value) => {
@@ -16,7 +16,7 @@ const Login = () => {
     <div>
       <div className={styles.bg}>
         <div className={styles.form_container}>
-          <h1>Đăng nhập</h1>
+          <h1>Đăng ký</h1>
           <Divider />
           <Form form={form} layout='vertical' onFinish={handleLogin}>
             <Form.Item
@@ -45,8 +45,6 @@ const Login = () => {
 
             <Button className={styles.btn} type='primary' danger htmlType='submit'>Đăng nhập</Button>
 
-            <a href='#'>Quên mật khẩu</a>
-
             <Divider plain>Hoặc</Divider>
 
             <Row justify='space-between' align='middle'>
@@ -74,4 +72,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Register

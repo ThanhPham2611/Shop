@@ -24,16 +24,18 @@ export const CoupounsShop = ({ number }) => {
   return (
     <div className={styles.wrapperCouponsShop}>
       <span className={styles.textCouponsShop}>{number}% Giảm</span>
-      <div className={[styles.circleShop]} style={{ top: 0, right: -1.5 }}></div>
+      <div className={[styles.circleShop]} style={{ top: 1, right: -1.5 }}></div>
       <div className={[styles.circleShop]} style={{ top: 6, right: -1.5 }}></div>
-      <div className={[styles.circleShop]} style={{ top: 12, right: -1.5 }}></div>
-      <div className={[styles.circleShop]} style={{ top: 18, right: -1.5 }}></div>
-      <div className={[styles.circleShop]} style={{ top: 24, right: -1.5 }}></div>
-      <div className={[styles.circleShop]} style={{ top: 0, left: -1.5 }}></div>
+      <div className={[styles.circleShop]} style={{ top: 11, right: -1.5 }}></div>
+      <div className={[styles.circleShop]} style={{ top: 16, right: -1.5 }}></div>
+      <div className={[styles.circleShop]} style={{ top: 21, right: -1.5 }}></div>
+      <div className={[styles.circleShop]} style={{ top: 26, right: -1.5 }}></div>
+      <div className={[styles.circleShop]} style={{ top: 1, left: -1.5 }}></div>
       <div className={[styles.circleShop]} style={{ top: 6, left: -1.5 }}></div>
-      <div className={[styles.circleShop]} style={{ top: 12, left: -1.5 }}></div>
-      <div className={[styles.circleShop]} style={{ top: 18, left: -1.5 }}></div>
-      <div className={[styles.circleShop]} style={{ top: 24, left: -1.5 }}></div>
+      <div className={[styles.circleShop]} style={{ top: 11, left: -1.5 }}></div>
+      <div className={[styles.circleShop]} style={{ top: 16, left: -1.5 }}></div>
+      <div className={[styles.circleShop]} style={{ top: 21, left: -1.5 }}></div>
+      <div className={[styles.circleShop]} style={{ top: 26, left: -1.5 }}></div>
     </div>
   )
 };

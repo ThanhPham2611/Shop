@@ -1,10 +1,12 @@
 import React from 'react';
-import { Badge, Col, Image, Input, Row, Space } from 'antd'
+import { Badge, Col, Divider, Image, Input, Row, Space } from 'antd'
 import {
   ShoppingCartOutlined,
   BellOutlined,
   QuestionCircleOutlined
 } from '@ant-design/icons';
+import { useLocation } from 'react-router-dom'
+
 
 //local
 import logo from '../asset/image/logo.png'
@@ -17,19 +19,26 @@ const App = (props) => {
   //components render
   const { renderRouter } = props;
 
+  const { pathname } = useLocation();
+
+  console.log('pathName::>>', pathname)
+
   const onSearch = (value) => {
     console.log(value)
   }
 
-  return (
+  return pathname === '/login' ? renderRouter() : (
     <div id={styles.main}>
       <div className={styles.wrapperHeader}>
         <Row justify='space-between' align='middle'>
           <Col>
-            <Space size={18}>
+            <Space size={5}>
               <a>Trang chủ</a>
+              <Divider type="vertical" style={{ borderColor: 'hsla(0,0%,100%,.22)' }} />
               <a>Trở thành người bán</a>
+              <Divider type="vertical" style={{ borderColor: 'hsla(0,0%,100%,.22)' }} />
               <a>Tải ứng dụng</a>
+              <Divider type="vertical" style={{ borderColor: 'hsla(0,0%,100%,.22)' }} />
               <a>Kết nối</a>
             </Space>
           </Col>
@@ -44,7 +53,7 @@ const App = (props) => {
                 <QuestionCircleOutlined style={{ color: 'white' }} />
               </Space>
               <a>Đăng ký</a>
-              <a>Đăng nhập</a>
+              <a href='/login'>Đăng nhập</a>
             </Space>
           </Col>
         </Row>
