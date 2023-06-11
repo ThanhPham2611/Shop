@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
@@ -8,44 +8,55 @@ import Login from "./screens/Login";
 import PageNotFound from "./screens/PageNotFound";
 
 //local
-import { STORAGEKEY } from './service/cookie/index'
+import { STORAGEKEY } from "./service/cookie/index";
 import { checkPermission } from "./service/cookie/JWT";
 import DetailProduct from "./screens/DetailProduct";
-
+import Register from "./screens/Register";
 
 export const routers = [
   {
-    name: 'Home',
-    path: '/',
+    name: "Home",
+    path: "/",
     component: Home,
     meta: {
-      role: '*',
+      role: "*",
       isPrivate: false,
       hidden: false,
       child: false,
     },
   },
   {
-    name: 'Login',
-    path: '/login',
+    name: "Login",
+    path: "/login",
     component: Login,
     meta: {
-      role: '*',
+      role: "*",
       isPrivate: false,
       hidden: false,
       child: false,
-    }
+    },
   },
   {
-    name: 'Detail Product',
-    path: '/detail/:id',
-    component: DetailProduct,
+    name: "Register",
+    path: "/register",
+    component: Register,
     meta: {
-      role: '*',
+      role: "*",
       isPrivate: false,
       hidden: false,
       child: false,
-    }
+    },
+  },
+  {
+    name: "Detail Product",
+    path: "/detail/:id",
+    component: DetailProduct,
+    meta: {
+      role: "*",
+      isPrivate: false,
+      hidden: false,
+      child: false,
+    },
   },
 ];
 
@@ -56,21 +67,24 @@ const PrivateRouter = (props) => {
     <Route
       path={props.path}
       exact
-      render={(prop) => cookies[STORAGEKEY.ACCESS_TOKEN] ?
-        (<Components {...prop} />) :
-        (<Redirect
-          to={{
-            pathname: 'Login',
-            state: { redirect_url: prop.location },
-          }}
-        />)
+      render={(prop) =>
+        cookies[STORAGEKEY.ACCESS_TOKEN] ? (
+          <Components {...prop} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "Login",
+              state: { redirect_url: prop.location },
+            }}
+          />
+        )
       }
     />
   );
 };
 
 const WhiteListRoute = (props) => {
-  const whiteList = ['/login', '/', '/detail/:id'];
+  const whiteList = ["/login", "/register", "/", "/detail/:id"];
   const [cookies] = useCookies([STORAGEKEY.ACCESS_TOKEN]);
   const isWhiteList = (path) =>
     !cookies[STORAGEKEY.ACCESS_TOKEN] && whiteList.indexOf(path) >= 0;
@@ -88,7 +102,7 @@ const WhiteListRoute = (props) => {
       }
     />
   );
-}
+};
 
 const renderRouter = (routers) => {
   let arr = [];
@@ -115,12 +129,12 @@ const renderRouter = (routers) => {
     if (route.children) {
       arr = arr.concat(renderRouter(route.children));
     }
-  })
+  });
   return arr;
-}
+};
 
 const routes = () => {
-  const whiteList = ["/login", '/', '/detail:id'];
+  const whiteList = ["/login", "/register", "/", "/detail:id"];
   const path = window.location.pathname;
   const isWhiteList = whiteList.includes(path);
   return (
