@@ -3,13 +3,34 @@ import { Button, Col, Divider, Form, Input, Row } from "antd";
 
 import { FaFacebookSquare, FaGoogle } from "react-icons/fa";
 
+import { post } from '../service/axios/instance'
+
 import styles from "../asset/scss/login.module.scss";
+import axios from "axios";
 
 const Login = () => {
   const [form] = Form.useForm();
 
   const handleLogin = (value) => {
-    console.log(value);
+    console.log('vlaue:::>>', value)
+    // axios.post('/login', {
+    //   ...value
+    // })
+    //   .then(data => {
+    //     console.log('data::>>', data)
+    //   })
+    //   .catch(err => {
+    //     console.log('datae erere::>>>', err)
+    //   })
+    post('/login', {
+      ...value,
+      username: value.toLowerCase()
+    })
+      .then(data => {
+        console.log('data::>>>', data)
+      }).catch(err => {
+        console.log('err::>>', err)
+      })
   };
 
   return (

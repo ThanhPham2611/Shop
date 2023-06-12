@@ -18,13 +18,15 @@ const App = (props) => {
   //components render
   const { renderRouter } = props;
 
+  const whiteList = ['/login', '/register']
+
   const { pathname } = useLocation();
 
   const onSearch = (value) => {
     console.log(value);
   };
 
-  return pathname === "/login" || "/register" ? (
+  return (whiteList.includes(pathname)) ? (
     renderRouter()
   ) : (
     <div id={styles.main}>

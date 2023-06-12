@@ -14,7 +14,7 @@ if (token)
 
 const get = async (url, params = {}) => {
   try {
-    const config = {params}
+    const config = { params }
     const response = await instance.get(getUrlPrefix() + url, config);
     return _responseHandler(response);
   } catch (error) {
