@@ -1,0 +1,44 @@
+.wraperItem {
+  height: 80px;
+  .imgCart {
+    height: 70px;
+  }
+
+  .textCart {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    .textTitleItem {
+      font-size: 16px;
+    }
+  }
+  .priceCart {
+    font-size: 18px;
+    margin-top: 8px;
+  }
+
+  .buttonCart {
+    margin-top: 10px;
+    .numberItem {
+      font-size: 16px;
+      margin: 0 10px;
+    }
+  }
+}
+
+.buttonPaymentContainer {
+  position: absolute;
+  bottom: 10px;
+  width: 90%;
+  .priceTotal {
+    font-size: 20px;
+    color: #ee4d2d;
+    text-transform: uppercase;
+  }
+  .buttonPaymentCart {
+    height: 50px;
+    width: 100%;
+    margin-top: 15px;
+  }
+}

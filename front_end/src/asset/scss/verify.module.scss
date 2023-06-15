@@ -1,0 +1,38 @@
+.bg {
+  background: url("../image/background_verify.png");
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.formVerify {
+  position: absolute;
+  min-height: 200px;
+  min-width: 600px;
+  background-color: white;
+  top: 15%;
+  right: 20%;
+  border-radius: 20px;
+  padding: 15px 45px;
+  font-family: "Noto Sans", sans-serif;
+
+  .logo {
+    height: 50px;
+  }
+
+  .title {
+    font-size: 32px;
+    margin-top: 8px;
+  }
+
+  .input,
+  .button_verify {
+    height: 50px;
+  }
+
+  .input {
+    width: 450px;
+  }
+}

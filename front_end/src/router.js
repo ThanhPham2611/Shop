@@ -12,6 +12,7 @@ import { STORAGEKEY } from "./service/cookie/index";
 import { checkPermission } from "./service/cookie/JWT";
 import DetailProduct from "./screens/DetailProduct";
 import Register from "./screens/Register";
+import VerifyRegister from "./screens/VerifyRegister";
 
 export const routers = [
   {
@@ -21,6 +22,17 @@ export const routers = [
     meta: {
       role: "*",
       isPrivate: false,
+      hidden: false,
+      child: false,
+    },
+  },
+  {
+    name: "Home",
+    path: "/home",
+    component: Home,
+    meta: {
+      role: "*",
+      isPrivate: true,
       hidden: false,
       child: false,
     },
@@ -40,6 +52,17 @@ export const routers = [
     name: "Register",
     path: "/register",
     component: Register,
+    meta: {
+      role: "*",
+      isPrivate: false,
+      hidden: false,
+      child: false,
+    },
+  },
+  {
+    name: "VerifyRegister",
+    path: "/verify_register",
+    component: VerifyRegister,
     meta: {
       role: "*",
       isPrivate: false,
@@ -84,21 +107,18 @@ const PrivateRouter = (props) => {
 };
 
 const WhiteListRoute = (props) => {
-  const whiteList = ["/login", "/register", "/", "/detail/:id"];
+  const whiteList = ["/login", "/register", "/", "/detail/:id", '/verify_register'];
   const [cookies] = useCookies([STORAGEKEY.ACCESS_TOKEN]);
   const isWhiteList = (path) =>
     !cookies[STORAGEKEY.ACCESS_TOKEN] && whiteList.indexOf(path) >= 0;
 
+  console.log('isWhiteList', isWhiteList(props.path))
   return (
     <Route
       path={props.path}
       exact
       render={(prop) =>
-        isWhiteList(props.path) ? (
-          <div>{React.createElement(props.component, prop)}</div>
-        ) : (
-          <Redirect to={{ pathname: "/login" }} />
-        )
+        <div>{React.createElement(props.component, prop)}</div>
       }
     />
   );
@@ -134,7 +154,7 @@ const renderRouter = (routers) => {
 };
 
 const routes = () => {
-  const whiteList = ["/login", "/register", "/", "/detail:id"];
+  const whiteList = ["/login", "/register", "/", "/detail:id", '/verify_register'];
   const path = window.location.pathname;
   const isWhiteList = whiteList.includes(path);
   return (

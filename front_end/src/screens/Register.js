@@ -1,27 +1,49 @@
 import React from "react";
 import { Button, Col, Divider, Form, Input, Row } from "antd";
-import moment from 'moment';
+import { useHistory } from 'react-router-dom';
 
 import { FaFacebookSquare, FaGoogle } from "react-icons/fa";
+import logo from '../asset/image/logo_login.png';
+
+import { post } from "../service/axios/instance";
 
 import styles from "../asset/scss/login.module.scss";
 
 const Register = () => {
   const [form] = Form.useForm();
+  const history = useHistory();
 
-  const handleLogin = (value) => {
-    console.log(value);
+  const handleRegister = (value) => {
+    console.log('valueueee', value)
+    post('register', {
+      ...value,
+      username: value.username.toLowerCase(),
+      role: 1
+    })
+      .then(data => {
+        console.log('data::>>', data);
+      })
+      .catch(err => {
+        console.log('err data:>>>', err);
+      })
   };
 
   return (
     <div>
       <div className={styles.bg}>
         <div className={styles.form_container}>
-          <h1>Đăng ký</h1>
+          <Row align='middle' justify='space-between'>
+            <img
+              src={logo}
+              className={styles.logo}
+              onClick={() => history.push('/')}
+            />
+            <span className={styles.title}>Đăng ký</span>
+          </Row>
           <Divider />
-          <Form form={form} layout="vertical" onFinish={handleLogin}>
+          <Form form={form} layout="vertical" onFinish={handleRegister}>
             <Form.Item
-              name="usename"
+              name="username"
               rules={[
                 {
                   required: true,
@@ -48,7 +70,7 @@ const Register = () => {
             </Form.Item>
 
             <Form.Item
-              name="rePassword"
+              name="confirmPassword"
               rules={[
                 {
                   required: true,
@@ -71,6 +93,15 @@ const Register = () => {
                 className={styles.input}
                 placeholder="Xác nhận mật khẩu"
               />
+            </Form.Item>
+
+            <Form.Item name='phone' rules={[
+              {
+                required: true,
+                message: 'Bạn cần điền trường này'
+              }
+            ]}>
+              <Input className={styles.input} placeholder='Nhập số điện thoại' />
             </Form.Item>
 
             <Button
