@@ -22,7 +22,8 @@
       justify-content: space-between;
       cursor: pointer;
       .logo {
-        height: 40px;
+        height: 50px;
+        width: 200px;
       }
       .textLogo {
         font-size: 25px;
@@ -44,6 +45,9 @@
         margin-left: 25px;
       }
     }
+  }
+  .username {
+    color: white;
   }
 }
 
