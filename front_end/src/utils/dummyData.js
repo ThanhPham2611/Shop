@@ -1,4 +1,4 @@
-import { typeTicket } from "./typeTicket";
+import { typeTicket } from "./type";
 
 export const listCategory = [
   {

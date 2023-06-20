@@ -1,30 +1,35 @@
 import React from "react";
-import { Button, Col, Divider, Form, Input, Row } from "antd";
+import { Button, Col, Divider, Form, Input, Row, notification } from "antd";
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import { FaFacebookSquare, FaGoogle } from "react-icons/fa";
 import logo from '../asset/image/logo_login.png';
 
 import { post } from "../service/axios/instance";
+import { getUsername } from "../store/modules/verifySlice";
 
 import styles from "../asset/scss/login.module.scss";
 
 const Register = () => {
   const [form] = Form.useForm();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleRegister = (value) => {
-    console.log('valueueee', value)
     post('register', {
       ...value,
       username: value.username.toLowerCase(),
       role: 1
     })
       .then(data => {
-        console.log('data::>>', data);
+        dispatch(getUsername(value.username.toLowerCase()))
+        history.push(`/verify_register`)
       })
       .catch(err => {
-        console.log('err data:>>>', err);
+        if (err.response.status === 409) {
+          notification.error({ message: 'Tên đăng nhập đã được sử dụng' })
+        }
       })
   };
 

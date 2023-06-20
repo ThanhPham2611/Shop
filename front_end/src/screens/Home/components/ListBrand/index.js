@@ -9,7 +9,7 @@ import {
 } from "../../../../utils/function";
 
 import styles from "./listBrand.module.scss";
-import { typeTicket } from "../../../../utils/typeTicket";
+import { typeTicket } from "../../../../utils/type";
 import { useHistory } from "react-router-dom";
 
 const { Text } = Typography;

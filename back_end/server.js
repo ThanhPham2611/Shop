@@ -11,6 +11,7 @@ import dotenv from "dotenv";
 //router
 import user from "./routes/user";
 import admin from "./routes/admin";
+import vendor from './routes/vendor';
 
 dotenv.config();
 const app = express();
@@ -52,6 +53,7 @@ mongoose
 //router
 app.use("/api", user);
 app.use("/api", admin);
+app.use('/api', vendor);
 
 //port
 const port = process.env.PORT || 8000;
