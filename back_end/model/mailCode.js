@@ -3,7 +3,12 @@ import mongoose from "mongoose";
 const mailSchema = mongoose.Schema(
   {
     idUser: String,
-    code: String
+    code: String,
+    type: Number,
+    flag: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     timestamps: true,

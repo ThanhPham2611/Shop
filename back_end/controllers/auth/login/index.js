@@ -6,8 +6,6 @@ export const login_user = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    console.log('userName', username)
-
     const checkUser = await User.findOne({ username }, 'password isActive')
 
     if (!checkUser) {

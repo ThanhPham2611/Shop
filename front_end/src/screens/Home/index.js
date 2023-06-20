@@ -10,7 +10,6 @@ import ship from '../../asset/image/ship.png'
 import safeBill from '../../asset/image/safe_bill.png'
 
 import styles from '../../asset/scss/home.module.scss'
-import { LoadingPage } from "../../components/loading/loadingPage";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);

@@ -35,4 +35,18 @@
   .input {
     width: 450px;
   }
+
+  .wrapper_auth_code {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .auth_code {
+      margin: 10px 0px 20px 0px;
+    }
+    .button_auth_code {
+      width: 40%;
+      height: 50px;
+    }
+  }
 }

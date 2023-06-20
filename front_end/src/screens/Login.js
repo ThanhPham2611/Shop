@@ -7,9 +7,10 @@ import { FaFacebookSquare, FaGoogle } from "react-icons/fa";
 import logo from '../asset/image/logo_login.png';
 
 import { post } from '../service/axios/instance'
+import { STORAGEKEY, setCookie } from "../service/cookie";
 
 import styles from "../asset/scss/login.module.scss";
-import { STORAGEKEY, setCookie } from "../service/cookie";
+
 // import axios from "axios";
 
 const Login = () => {
@@ -25,7 +26,7 @@ const Login = () => {
         const { accessToken } = data;
         setCookie(STORAGEKEY.ACCESS_TOKEN, accessToken);
         toast.success('Đăng nhập thành công');
-        history.push('/home')
+        window.location.href = '/home'
       })
       .catch(err => {
         console.log('err', err)
@@ -33,6 +34,9 @@ const Login = () => {
           toast.error('Không tìm thấy tài khoản')
         } else if (err.response.status === 402) {
           toast.error('Tài khoản hoặc mật khẩu không đúng')
+        } else if (err.response.status === 401) {
+          toast.error('Tài khoản của bạn chưa được kích hoạt')
+          history.push('/verify_register')
         }
       })
 

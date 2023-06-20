@@ -24,19 +24,7 @@ export const register_user = async (req, res) => {
       password: hashPassword,
     });
 
-    const user = await User.findOne({
-      username
-    }, '_id firstName lastName')
-
-    const accessToken = jwt.sign(
-      JSON.parse(JSON.stringify(user)),
-      process.env.ACCESS_TOKEN_SECRET,
-      {
-        expiresIn: "8h",
-      }
-    );
-
-    return res.status(201).send({ accessToken, message: "OK" });
+    return res.status(201).send({ message: "OK" });
   } catch (err) {
     console.log(err)
     return res.status(500).send({ message: 'Not found' })
