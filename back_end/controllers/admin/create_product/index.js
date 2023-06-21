@@ -1,4 +1,4 @@
-import User from '../../../model/user';
+import { userModel } from '../../../model/user';
 import Product from '../../../model/product';
 
 export const admin_create_product = async (req, res) => {
@@ -11,7 +11,7 @@ export const admin_create_product = async (req, res) => {
 
   try {
     const { _id } = jwt.decode(token, { complete: true }).payload;
-    const admin = await User.findOne({ _id });
+    const admin = await userModel.findOne({ _id });
     if (admin.role !== 3) {
       return res.status(401).send({ message: 'Not admin' });
     }

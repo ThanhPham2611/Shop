@@ -1,7 +1,7 @@
 .wrapperInformation {
   background-color: #fff;
   border-radius: 5px;
-  padding: 15px 15px 10px 15px;
+  padding: 1rem 2rem 1rem 1rem;
 
   .titleProduct {
     font-size: 1.25rem;
@@ -64,20 +64,23 @@
       text-transform: uppercase;
       color: white;
       font-weight: 500;
-      padding: 2px;
-      border-radius: 5px;
+      padding: 4px;
+      border-radius: 2px;
       font-size: 12px;
       margin-left: 20px;
     }
   }
 }
 
-.listImage {
-  margin-right: 5px;
-  cursor: pointer;
-  border: 2px solid transparent;
-  &:hover {
-    border: 2px solid #d0011b;
+.wrapperImage {
+  width: 100%;
+  .listImage {
+    margin-right: 5px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    &:hover {
+      border: 2px solid #d0011b;
+    }
   }
 }
 

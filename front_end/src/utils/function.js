@@ -30,6 +30,11 @@ export const formatAmoutProductSold = (value) => {
   }
 }
 
-export const formatSalePercent = (valueOld, valueNew) => {
-  return Math.round((valueNew / valueOld) * 100)
+export const formatAfterSale = (value, percent) => {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'VND'
+  })
+
+  return formatter.format(value - (value * percent / 100));
 }

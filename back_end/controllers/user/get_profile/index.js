@@ -1,4 +1,4 @@
-import User from '../../../model/user';
+import { userModel } from '../../../model/user';
 import jwt from 'jsonwebtoken';
 
 export const get_profile = async (req, res) => {
@@ -12,7 +12,7 @@ export const get_profile = async (req, res) => {
 
   const { _id } = jwt.decode(token, { complete: true }).payload;
 
-  const user = await User.findOne({ _id }, '-password -role -_id -isActive');
+  const user = await userModel.findOne({ _id }, '-password -role -_id -isActive');
 
   return res.status(200).json({ user })
 }

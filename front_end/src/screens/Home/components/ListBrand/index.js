@@ -28,31 +28,31 @@ const ListBrand = ({ imageBrand, altImageBrand, categoryProduct }) => {
       <Row gutter={[0, 16]} className={styles.rowItem}>
         {categoryProduct?.map((data) => (
           <Col
-            key={data.id}
+            key={data._id}
             className={styles.itemBrand}
-            onClick={() => history.push(`/detail/${data.id}`)}
+            onClick={() => history.push(`/detail/${data._id}`)}
           >
             <div className={styles.wrapperSoldOff}>
               <Image
                 className={styles.imageItemBrand}
-                src={data.src}
-                alt={data.alt}
+                src={data.listImage[0]}
+                alt={data.listImage[0]}
                 preview={false}
               />
               {data.soldOff && (
                 <div className={styles.iconSoldOff}>Hết hàng</div>
               )}
             </div>
-            <div className={styles.nameItemBrand}>{data.name}</div>
-            {data.tagTicket.length > 0 ? (
+            <div className={styles.nameItemBrand}>{data.title}</div>
+            {data.ticketTag.length > 0 ? (
               <Space className={styles.wrapperTicket}>
-                {data.tagTicket?.map((ticket) => (
-                  <Col key={ticket.id}>
+                {data.ticketTag?.map((ticket, index) => (
+                  <Col key={index}>
                     {ticket.type === typeTicket.coupons && (
-                      <Coupons number={ticket.value} />
+                      <Coupons number={ticket.title} />
                     )}
                     {ticket.type === typeTicket.tag && (
-                      <Tags value={ticket.value} />
+                      <Tags value={ticket.title} />
                     )}
                   </Col>
                 ))}
@@ -87,10 +87,10 @@ const ListBrand = ({ imageBrand, altImageBrand, categoryProduct }) => {
                 ) : (
                   <Col style={{ display: "flex", flexDirection: "column" }}>
                     <Text delete className={styles.priceOld}>
-                      {formatCurrency(data.priceOld)}
+                      {formatCurrency(data.price)}
                     </Text>
                     <Text className={styles.priceNew}>
-                      {formatCurrency(data.priceNew)}
+                      {formatCurrency((data.price) - (data.price * data.salePercent / 100))}
                     </Text>
                   </Col>
                 )
@@ -103,7 +103,7 @@ const ListBrand = ({ imageBrand, altImageBrand, categoryProduct }) => {
               ) : (
                 <Col>
                   <Text className={styles.priceNew}>
-                    {formatCurrency(data.priceNew)}
+                    {formatCurrency((data.price) - (data.price * data.salePercent / 100))}
                   </Text>
                 </Col>
               )}

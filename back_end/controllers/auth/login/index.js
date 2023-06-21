@@ -1,4 +1,4 @@
-import User from '../../../model/user';
+import { userModel } from '../../../model/user';
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
 
@@ -6,7 +6,7 @@ export const login_user = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const checkUser = await User.findOne({ username }, 'password isActive')
+    const checkUser = await userModel.findOne({ username }, 'password isActive')
 
     if (!checkUser) {
       return res.status(404).send({ message: 'Not found' })
@@ -21,7 +21,7 @@ export const login_user = async (req, res) => {
       return res.status(402).send({ message: "Email or password is wrong" });
     }
 
-    const user = await User.findOne({
+    const user = await userModel.findOne({
       username
     }, 'firstName lastName')
 

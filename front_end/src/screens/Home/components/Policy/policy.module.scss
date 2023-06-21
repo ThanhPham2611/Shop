@@ -1,0 +1,23 @@
+.informationMall {
+  margin-top: 5px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 1rem 10rem;
+
+  .iconInformation {
+    height: 35px;
+  }
+
+  .titleInformation {
+    font-size: 1.125rem;
+    color: #333;
+    line-height: 1.375rem;
+    font-weight: 500;
+  }
+
+  .subTitleInformation {
+    font-size: 0.8125rem;
+    color: rgba(0, 0, 0, 0.54);
+    line-height: 1.125rem;
+  }
+}
