@@ -1,4 +1,4 @@
-import User from '../../../model/user';
+import { userModel } from '../../../model/user';
 import MailCode from '../../../model/mailCode';
 import moment from 'moment';
 import jwt from 'jsonwebtoken';
@@ -7,7 +7,7 @@ export const verify_code = async (req, res) => {
   try {
     const { codeSubmit, username, email } = req.body;
 
-    const userInfo = await User.findOne({ username }, '_id');
+    const userInfo = await userModel.findOne({ username }, '_id');
 
     const checkCode = await MailCode.findOne({ idUser: userInfo._id }, '_id code createdAt flag type');
 
@@ -15,8 +15,8 @@ export const verify_code = async (req, res) => {
       if (codeSubmit === checkCode.code && !checkCode.flag) {
         await MailCode.updateOne({ _id: checkCode._id }, { flag: true })
         if (checkCode.type === 1) {
-          await User.updateOne({ _id: userInfo._id }, { email, isActive: true });
-          const user = await User.findOne({
+          await userModel.updateOne({ _id: userInfo._id }, { email, isActive: true });
+          const user = await userModel.findOne({
             username
           }, '_id ')
 

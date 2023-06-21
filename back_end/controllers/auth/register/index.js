@@ -1,4 +1,4 @@
-import User from '../../../model/user';
+import { userModel } from '../../../model/user';
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
 
@@ -8,7 +8,7 @@ export const register_user = async (req, res) => {
   try {
     const { username, password, confirmPassword } = req.body;
 
-    const checkUser = await User.findOne({ username });
+    const checkUser = await userModel.findOne({ username });
     if (checkUser) {
       return res.status(409).send({ message: "User exists !!!" });
     }
@@ -19,7 +19,7 @@ export const register_user = async (req, res) => {
 
     const hashPassword = bcrypt.hashSync(password, saltRounds);
 
-    await User.create({
+    await userModel.create({
       ...req.body,
       password: hashPassword,
     });

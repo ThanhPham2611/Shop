@@ -2,17 +2,24 @@ import Product from '../../../model/product';
 import Shop from '../../../model/shop';
 
 export const get_brand_day = async (req, res) => {
-  const listByshop = []
   try {
-    const listshop = await Shop.find({ brandToday: true }).exec();
+    const listshop = await Shop.find({ brandToday: true }, '_id linkImageBrand');
+    let listByshop = []
 
-    const arrayItem = listshop.forEach(async (item) => {
-      console.log('itemm:>', item._id)
-      const arrayProduct = await Product.find({ shopId: item._id })
-      return arrayProduct
+    Promise.all(
+      listshop.map(async (item) => {
+        const arrayProduct = await Product.find({ shopId: item._id })
+        listByshop.push({
+          linkBanner: item.linkImageBrand,
+          items: arrayProduct
+        })
+        return arrayProduct
+      })
+
+    ).then(values => {
+      return res.status(200).send({ data: listByshop })
     });
 
-    console.log('dl', arrayItem)
 
   } catch (err) {
     return res.status(500).send({ message: 'Not server' })

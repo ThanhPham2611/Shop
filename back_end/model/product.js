@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 const { ObjectId } = mongoose.Types;
-const userSchema = mongoose.Schema(
+
+const productSchema = mongoose.Schema(
   {
     shopId: {
       type: ObjectId,
@@ -21,7 +22,15 @@ const userSchema = mongoose.Schema(
     },
     timeEndSale: Date,
     salePercent: Number,
-    ticketTag: Array,
+    ticketTag: [
+      {
+        type: {
+          type: Number,
+          default: 0
+        },
+        title: String
+      }
+    ],
     price: {
       type: Number,
       require: true
@@ -54,4 +63,4 @@ const userSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("product", userSchema);
+module.exports = mongoose.model("product", productSchema);

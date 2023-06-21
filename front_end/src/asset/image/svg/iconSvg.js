@@ -21,13 +21,14 @@ export const FlashShip = ({ height, width, color }) => {
 
 export const Shipping = ({ height, width, color }) => {
   return (
-    <svg height={height || 18} width={width || 18} fill={color || "#000000"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-      <g id="SVGRepo_iconCarrier">
-        <path d="M19.8,5.4A1,1,0,0,0,19,5H15V4a2,2,0,0,0-2-2H3A2,2,0,0,0,1,4V17a1,1,0,0,0,1,1H3a4,4,0,0,0,8,0h2a4,4,0,0,0,8,0,2,2,0,0,0,2-2V10a1,1,0,0,0-.2-.6ZM7,20a2,2,0,1,1,2-2A2,2,0,0,1,7,20Zm6-4H10.444a3.965,3.965,0,0,0-6.888,0H3V10H13ZM13,6V8H3V4H13Zm4,14a2,2,0,1,1,2-2A2,2,0,0,1,17,20Zm4-4h-.556A3.936,3.936,0,0,0,15,14.556V7h3.5L21,10.333Z"></path>
-      </g>
+    <svg width="30" height="30" viewBox="0 0 60 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="9" y="5" width="34.8421" height="25.8667" fill="white" stroke="black" stroke-width="2" />
+      <path d="M49.1052 35.6666C49.1052 38.5766 46.6436 41 43.5263 41C40.4089 41 37.9473 38.5766 37.9473 35.6666C37.9473 32.7566 40.4089 30.3333 43.5263 30.3333C46.6436 30.3333 49.1052 32.7566 49.1052 35.6666Z" fill="white" stroke="black" stroke-width="2" />
+      <path d="M20.1579 35.6666C20.1579 38.5766 17.6963 41 14.5789 41C11.4616 41 9 38.5766 9 35.6666C9 32.7566 11.4616 30.3333 14.5789 30.3333C17.6963 30.3333 20.1579 32.7566 20.1579 35.6666Z" fill="white" stroke="black" stroke-width="2" />
+      <path d="M44.8421 21.7333H55.9224H57C57.5523 21.7333 58 22.181 58 22.7333V30.8666C58 31.4189 57.5523 31.8666 57 31.8666H48" stroke="black" stroke-width="2" />
+      <path d="M44.8421 11.6H54.3684C54.9207 11.6 55.3684 12.0477 55.3684 12.6V21.7333" stroke="black" stroke-width="2" />
     </svg>
+
   )
 }
 

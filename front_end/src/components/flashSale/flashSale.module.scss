@@ -1,11 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
 .wrapperCountDown {
   color: white;
   .textCountdown {
     background-color: #222;
     color: white;
-    padding: 5px;
+    padding: 1px 4px;
     margin: 0 3px;
-    border-radius: 5px;
+    border-radius: 2px;
+    font-weight: 500;
+    font-size: 18px;
+    font-family: "Bebas Neue", sans-serif;
   }
 }
 

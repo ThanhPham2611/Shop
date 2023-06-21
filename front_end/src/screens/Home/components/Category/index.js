@@ -1,12 +1,22 @@
 import { Col, Image, Row } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 
 import { listCategory, listProduct } from "../../../../utils/dummyData";
 import ListBrand from "../ListBrand";
+import { productMall } from "../../../../store/modules/productSlice";
 
 import styles from './category.module.scss';
 
 const Category = () => {
+  const dispatch = useDispatch();
+
+  const { listMall } = useSelector(state => state.productInfo);
+
+  useEffect(() => {
+    dispatch(productMall());
+  }, [])
+
   return (
     <div className={styles.itemContainer}>
       <h2>Danh mục</h2>
@@ -21,8 +31,8 @@ const Category = () => {
         ))}
       </Row>
       <h1 className={styles.titleBrand}>Thương hiệu nổi bật trong ngày</h1>
-      {listProduct?.map((data) => (
-        <ListBrand key={data._id} imageBrand={data.imageBrand} altImageBrand={data.altImageBrand} categoryProduct={data.products} />
+      {listMall?.map((data) => (
+        <ListBrand key={data.items._id} imageBrand={data.linkBanner} altImageBrand={data.linkBanner} categoryProduct={data.items} />
       ))}
     </div >
   )

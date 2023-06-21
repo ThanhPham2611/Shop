@@ -3,7 +3,7 @@
 .wrapperHeader {
   height: 120px;
   background-color: #d0011b;
-  padding: 15px 25px;
+  padding: 1rem 18rem;
   position: fixed;
   width: 100%;
   z-index: 1;
@@ -14,7 +14,7 @@
     }
   }
   .searchBarContainer {
-    margin: 20px 25px 0px 25px;
+    margin: 20px 0px;
     .wrapperLogo {
       display: flex;
       align-items: center;
@@ -37,7 +37,7 @@
       display: flex;
       align-items: center;
       .inputSearch {
-        width: 400px;
+        width: 450px;
       }
       .iconShoppingCart {
         font-size: 30px;
@@ -52,5 +52,5 @@
 }
 
 .wrapperContent {
-  padding: 9rem 8.75rem;
+  padding: 9rem 18rem;
 }

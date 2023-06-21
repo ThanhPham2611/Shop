@@ -1,0 +1,19 @@
+.wrapperCarousel {
+  width: 92%;
+  margin-top: 10px;
+}
+
+.arrow {
+  position: absolute;
+  top: 40%;
+  font-size: 30px;
+  color: #fff;
+
+  &.right {
+    right: 30px;
+  }
+
+  &.left {
+    left: -5px;
+  }
+}

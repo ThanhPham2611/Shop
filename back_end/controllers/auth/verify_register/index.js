@@ -1,4 +1,4 @@
-import User from '../../../model/user';
+import { userModel } from '../../../model/user';
 import MailCode from '../../../model/mailCode'
 import randomstring from 'randomstring';
 import nodemailer from 'nodemailer';
@@ -7,12 +7,12 @@ import { TYPE_VERIFY_CODE } from '../../../utils/type';
 export const verify_register = async (req, res) => {
   try {
     const { email, username } = req.body;
-    const checkExist = await User.findOne({ email })
+    const checkExist = await userModel.findOne({ email })
     if (checkExist) {
       return res.status(409).send({ message: 'conflix' })
     }
 
-    const userInfo = await User.findOne({ username }, '_id');
+    const userInfo = await userModel.findOne({ username }, '_id');
 
     const code = randomstring.generate({
       charset: 'numeric',
