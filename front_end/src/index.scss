@@ -9,10 +9,6 @@ body {
   background-color: #f5f5f5;
 }
 
-::-webkit-scrollbar {
-  width: 0px;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
@@ -31,7 +27,8 @@ code {
 .buttonFirst {
   background-color: #d0011b;
   color: #fff;
-  height: 55px;
+  height: 45px;
+  padding: 0 1.5rem;
   &:hover {
     border: 1px solid #d0011b !important;
     color: #fff !important;
@@ -39,7 +36,7 @@ code {
 }
 
 .buttonSecond {
-  height: 55px;
+  height: 45px;
   text-transform: capitalize;
   color: #d0011b;
   border: 1px solid #d0011b;

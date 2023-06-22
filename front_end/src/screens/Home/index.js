@@ -9,11 +9,9 @@ const Home = () => {
 
   return (
     <Spin spinning={false} tip='Đang tải....' size='large'>
-      <div>
-        <Advertisement />
-        <Policy />
-        <Category />
-      </div>
+      <Advertisement />
+      <Policy />
+      <Category />
     </Spin>
   )
 }

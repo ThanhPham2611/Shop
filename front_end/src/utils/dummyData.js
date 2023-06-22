@@ -51,6 +51,16 @@ export const listCategory = [
     nameCategory: "Túi Ví Nữ",
     linkUrl: "",
   },
+  {
+    image: "https://down-vn.img.susercontent.com/file/099edde1ab31df35bc255912bab54a5e",
+    nameCategory: "Mẹ & Bé",
+    linkUrl: "",
+  },
+  {
+    image: "https://down-vn.img.susercontent.com/file/cdf21b1bf4bfff257efe29054ecea1ec",
+    nameCategory: "Thú cưng",
+    linkUrl: "",
+  }
 ];
 
 export const listProduct = [

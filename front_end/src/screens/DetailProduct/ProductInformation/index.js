@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Carousel, Col, Divider, Image, Rate, Row, Space, Typography } from "antd";
+import { Col, Divider, Image, Rate, Row, Space, Typography } from "antd";
+import { useDispatch } from "react-redux";
+
 import { detailProduct } from "../../../utils/dummyData";
 import {
   formatAfterSale,
@@ -23,6 +25,7 @@ import styles from "./information.module.scss";
 import Variation from "../../../components/variation";
 import { useSelector } from "react-redux";
 import CarouselImage from "./components/carousel";
+import { getSelect } from "../../../store/modules/cartSlice";
 
 
 const { Text } = Typography;
@@ -40,6 +43,8 @@ const ProductInformation = () => {
   const { id } = useParams();
   const [productValue, setProductValue] = useState()
   const [linkImage, setLinkImage] = useState('');
+  const [highlight, setHighlight] = useState()
+  const dispatch = useDispatch();
 
   const { select } = useSelector(state => state.cartInfo);
 
@@ -62,6 +67,13 @@ const ProductInformation = () => {
 
   const handleAddCart = () => {
     valueRef.current.getValue();
+  }
+
+  const handleClick = (item, index) => {
+    if (highlight !== index) {
+      setHighlight(index);
+      dispatch(getSelect(item));
+    }
   }
 
   return (
@@ -208,8 +220,8 @@ const ProductInformation = () => {
           <Col xxl={5}>
             <span className={styles.textLabelInfo}>Variation</span>
           </Col>
-          <Col xxl={12}>
-            <Variation data={productValue?.typeProduct} />
+          <Col xxl={17}>
+            <Variation data={productValue?.typeProduct} handleClick={handleClick} indexClick={highlight} />
           </Col>
         </Row>}
 

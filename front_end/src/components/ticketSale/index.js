@@ -1,4 +1,11 @@
 import React from "react";
+import { Button, Row } from 'antd';
+
+import { ButtonFirst } from "../button";
+
+import {
+  ClockCircleOutlined
+} from '@ant-design/icons';
 
 import styles from "./ticket.module.scss";
 
@@ -33,6 +40,26 @@ export const CoupounsShop = ({ number }) => {
     </div>
   )
 };
+
+export const TicketDiscount = ({ discount, minimum, maximum, expiresDate, startTime }) => {
+  return (
+    <Row className={styles.wrapperTicketDiscount} justify='space-between'>
+      <div className={styles.wrapperLeft}>
+        <div className={styles.textDiscount}>Giảm 10K</div>
+        <div className={styles.textMinimum}>Đơn tối thiểu 0Đ</div>
+        <div className={styles.textMinimum}>Giảm tối đa 100K</div>
+
+        <div className={styles.wrapperDate}>
+          <ClockCircleOutlined className={styles.textDate} style={{ marginRight: 5 }} />
+          <span className={styles.textDate}>Có hiệu lực sau: 4 giờ</span>
+        </div>
+      </div>
+      <div className={styles.wrapperButton}>
+        <ButtonFirst className={styles.buttonSave} title='Lưu' />
+      </div>
+    </Row>
+  )
+}
 
 export const Tags = ({ value }) => {
   return <div className={styles.wrapperTag}>{value}</div>;

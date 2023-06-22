@@ -25,7 +25,7 @@ const InfoShop = () => {
           </button>
         </Space>
       </Col>
-      <Col xxl={3} className={styles.colDescription}>
+      <Col xxl={4} className={styles.colDescription}>
         <Row className={styles.wrapperDescription} justify='space-between'>
           <span className={styles.label}>Đánh giá</span>
           <span className={styles.value}>2,1tr</span>
@@ -33,6 +33,26 @@ const InfoShop = () => {
         <Row className={styles.wrapperDescription} justify='space-between'>
           <span className={styles.label}>Sản phẩm</span>
           <span className={styles.value}>740</span>
+        </Row>
+      </Col>
+      <Col xxl={6} className={styles.colDescription}>
+        <Row className={styles.wrapperDescription} justify='space-between'>
+          <span className={styles.label}>Tỷ lệ phản hồi</span>
+          <span className={styles.value}>100%</span>
+        </Row>
+        <Row className={styles.wrapperDescription} justify='space-between'>
+          <span className={styles.label}>Thời gian phản hổi</span>
+          <span className={styles.value}>Trong vài giờ</span>
+        </Row>
+      </Col>
+      <Col xxl={5} className={styles.colDescription}>
+        <Row className={styles.wrapperDescription} justify='space-between'>
+          <span className={styles.label}>Tham gia</span>
+          <span className={styles.value}>3 năm trước</span>
+        </Row>
+        <Row className={styles.wrapperDescription} justify='space-between'>
+          <span className={styles.label}>Người theo dõi</span>
+          <span className={styles.value}>289,3K</span>
         </Row>
       </Col>
     </Row>

@@ -9,3 +9,14 @@ export const typeRole = {
   admin: 3,
   root: 0
 }
+
+export const typeReview = {
+  oneStar: 1,
+  twoStar: 2,
+  threeStar: 3,
+  fourStar: 4,
+  fiveStar: 5,
+  all: 0,
+  haveComment: 6,
+  haveImage: 7
+}

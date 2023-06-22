@@ -59,3 +59,51 @@
   color: #d0011b;
   background-color: rgba(208, 1, 27, 0.08);
 }
+
+.wrapperTicketDiscount {
+  background-color: #fff4f4;
+  height: 120px;
+  width: 270px;
+  padding: 0px 15px;
+  margin: 10px 0;
+
+  .wrapperLeft {
+    border-right: 1px dashed #ccc;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .textDiscount {
+      color: #d0011b;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .textMinimum {
+      color: #d0011b;
+      font-weight: 400;
+      font-size: 14px;
+    }
+
+    .wrapperDate {
+      margin-top: 12px;
+
+      .textDate {
+        color: rgba(0, 0, 0, 0.54);
+        font-size: 11px;
+      }
+    }
+  }
+
+  .wrapperButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .buttonSave {
+      height: 35px;
+    }
+  }
+}

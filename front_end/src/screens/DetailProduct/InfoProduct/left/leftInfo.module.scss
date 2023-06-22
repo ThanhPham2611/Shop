@@ -1,0 +1,41 @@
+.container {
+  background-color: #fff;
+  padding: 2rem;
+  margin-top: 15px;
+
+  h2 {
+    background: rgba(0, 0, 0, 0.02);
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 1.125rem;
+    padding: 0.875rem;
+    text-transform: uppercase;
+  }
+
+  .mr30 {
+    margin: 30px 0px;
+  }
+
+  .detailProduct {
+    margin: 1.875rem 0.9375rem 0.9375rem;
+
+    .wrapperText {
+      margin: 20px 0;
+    }
+
+    .label {
+      color: rgba(0, 0, 0, 0.4);
+      font-size: 0.875rem;
+      text-transform: capitalize;
+    }
+
+    a {
+      color: #05a;
+      font-size: 0.875rem;
+    }
+
+    span {
+      color: rgba(0, 0, 0, 0.8);
+      font-size: 0.875rem;
+    }
+  }
+}
