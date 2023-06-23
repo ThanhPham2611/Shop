@@ -14,7 +14,6 @@ import logo from "../../../asset/image/logo.png";
 
 import { STORAGEKEY, getCookie, removeCookie } from "../../../service/cookie";
 import { toggleCart } from "../../../store/modules/cartSlice";
-import { get } from "../../../service/axios/instance";
 
 import styles from '../../app.module.scss';
 

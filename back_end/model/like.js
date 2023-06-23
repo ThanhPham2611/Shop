@@ -5,9 +5,10 @@ const likeSchema = mongoose.Schema(
   {
     userId: ObjectId,
     productId: ObjectId,
-    type: {
-      type: Number,
-      require: true
+    commentId: ObjectId,
+    like: {
+      type: Boolean,
+      default: false
     }
   },
   {

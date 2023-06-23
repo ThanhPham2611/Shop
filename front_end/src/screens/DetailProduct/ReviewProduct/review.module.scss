@@ -29,4 +29,36 @@
     font-weight: 500;
     font-size: 18px;
   }
+
+  .wrapperDate {
+    margin-top: 0.5rem;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 0.75rem;
+  }
+
+  .wrapperComment {
+    margin: 0.85rem 0;
+    .label {
+      color: rgba(0, 0, 0, 0.4);
+      margin-right: 5px;
+      font-size: 14px;
+    }
+  }
+
+  .description {
+    margin-bottom: 0.85rem;
+  }
+
+  .wrapperImageReview {
+    margin-bottom: 0.85rem;
+    .imageReview {
+      width: 80px;
+      height: 80px;
+    }
+  }
+  .textLike {
+    color: rgba(0, 0, 0, 0.4);
+    margin-left: 8px;
+    font-size: 15px;
+  }
 }
