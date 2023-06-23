@@ -3,7 +3,7 @@
   .wrapperImageAd {
     position: relative;
     .imageAdvertisement {
-      height: 34vh;
+      height: 30vh;
       width: 100%;
       border-radius: 5px;
     }
@@ -32,9 +32,10 @@
     justify-content: space-between;
     flex-direction: column;
     .subImageAdvertisement {
-      height: 16.7vh;
+      height: 14.8vh;
       width: 100%;
       border-radius: 5px;
+      margin-bottom: 5px;
     }
   }
 }

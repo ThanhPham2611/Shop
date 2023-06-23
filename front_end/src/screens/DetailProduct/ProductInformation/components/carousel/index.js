@@ -8,7 +8,6 @@ import {
 } from '@ant-design/icons';
 
 import 'react-multi-carousel/lib/styles.css';
-
 import styles from './carousel.module.scss';
 
 const CarouselImage = ({ data, linkImage }) => {

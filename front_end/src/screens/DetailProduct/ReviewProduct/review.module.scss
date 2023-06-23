@@ -1,0 +1,32 @@
+.wrapperReview {
+  padding: 2rem;
+  background-color: #fff;
+  margin-top: 15px;
+  width: 75%;
+
+  h2 {
+    text-transform: uppercase;
+    font-size: 18px;
+  }
+
+  .containerRating {
+    background-color: #fffbf8;
+    border: 1px solid #f9ede5;
+    margin-bottom: 1rem;
+    border-radius: 2px;
+    padding: 1.875rem;
+  }
+
+  .textRating {
+    font-size: 25px;
+    color: #d0011b;
+    font-weight: 500;
+    margin-right: 3px;
+  }
+
+  .textDefaultRating {
+    color: #d0011b;
+    font-weight: 500;
+    font-size: 18px;
+  }
+}

@@ -10,19 +10,50 @@
     font-size: 18px;
     font-weight: bold;
   }
-  .rowItem {
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+
+  .category {
+    position: relative;
+    &:hover {
+      .button {
+        font-size: 12px;
+        scale: 1.4;
+      }
+    }
+    .button {
+      position: absolute;
+      border-radius: 50%;
+      font-size: 9px;
+      color: #252525;
+      top: 33%;
+      border: none;
+      box-shadow: 0 1px 12px 0 rgba(0, 0, 0, 0.12);
+      &.left {
+        left: -10px;
+      }
+      &.right {
+        right: -10px;
+      }
+    }
   }
+
   .wrapperItem {
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
     border-right: 1px solid rgba(0, 0, 0, 0.05);
-    width: 150px;
     overflow: hidden;
+    padding: 1rem 0;
     .imageItem {
       height: 80px;
       width: 80px;
+      margin-bottom: 10px;
+    }
+
+    .titleItem {
+      font-size: 14px;
+      text-align: center;
+      color: #000;
     }
   }
   .titleBrand {
