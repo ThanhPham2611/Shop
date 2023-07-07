@@ -107,14 +107,17 @@ const io = new Server({
 io.attach(httpServer);
 
 io.on("connection", (socket) => {
-  socket.on("connected", () => { });
-  socket.on("disconnect", () => { });
-  socket.on("devices_register", () => {
-    io.emit("success_form");
-  });
-  socket.on("admin_call", () => {
-    io.emit("user_claim");
-  });
+  // socket.on("connected", () => { });
+  // socket.on("disconnect", () => { });
+  // socket.on("devices_register", () => {
+  //   io.emit("success_form");
+  // });
+  // socket.on("admin_call", () => {
+  //   io.emit("user_claim");
+  // });
+  socket.on('like', () => {
+    io.emit('likefc')
+  })
 });
 
 httpServer.listen(port, function () {

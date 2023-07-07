@@ -1,85 +1,96 @@
-import React, { useState } from "react";
-import { Avatar, Col, Divider, Rate, Row, Space } from 'antd';
+import React, { useEffect, useState } from "react";
+import { Avatar, Col, Divider, Empty, Rate, Row, Space } from 'antd';
+import { useParams } from 'react-router-dom';
 
 import { BiLike } from 'react-icons/bi'
+import { UserOutlined } from '@ant-design/icons';
 
-import { typeReview } from "../../../utils/type";
+import { get, post } from '../../../service/axios/instance'
+import { formatTimeFull, listReview } from "../../../utils/type";
 import Variation from "../../../components/variation";
 
 import styles from './review.module.scss';
+import moment from "moment";
+import { socket } from "../../../service/socket";
 
 const ReviewProduct = () => {
   const [highlight, setHighlight] = useState(0);
-  const [like, setLike] = useState(false);
+  const [page, setPage] = useState({
+    current: 1,
+    items: 10
+  })
+
+  const [valueComment, setValueComment] = useState([]);
+  const [valueRate, setValueRate] = useState([]);
+  const [valueLike, setValueLike] = useState([]);
+  const [valueUserLike, setValueUserLike] = useState([]);
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    (async () => {
+      await get(`comment/${id}?page=${page.current}&item=${page.items}`)
+        .then(data => {
+          const { comments, rates } = data;
+          setValueComment(comments)
+          setValueRate(rates);
+        })
+        .catch(err => console.log(err))
+
+      await get(`like/${id}`)
+        .then(data => {
+          const { likeInfo, dataUserLike } = data;
+          setValueLike(likeInfo);
+          setValueUserLike(dataUserLike);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    })()
+  }, [])
+
+  useEffect(() => {
+    socket.on('likefc', async () => {
+      await get(`like/${id}`)
+        .then(data => {
+          const { likeInfo, dataUserLike } = data;
+          setValueLike(likeInfo);
+          setValueUserLike(dataUserLike);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    })
+  }, [])
+
+  const totalRate = valueRate.reduce((acc, current) => {
+    return acc + current.rate
+  }, 0)
 
   const handleClick = (items, index) => {
     setHighlight(index);
     console.log(items)
+    get(`comment/${id}?page=${page.current}&item=${page.items}&rate=${items.type}`)
+      .then(data => {
+        const { comments, rates } = data;
+        setValueComment(comments);
+      })
+      .catch(err => console.log(err))
   }
 
-  const listReview = [
-    {
-      title: 'Tất cả',
-      type: typeReview.all
-    },
-    {
-      title: '5 sao',
-      type: typeReview.fiveStar
-    },
-    {
-      title: '4 sao',
-      type: typeReview.fourStar
-    },
-    {
-      title: '3 sao',
-      type: typeReview.threeStar
-    },
-    {
-      title: '2 sao',
-      type: typeReview.twoStar
-    },
-    {
-      title: '1 sao',
-      type: typeReview.oneStar
-    },
-    {
-      title: 'Có bình luận',
-      type: typeReview.haveComment
-    },
-    {
-      title: 'Có hình ảnh',
-      type: typeReview.haveImage
-    }
-  ];
-
-  const commentData = [
-    {
-      _id: '12312312',
-      user: {
-        name: 'thanhpt',
-        linkAvatvar: 'https://pethouse.com.vn/wp-content/uploads/2022/12/Ngoai-hinh-husky-768x1024-1-600x800.jpg',
-      },
-      rate: 5,
-      dateReview: '2023-05-09 01:29',
-      contentComment: [
-        {
-          title: 'Chất liệu',
-          value: 'Bamboo'
-        },
-        {
-          title: 'Màu sắc',
-          value: '3 màu'
-        },
-        {
-          title: 'Đúng với mô tả',
-          value: 'Đúng mô tả'
-        }
-      ],
-      description: 'Tôi nói với ae là không còn gì để chê hàng coolmate luôn ấy. Dịch vụ chăm sóc khách hàng quá tốt, đổi trả hàng trong 60 ngày. Hàng mặc co dãn cực kì thoải mái và dễ chịu. Từ giờ mk chuyển sang tin dùng coolmate thôi. 10/10 điểm. Giao hàng nhanh, đóng gói kĩ lưỡng, đẹp',
-      listImage: ['https://down-ws-vn.img.susercontent.com/vn-11134103-7qukw-lgjrrf8hiz1z3c_tn.webp', 'https://down-ws-vn.img.susercontent.com/vn-11134103-7qukw-lgjrrm6rcq9j4b_tn.webp'],
-      like: 18
-    }
-  ]
+  const handleLikeComment = (items, isLike) => {
+    post('like', {
+      productId: items.productId,
+      commentId: items._id,
+      isLike: !isLike
+    })
+      .then(() => {
+        socket.emit('like');
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
 
   return (
     <div className={styles.wrapperReview}>
@@ -88,7 +99,7 @@ const ReviewProduct = () => {
       <Row className={styles.containerRating} align='middle'>
         <Col xxl={6}>
           <div>
-            <span className={styles.textRating}>4.9</span>
+            <span className={styles.textRating}>{totalRate}</span>
             <span className={styles.textDefaultRating}>trên 5</span>
           </div>
           <Rate disabled={true} value={5} style={{ color: "#d0011b" }} />
@@ -99,39 +110,47 @@ const ReviewProduct = () => {
         </Col>
       </Row>
 
-      {commentData?.map(items => (
-        <Row key={items._id}>
-          <Col xxl={2}>
-            <Avatar src={items.user.linkAvatvar} size={50} />
-          </Col>
+      {valueComment.length > 0 ? valueComment?.map(items => {
+        const arrayItemLike = valueLike.filter(filter => filter.isLike && filter.commentId === items._id);
+        const checkLike = valueUserLike.every((every) => every.commentId === items._id && every.isLike);
+        return (
+          <Row key={items._id}>
+            <Col xxl={2}>
+              {items.user.linkAvatar ? <Avatar src={items.user.linkAvatvar} size={50} /> : <Avatar icon={<UserOutlined />} size={50} />}
+            </Col>
 
-          <Col xxl={18}>
-            <div>{items.user.name}</div>
-            <Rate disabled={true} value={5} style={{ color: '#d0011b', fontSize: 11 }} />
-            <div className={styles.wrapperDate}>
-              <span className={styles.dateTime}>2023-05-09 01:29</span>
-              <Divider type='vertical' />
-              <span >Phân loại hàng: ĐEN-TRẮNG-NAVY,XXL</span>
-            </div>
-            {items?.contentComment?.map((comment, index) => (
-              <Row key={index} className={styles.wrapperComment}>
-                <span className={styles.label}>{comment.title}: </span>
-                <span>{comment.value}</span>
-              </Row>
-            ))}
-            <div className={styles.description}>Giao hàng trong 4 ngày - hợp lí - cảm nhận đầu khá xịn xò</div>
-            <Space className={styles.wrapperImageReview}>
-              {items?.listImage?.map((image, index) => (
-                <img src={image} key={index} className={styles.imageReview} />
+            <Col xxl={18}>
+              <div>{items.user.username}</div>
+              <Rate disabled={true} value={items.rate} style={{ color: '#d0011b', fontSize: 11 }} />
+              <div className={styles.wrapperDate}>
+                <span className={styles.dateTime}>{moment(items.updatedAt).format(formatTimeFull)}</span>
+                {items.typeName &&
+                  <>
+                    <Divider type='vertical' />
+                    <span >Phân loại hàng: {items.typeName}</span>
+                  </>
+                }
+              </div>
+              {items?.commentOptions?.map((comment, index) => (
+                <Row key={index} className={styles.wrapperComment}>
+                  <span className={styles.label}>{comment.title}: </span>
+                  <span>{comment.value}</span>
+                </Row>
               ))}
-            </Space>
-            <Row align='middle'>
-              <BiLike style={{ color: like ? '#ee4d2d' : 'rgba(0,0,0,.2)', fontSize: 17, cursor: 'pointer' }} onClick={() => setLike(!like)} />
-              <span className={styles.textLike}>{items.like}</span>
-            </Row>
-          </Col>
-        </Row>
-      ))}
+              <div className={styles.description}>{items.description}</div>
+              <Space className={styles.wrapperImageReview}>
+                {items?.listImage?.map((image, index) => (
+                  <img src={image} key={index} className={styles.imageReview} />
+                ))}
+              </Space>
+              <Row align='middle'>
+                <BiLike style={{ color: checkLike ? '#ee4d2d' : 'rgba(0,0,0,.2)', fontSize: 17, cursor: 'pointer' }} onClick={() => handleLikeComment(items, checkLike)} />
+                <span className={styles.textLike}>{arrayItemLike.length || 0}</span>
+              </Row>
+            </Col>
+          </Row>
+        )
+      }) : <Empty description='Không có dữ liệu' />}
     </div>
   )
 }

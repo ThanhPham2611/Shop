@@ -3,9 +3,9 @@ const { ObjectId } = mongoose.Types;
 
 const commentSchema = mongoose.Schema(
   {
-    ownerId: ObjectId,
     ShopId: ObjectId,
     productId: ObjectId,
+    shopId: ObjectId,
     commentOptions: Array,
     description: String,
     options: Array,
@@ -14,7 +14,13 @@ const commentSchema = mongoose.Schema(
     isHidden: {
       type: Boolean,
       default: false
-    }
+    },
+    user: {
+      _id: ObjectId,
+      username: String,
+      linkAvatar: String,
+    },
+    typeName: String,
   },
   {
     timestamps: true,

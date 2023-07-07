@@ -1,33 +1,28 @@
 import Comment from '../../../model/comment';
-import { userModel } from '../../../model/user';
+import Rate from '../../../model/rate';
 
 export const get_comment_product = async (req, res) => {
   try {
     const { id } = req.params;
+    const { page, item, rate } = req.query;
 
-    const comment = await Comment.findOne({ productId: id }, '-__v');
+    const skip = (page - 1) * item;
 
-    const user = await userModel.findOne({ _id: comment.ownerId }, 'username avatarUrl');
+    const condition = {
+      productId: id
+    };
 
-    const { ownerId, productId, ...dataComment } = comment;
-
-    const hiddenName = user.username.slice(0, 1) + '****' + user.username.slice(-1);
-
-    const objUser = {
-      ...user,
-      username: hiddenName
+    if (rate && rate !== '0') {
+      condition.rate = rate;
     }
 
-    // console.log(objUser.username);
+    const comments = await Comment.find(condition).skip(skip).limit(item);
 
+    const rates = await Rate.find({ productId: id }, '-_id rate');
 
-    if (comment.isHidden) {
-      return res.status(200).send({ comment, objUser });
-    } else {
-      return res.status(200).send(dataComment, user);
-    }
-
+    return res.status(200).send({ comments, rates })
   } catch (err) {
+    console.log(err)
     return res.status(500).send({ message: 'Not found' })
   }
 }

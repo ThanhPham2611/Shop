@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+const { ObjectId } = mongoose.Types;
 
 const rateSchema = mongoose.Schema(
   {
@@ -6,11 +7,7 @@ const rateSchema = mongoose.Schema(
       type: Number,
       require: true,
     },
-    typeProduct: String,
-    content: {
-      type: String,
-      require: true
-    }
+    productId: ObjectId
   },
   {
     timestamps: true,
