@@ -1,6 +1,8 @@
 import Product from '../../../model/product';
 import { userModel } from '../../../model/user';
 import Comment from '../../../model/comment';
+import Shop from '../../../model/shop';
+import Rate from '../../../model/rate';
 import jwt from 'jsonwebtoken';
 
 export const comment_product = async (req, res) => {
@@ -19,19 +21,50 @@ export const comment_product = async (req, res) => {
     if (!checkUser.isActive) {
       return res.status(401).send({ message: 'Not active' });
     }
-    const { commentOptions, description, options, listImage, rate, productId } = req.body;
-
+    const { productId, isHidden, rate } = req.body;
 
     const productInfo = await Product.findOne({ _id: productId }, 'shopId _id');
 
-    await Comment.create({
-      commentOptions, description, options, listImage, rate,
-      ownerId: _id,
-      shopId: productInfo.shopId,
-      productId: productInfo._id
-    });
+    const shopInfo = await Shop.findOne({ _id: productInfo.shopId });
 
-    return res.status(201).send({ message: 'Complete' });
+    if (checkUser._id === shopInfo.owner._id) {
+      return res.status(404).send({ message: 'Not comment by product vendor' });
+    }
+
+    const userHidden = {
+      username: checkUser.username.slice(0, 1) + '****' + checkUser.username.slice(-1),
+      linkAvatar: checkUser.avatarUrl
+    }
+
+    await Rate.create({
+      rate: rate,
+      productId: productInfo._id
+    })
+
+    if (isHidden) {
+      const comment = await Comment.create({
+        ...req.body,
+        shopId: productInfo.shopId,
+        productId: productInfo._id,
+        user: {
+          ...userHidden
+        }
+      });
+      return res.status(201).send({ comment });
+    } else {
+      await Comment.create({
+        ...req.body,
+        shopId: productInfo.shopId,
+        productId: productInfo._id,
+        user: {
+          _id: checkUser._id,
+          username: checkUser.username,
+          linkAvatar: checkUser.avatarUrl
+        }
+      })
+      return res.status(201).send({ message: 'Complete' });
+    }
+
   } catch (err) {
     console.log(err)
     return res.status(500).send({ message: 'Not found' });

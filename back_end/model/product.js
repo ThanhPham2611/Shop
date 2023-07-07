@@ -56,7 +56,8 @@ const productSchema = mongoose.Schema(
           require: true
         }
       }
-    ]
+    ],
+    type: Number,
   },
   {
     timestamps: true,

@@ -6,7 +6,7 @@ const likeSchema = mongoose.Schema(
     userId: ObjectId,
     productId: ObjectId,
     commentId: ObjectId,
-    like: {
+    isLike: {
       type: Boolean,
       default: false
     }
