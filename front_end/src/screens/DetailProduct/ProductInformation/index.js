@@ -7,7 +7,7 @@ import { detailProduct } from "../../../utils/dummyData";
 import {
   formatAfterSale,
   formatAmoutProductSold,
-  formatCurrency
+  formatCurrency,
 } from "../../../utils/function";
 import { ButtonFirst, ButtonSecond } from "../../../components/button";
 import InputAmount from "../../../components/input_plus_min";
@@ -15,18 +15,24 @@ import { FlashSale } from "../../../components/flashSale";
 import { CoupounsShop, TagDeal } from "../../../components/ticketSale";
 import { get } from "../../../service/axios/instance";
 
-import { Cart, FaceBook, FlashShip, HeartEmpty, Messenger, Shipping } from "../../../asset/image/svg/iconSvg";
-import freeShip from '../../../asset/image/free-shipping.png';
-import returnPackage from '../../../asset/image/return_package.png';
-import safeBill from '../../../asset/image/safe_bill.png';
-import ship from '../../../asset/image/ship.png';
+import {
+  Cart,
+  FaceBook,
+  FlashShip,
+  HeartEmpty,
+  Messenger,
+  Shipping,
+} from "../../../asset/image/svg/iconSvg";
+import freeShip from "../../../asset/image/free-shipping.png";
+import returnPackage from "../../../asset/image/return_package.png";
+import safeBill from "../../../asset/image/safe_bill.png";
+import ship from "../../../asset/image/ship.png";
 
 import styles from "./information.module.scss";
 import Variation from "../../../components/variation";
 import { useSelector } from "react-redux";
 import CarouselImage from "./components/carousel";
-import { getSelect } from "../../../store/modules/cartSlice";
-
+import { addCart, getSelect } from "../../../store/modules/cartSlice";
 
 const { Text } = Typography;
 
@@ -34,74 +40,80 @@ const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
     items: 3,
-    slidesToSlide: 3 // optional, default to 1.
-  }
-}
+    slidesToSlide: 3, // optional, default to 1.
+  },
+};
 
 const ProductInformation = () => {
   const valueRef = useRef(null);
   const { id } = useParams();
-  const [productValue, setProductValue] = useState()
-  const [linkImage, setLinkImage] = useState('');
-  const [highlight, setHighlight] = useState()
+  const [productValue, setProductValue] = useState();
+  const [linkImage, setLinkImage] = useState("");
+  const [highlight, setHighlight] = useState();
   const dispatch = useDispatch();
 
-  const { select } = useSelector(state => state.cartInfo);
+  const { select } = useSelector((state) => state.cartInfo);
 
   useEffect(() => {
-    setLinkImage(select.image)
-  }, [select])
-
+    setLinkImage(select.image);
+  }, [select]);
 
   useEffect(() => {
     (async () => {
       const { item } = await get(`product/${id}`);
       setProductValue(item);
-      setLinkImage(item.listImage[0])
+      setLinkImage(item.listImage[0]);
     })();
-  }, [id])
+  }, [id]);
 
   const hoverMouse = (e) => {
-    setLinkImage(e.target.src)
+    setLinkImage(e.target.src);
   };
 
   const handleAddCart = () => {
-    valueRef.current.getValue();
-  }
+    const dataProduct = {
+      _id: productValue._id,
+      shopId: productValue.shopId,
+      title: productValue.title,
+      image: productValue.listImage[0],
+      price: productValue.price,
+      amount: valueRef.current.getValue(),
+      type: 1,
+    };
+    console.log(dataProduct);
+    dispatch(addCart(dataProduct));
+  };
 
   const handleClick = (item, index) => {
     if (highlight !== index) {
       setHighlight(index);
       dispatch(getSelect(item));
     }
-  }
+  };
 
   return (
-
-    <Row className={styles.wrapperInformation} justify='space-between'>
+    <Row className={styles.wrapperInformation} justify="space-between">
       <Col xxl={8}>
         <Image src={linkImage || productValue?.listImage[0]} height={400} />
         <CarouselImage data={productValue?.listImage} linkImage={hoverMouse} />
-        <Row className={styles.rowSocialMedia} align='middle'>
+        <Row className={styles.rowSocialMedia} align="middle">
           <Col span={7}>
             <Space>
               <span>Chia sẻ: </span>
-              <Messenger onClick={() => console.log('messager')} />
+              <Messenger onClick={() => console.log("messager")} />
               <FaceBook />
             </Space>
           </Col>
           <Col>
             <Space>
-              <HeartEmpty onClick={() => console.log('heartP')} />
+              <HeartEmpty onClick={() => console.log("heartP")} />
               <span>Đã thích(122)</span>
             </Space>
           </Col>
         </Row>
       </Col>
       <Col xxl={15}>
-        <span className={styles.titleProduct}>
-          {productValue?.title}
-        </span>
+        <span className={styles.titleProduct}>{productValue?.title}</span>
         <Row
           className={styles.infoSaleProduct}
           justify="space-between"
@@ -144,9 +156,14 @@ const ProductInformation = () => {
                 {formatCurrency(select.price || productValue.price)}
               </Text>
               <Text className={styles.textPriceNew}>
-                {formatAfterSale(select.price || productValue.price, select.salePercent || productValue.salePercent)}
+                {formatAfterSale(
+                  select.price || productValue.price,
+                  select.salePercent || productValue.salePercent
+                )}
               </Text>
-              <div className={styles.showSale}>{select.salePercent || productValue.salePercent}% giảm</div>
+              <div className={styles.showSale}>
+                {select.salePercent || productValue.salePercent}% giảm
+              </div>
             </Row>
           </div>
         )}
@@ -165,22 +182,24 @@ const ProductInformation = () => {
           </Col>
         </Row>
 
-        {productValue?.ticketTag?.length > 0 && <Row className={styles.wrapperListCoupons} align="middle">
-          <Col xxl={5}>
-            <span className={styles.textLabelInfo}>Deal sốc</span>
-          </Col>
-          <Col xxl={19}>
-            <Row gutter={[14]}>
-              {productValue?.ticketTag?.map((ticket, index) => (
-                <Col>
-                  <TagDeal key={index} title={ticket.title} />
-                </Col>
-              ))}
-            </Row>
-          </Col>
-        </Row>}
+        {productValue?.ticketTag?.length > 0 && (
+          <Row className={styles.wrapperListCoupons} align="middle">
+            <Col xxl={5}>
+              <span className={styles.textLabelInfo}>Deal sốc</span>
+            </Col>
+            <Col xxl={19}>
+              <Row gutter={[14]}>
+                {productValue?.ticketTag?.map((ticket, index) => (
+                  <Col>
+                    <TagDeal key={index} title={ticket.title} />
+                  </Col>
+                ))}
+              </Row>
+            </Col>
+          </Row>
+        )}
 
-        <Row className={styles.wrapperListCoupons} >
+        <Row className={styles.wrapperListCoupons}>
           <Col xxl={5}>
             <span className={styles.textLabelInfo}>Bảo hiểm</span>
           </Col>
@@ -195,60 +214,97 @@ const ProductInformation = () => {
             <span className={styles.textLabelInfo}>Vận chuyển</span>
           </Col>
           <Col xxl={19}>
-            <Row align='middle'>
+            <Row align="middle">
               <FlashShip height={25} width={30} />
-              <span className={styles.textTitleSub}>Xử lý đơn hàng bởi shoppe</span>
+              <span className={styles.textTitleSub}>
+                Xử lý đơn hàng bởi shoppe
+              </span>
             </Row>
-            <Row align='middle' style={{ margin: '10px 0' }}>
+            <Row align="middle" style={{ margin: "10px 0" }}>
               <Image src={freeShip} style={{ height: 30 }} preview={false} />
-              <span className={styles.textTitleSub} style={{ color: '#000' }}>Miễn phí vận chuyển</span>
+              <span className={styles.textTitleSub} style={{ color: "#000" }}>
+                Miễn phí vận chuyển
+              </span>
             </Row>
-            <Row align='middle'>
+            <Row align="middle">
               <Shipping height={25} width={30} />
-              <span className={styles.textTitleSub} style={{ textTransform: 'capitalize' }}>Vận chuyển tới</span>
-              <span style={{ textTransform: 'capitalize' }}>Phường tràng tiền, quận hoàn kiếm</span>
+              <span
+                className={styles.textTitleSub}
+                style={{ textTransform: "capitalize" }}
+              >
+                Vận chuyển tới
+              </span>
+              <span style={{ textTransform: "capitalize" }}>
+                Phường tràng tiền, quận hoàn kiếm
+              </span>
             </Row>
-            <Row align='middle' style={{ margin: '10px 0' }}>
+            <Row align="middle" style={{ margin: "10px 0" }}>
               <div style={{ width: 30 }} />
-              <span className={styles.textTitleSub} style={{ textTransform: 'capitalize' }}>Phí vận chuyển</span>
-              <span style={{ textTransform: 'capitalize' }}>{formatCurrency(0)}</span>
+              <span
+                className={styles.textTitleSub}
+                style={{ textTransform: "capitalize" }}
+              >
+                Phí vận chuyển
+              </span>
+              <span style={{ textTransform: "capitalize" }}>
+                {formatCurrency(0)}
+              </span>
             </Row>
           </Col>
         </Row>
 
-        {productValue?.typeProduct.length > 0 && <Row align='middle' style={{ marginTop: 10 }}>
-          <Col xxl={5}>
-            <span className={styles.textLabelInfo}>Variation</span>
-          </Col>
-          <Col xxl={17}>
-            <Variation data={productValue?.typeProduct} handleClick={handleClick} indexClick={highlight} />
-          </Col>
-        </Row>}
+        {productValue?.typeProduct.length > 0 && (
+          <Row align="middle" style={{ marginTop: 10 }}>
+            <Col xxl={5}>
+              <span className={styles.textLabelInfo}>Variation</span>
+            </Col>
+            <Col xxl={17}>
+              <Variation
+                data={productValue?.typeProduct}
+                handleClick={handleClick}
+                indexClick={highlight}
+              />
+            </Col>
+          </Row>
+        )}
 
-        <Row align='middle' style={{ marginTop: 30 }}>
+        <Row align="middle" style={{ marginTop: 30 }}>
           <Col xxl={5}>
             <span className={styles.textLabelInfo}>Số lượng</span>
           </Col>
           <Col xxl={4}>
             <InputAmount ref={valueRef} />
           </Col>
-          <Col xxl={5}>
-            <span className={styles.textTitleSub} style={{ textTransform: 'capitalize' }}>{select.amount || productValue?.amount} sản phẩm có sẵn</span>
+          <Col xxl={7}>
+            <span
+              className={styles.textTitleSub}
+              style={{ textTransform: "capitalize" }}
+            >
+              {select.amount || productValue?.amount} sản phẩm có sẵn
+            </span>
           </Col>
         </Row>
 
-        <Row className={styles.rowButton} align='middle'>
+        <Row className={styles.rowButton} align="middle">
           <Space size={25}>
-            <ButtonSecond title={'Thêm vào giỏ hàng'} icon={<Cart color={'#d0011b'} height={25} width={25} />} onClick={handleAddCart} />
-            <ButtonFirst title='Mua ngay' />
+            <ButtonSecond
+              title={"Thêm vào giỏ hàng"}
+              icon={<Cart color={"#d0011b"} height={25} width={25} />}
+              onClick={handleAddCart}
+            />
+            <ButtonFirst title="Mua ngay" />
           </Space>
         </Row>
         <Divider />
 
-        <Row align='middle' justify='space-around'>
+        <Row align="middle" justify="space-around">
           <Col>
             <Space>
-              <Image style={{ height: 25 }} src={returnPackage} preview={false} />
+              <Image
+                style={{ height: 25 }}
+                src={returnPackage}
+                preview={false}
+              />
               <span>7 ngày miễn phí trả hàng</span>
             </Space>
           </Col>

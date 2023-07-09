@@ -1,30 +1,46 @@
 import { Row } from "antd";
-import React, { forwardRef, useImperativeHandle, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 
-import styles from './input_amount.module.scss';
+import styles from "./input_amount.module.scss";
 
 const InputAmount = forwardRef((props, ref) => {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(props.value || 1);
 
   useImperativeHandle(ref, () => ({
     getValue() {
-      console.log('value::>>', value)
-    }
-  }))
+      return value;
+    },
+    setValueItem(amount) {
+      if (amount < 10) {
+        setValue(amount);
+      }
+    },
+  }));
 
   const handleInc = () => {
     if (value < 9) {
-      setValue(value + 1)
+      setValue(value + 1);
+      if (props.cart) {
+        props?.handleTotal(value + 1);
+      }
     }
-  }
+  };
 
   const handleDec = () => {
     if (value > 1) {
-      setValue(value - 1)
+      setValue(value - 1);
+      if (props.cart) {
+        props?.handleTotal(value - 1);
+      }
     }
-  }
+  };
 
   return (
     <Row>
@@ -36,7 +52,7 @@ const InputAmount = forwardRef((props, ref) => {
         <PlusOutlined />
       </button>
     </Row>
-  )
-})
+  );
+});
 
-export default InputAmount
+export default InputAmount;

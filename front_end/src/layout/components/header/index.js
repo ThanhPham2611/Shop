@@ -1,12 +1,22 @@
-import { Avatar, Badge, Col, Divider, Dropdown, Image, Input, Row, Space } from "antd";
-import React from "react";
-import { useDispatch, useSelector } from 'react-redux'
+import {
+  Avatar,
+  Badge,
+  Col,
+  Divider,
+  Dropdown,
+  Image,
+  Input,
+  Row,
+  Space,
+} from "antd";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   ShoppingCartOutlined,
   BellOutlined,
   QuestionCircleOutlined,
-  UserOutlined
+  UserOutlined,
 } from "@ant-design/icons";
 
 //local
@@ -15,39 +25,61 @@ import logo from "../../../asset/image/logo.png";
 import { STORAGEKEY, getCookie, removeCookie } from "../../../service/cookie";
 import { toggleCart } from "../../../store/modules/cartSlice";
 
-import styles from '../../app.module.scss';
+import styles from "../../app.module.scss";
+import { checkLogin } from "../../../utils/function";
 
 const { Search } = Input;
 
 const Header = () => {
-  const { userData } = useSelector(state => state.userInfo);
+  const { userData } = useSelector((state) => state.userInfo);
+  const { product } = useSelector((state) => state.cartInfo);
+
   const getToken = getCookie(STORAGEKEY.ACCESS_TOKEN);
   const dispatch = useDispatch();
 
+  const [arrayCart, setArrayCart] = useState([]);
+
   const handleLogout = () => {
     return removeCookie(STORAGEKEY.ACCESS_TOKEN);
-  }
+  };
+
+  useEffect(() => {
+    // if (Object.keys(product).length !== 0) {
+    //   const existProduct = arrayCart.find(
+    //     (filter) => filter._id === product._id
+    //   );
+    //   if (existProduct) {
+    //     const updateArrayCart = arrayCart.map((item) => {
+    //       if (item._id === product._id) {
+    //         return { ...item, amount: item.amount + product.amount };
+    //       }
+    //       return item;
+    //     });
+    //     setArrayCart(updateArrayCart);
+    //   } else {
+    //     setArrayCart([...arrayCart, product]);
+    //   }
+    // }
+  }, [product]);
 
   const items = [
     {
-      key: 'info',
-      label: (
-        <a href='#'>Tài khoản của tôi</a>
-      )
+      key: "info",
+      label: <a href="#">Tài khoản của tôi</a>,
     },
     {
-      key: 'order',
-      label: (
-        <a href='#'>Đơn mua</a>
-      )
+      key: "order",
+      label: <a href="#">Đơn mua</a>,
     },
     {
-      key: 'logout',
+      key: "logout",
       label: (
-        <a href='/login' onClick={handleLogout}>Đăng xuất</a>
-      )
-    }
-  ]
+        <a href="/login" onClick={handleLogout}>
+          Đăng xuất
+        </a>
+      ),
+    },
+  ];
 
   const avatarDiv = (
     <Dropdown menu={{ items }}>
@@ -58,10 +90,16 @@ const Header = () => {
         </Space>
       </a>
     </Dropdown>
-  )
+  );
 
   const onSearch = (value) => {
     console.log(value);
+  };
+
+  const handleToggleCart = () => {
+    if (checkLogin()) {
+      dispatch(toggleCart(true));
+    }
   };
 
   return (
@@ -97,10 +135,14 @@ const Header = () => {
               <a>Hỗ trợ</a>
               <QuestionCircleOutlined style={{ color: "white" }} />
             </Space>
-            {getToken ? avatarDiv : <Space>
-              <a href='/register'>Đăng ký</a>
-              <a href="/login">Đăng nhập</a>
-            </Space>}
+            {getToken ? (
+              avatarDiv
+            ) : (
+              <Space>
+                <a href="/register">Đăng ký</a>
+                <a href="/login">Đăng nhập</a>
+              </Space>
+            )}
           </Space>
         </Col>
       </Row>
@@ -128,13 +170,16 @@ const Header = () => {
             enterButton="Tìm kiếm"
             size="large"
           />
-          <Badge count={5}>
-            <ShoppingCartOutlined className={styles.iconShoppingCart} onClick={() => dispatch(toggleCart(true))} />
+          <Badge count={arrayCart.length}>
+            <ShoppingCartOutlined
+              className={styles.iconShoppingCart}
+              onClick={handleToggleCart}
+            />
           </Badge>
         </Col>
       </Row>
     </div>
-  )
-}
+  );
+};
 
 export default Header;
