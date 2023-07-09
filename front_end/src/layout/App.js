@@ -20,7 +20,6 @@ const App = (props) => {
 
   useEffect(() => {
     if (getToken) {
-      console.log('test', getToken)
       dispatch(myProfile());
     }
   }, [getToken, pathname])
