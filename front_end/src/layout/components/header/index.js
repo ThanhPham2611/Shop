@@ -44,22 +44,22 @@ const Header = () => {
   };
 
   useEffect(() => {
-    // if (Object.keys(product).length !== 0) {
-    //   const existProduct = arrayCart.find(
-    //     (filter) => filter._id === product._id
-    //   );
-    //   if (existProduct) {
-    //     const updateArrayCart = arrayCart.map((item) => {
-    //       if (item._id === product._id) {
-    //         return { ...item, amount: item.amount + product.amount };
-    //       }
-    //       return item;
-    //     });
-    //     setArrayCart(updateArrayCart);
-    //   } else {
-    //     setArrayCart([...arrayCart, product]);
-    //   }
-    // }
+    if (Object.keys(product).length !== 0) {
+      const existProduct = arrayCart.find(
+        (filter) => filter._id === product._id
+      );
+      if (existProduct) {
+        const updateArrayCart = arrayCart.map((item) => {
+          if (item._id === product._id) {
+            return { ...item, amount: item.amount + product.amount };
+          }
+          return item;
+        });
+        setArrayCart(updateArrayCart);
+      } else {
+        setArrayCart([...arrayCart, product]);
+      }
+    }
   }, [product]);
 
   const items = [

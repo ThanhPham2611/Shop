@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 
 import { detailProduct } from "../../../utils/dummyData";
 import {
+  checkLogin,
   formatAfterSale,
   formatAmoutProductSold,
   formatCurrency,
@@ -71,17 +72,18 @@ const ProductInformation = () => {
   };
 
   const handleAddCart = () => {
-    const dataProduct = {
-      _id: productValue._id,
-      shopId: productValue.shopId,
-      title: productValue.title,
-      image: productValue.listImage[0],
-      price: productValue.price,
-      amount: valueRef.current.getValue(),
-      type: 1,
-    };
-    console.log(dataProduct);
-    dispatch(addCart(dataProduct));
+    if (checkLogin()) {
+      const dataProduct = {
+        _id: productValue._id,
+        shopId: productValue.shopId,
+        title: productValue.title,
+        image: productValue.listImage[0],
+        price: productValue.price,
+        amount: valueRef.current.getValue(),
+        type: 1,
+      };
+      dispatch(addCart(dataProduct));
+    }
   };
 
   const handleClick = (item, index) => {
