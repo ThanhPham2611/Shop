@@ -6,17 +6,19 @@ import cors from "cors";
 import { Server } from "socket.io";
 import http from "http";
 import dotenv from "dotenv";
-// const stripe = require('stripe')('sk_test_51Mnwu5KxJRj9jA2jTGXyNnWnzmxhokBAkLkVBHwHiBjvXNp24kJUDzb00rLR47619X4QOmyBC768iMyryzWZQZkv00LT1QZq35');
+const stripe = require("stripe")(
+  "sk_test_51Mnwu5KxJRj9jA2jTGXyNnWnzmxhokBAkLkVBHwHiBjvXNp24kJUDzb00rLR47619X4QOmyBC768iMyryzWZQZkv00LT1QZq35"
+);
 
 //router
 import user from "./routes/user";
 import admin from "./routes/admin";
-import vendor from './routes/vendor';
+import vendor from "./routes/vendor";
 
 dotenv.config();
 const app = express();
 app.use(express.json());
-app.use(express.static('public'))
+app.use(express.static("public"));
 app.use(cors());
 app.use((error, req, res, next) => {
   console.log(error);
@@ -53,28 +55,35 @@ mongoose
 //router
 app.use("/api", user);
 app.use("/api", admin);
-app.use('/api', vendor);
+app.use("/api", vendor);
 
 //port
 const port = process.env.PORT || 8000;
 
 //stripe
-app.post('/create-checkout-session', async (req, res) => {
+app.post("/create-checkout-session", async (req, res) => {
   try {
+    const line_items = req.body?.cartItems?.map((item) => {
+      return {
+        price_data: {
+          currency: "VND",
+          product_data: {
+            name: item.title,
+            images: [item.image],
+            description: item.title,
+            metadata: {
+              id: item._id,
+            },
+          },
+          unit_amount: item.price - (item.price * item.salePercent / 100),
+        },
+        quantity: item.amount,
+      };
+    });
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       payment_method_types: ['card'],
-      line_items: [{
-        price_data: {
-          currency: 'VND',
-          product_data: {
-            name: 'T-shirt',
-          },
-          unit_amount: 200000,
-        },
-        quantity: 1,
-      }
-      ],
+      line_items,
       automatic_tax: {
         enabled: true,
       },
@@ -85,16 +94,16 @@ app.post('/create-checkout-session', async (req, res) => {
     });
     return res.status(200).json(session)
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    res.status(500).json({ error: err.message });
   }
 });
 
-app.get('/v1/balance_transactions', async (req, res) => {
+app.get("/v1/balance_transactions", async (req, res) => {
   const balanceTransactions = await stripe.balanceTransactions.list({
     limit: 3,
   });
-  return res.status(200).json(balanceTransactions)
-})
+  return res.status(200).json(balanceTransactions);
+});
 
 //socket.io
 const httpServer = http.createServer(app);
@@ -115,13 +124,11 @@ io.on("connection", (socket) => {
   // socket.on("admin_call", () => {
   //   io.emit("user_claim");
   // });
-  socket.on('like', () => {
-    io.emit('likefc')
-  })
+  socket.on("like", () => {
+    io.emit("likefc");
+  });
 });
 
 httpServer.listen(port, function () {
   console.log("Start with port: ", port);
 });
-
-

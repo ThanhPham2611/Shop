@@ -11,6 +11,7 @@ import { get_comment_product } from "../controllers/user/get_comment_product";
 import { like_comment } from "../controllers/user/like_comment";
 import { get_like_comment } from "../controllers/user/get_like_comment";
 import { add_cart } from "../controllers/user/add_cart";
+import { paymentMethod } from "../controllers/payment";
 
 const router = express.Router();
 
@@ -29,5 +30,6 @@ router.post("/verify_code", verify_code);
 router.post("/comment", comment_product);
 router.post("/like", like_comment);
 router.post("/add_cart", add_cart);
+router.post("/payment", paymentMethod);
 
 export default router;

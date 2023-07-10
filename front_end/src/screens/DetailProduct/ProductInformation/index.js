@@ -72,18 +72,17 @@ const ProductInformation = () => {
   };
 
   const handleAddCart = () => {
-    if (checkLogin()) {
-      const dataProduct = {
-        _id: productValue._id,
-        shopId: productValue.shopId,
-        title: productValue.title,
-        image: productValue.listImage[0],
-        price: productValue.price,
-        amount: valueRef.current.getValue(),
-        type: 1,
-      };
-      dispatch(addCart(dataProduct));
-    }
+    const dataProduct = {
+      _id: productValue._id,
+      shopId: productValue.shopId,
+      title: productValue.title,
+      image: productValue.listImage[0],
+      price: productValue.price,
+      amount: valueRef.current.getValue(),
+      salePercent: productValue.salePercent,
+      type: 1,
+    };
+    dispatch(addCart(dataProduct));
   };
 
   const handleClick = (item, index) => {
