@@ -12,6 +12,8 @@ import { like_comment } from "../controllers/user/like_comment";
 import { get_like_comment } from "../controllers/user/get_like_comment";
 import { add_cart } from "../controllers/user/add_cart";
 import { paymentMethod } from "../controllers/payment";
+import { get_cart } from "../controllers/user/get_cart";
+import { update_cart } from "../controllers/user/update_cart";
 
 const router = express.Router();
 
@@ -21,6 +23,7 @@ router.get("/mall", get_brand_day);
 router.get("/product/:id", get_product_detail);
 router.get("/comment/:id", get_comment_product);
 router.get("/like/:productId", get_like_comment);
+router.get('/cart', get_cart);
 
 //post
 router.post("/register", register_user);
@@ -31,5 +34,6 @@ router.post("/comment", comment_product);
 router.post("/like", like_comment);
 router.post("/add_cart", add_cart);
 router.post("/payment", paymentMethod);
+router.post("/update_cart", update_cart);
 
 export default router;

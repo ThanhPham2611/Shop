@@ -12,7 +12,7 @@ const router = express.Router();
 //post
 router.post('/shop', create_shop);
 router.post('/product', create_product);
-router.post('/product/update', update_product);
+router.post('/product/update/:id', update_product);
 
 //patch
 

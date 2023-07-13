@@ -18,10 +18,10 @@ export const update_product = async (req, res) => {
       return res.status(401).send({ message: 'Not vendor' });
     }
 
-    const { ids } = req.body;
+    const { id } = req.params;
 
     await Product.updateMany(
-      { _id: { $in: ids } },
+      { _id: { $in: id } },
       { $set: req.body }
     )
 

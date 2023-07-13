@@ -1,4 +1,3 @@
-import { useRouter } from "react-router-dom";
 import { getCookie, STORAGEKEY } from "../service/cookie";
 
 export const formatCurrency = (number) => {
@@ -51,4 +50,16 @@ export const checkLogin = async () => {
   }
 
   return true;
+};
+
+export const debounce = (func, delay) => {
+  let timeOutId;
+
+  return (...args) => {
+    clearTimeout(timeOutId);
+
+    timeOutId = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
 };

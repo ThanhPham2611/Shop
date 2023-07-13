@@ -4,14 +4,14 @@ const { ObjectId } = mongoose.Types;
 const cartSchema = mongoose.Schema(
   {
     userId: ObjectId,
-    product: {
-      shopId: ObjectId,
-      title: String,
-      image: String,
-      price: Number,
-      amount: Number,
-      type: Number,
-    },
+    shopId: ObjectId,
+    productId: ObjectId,
+    title: String,
+    image: String,
+    price: Number,
+    amount: Number,
+    salePercent: Number,
+    type: Number
   },
   {
     timestamps: true,
