@@ -1,5 +1,6 @@
 import Cart from "../../../model/cart";
 import { checkActiveUser } from "../../../utils/funtions";
+import jwt from 'jsonwebtoken';
 
 export const add_cart = async (req, res) => {
   let token = null;
@@ -12,19 +13,18 @@ export const add_cart = async (req, res) => {
   try {
     const { _id } = jwt.decode(token, { complete: true }).payload;
 
-    if (checkActiveUser(_id)) {
+    if (await checkActiveUser(_id)) {
       return res.status(404).send({ message: "Not active" });
     }
 
     await Cart.create({
       userId: _id,
-      product: {
-        ...req.body,
-      },
+      ...req.body
     });
 
     return res.status(201).send({ message: "Complete" });
   } catch (err) {
+    console.log(err);
     return res.status(500).send({ message: "Not found" });
   }
 };

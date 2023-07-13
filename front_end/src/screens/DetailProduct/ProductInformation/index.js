@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Col, Divider, Image, Rate, Row, Space, Typography } from "antd";
-import { useDispatch } from "react-redux";
+import { Col, Divider, Image, Rate, Row, Space, Typography, notification } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { nanoid } from 'nanoid';
 
 import { detailProduct } from "../../../utils/dummyData";
 import {
@@ -15,6 +16,9 @@ import InputAmount from "../../../components/input_plus_min";
 import { FlashSale } from "../../../components/flashSale";
 import { CoupounsShop, TagDeal } from "../../../components/ticketSale";
 import { get } from "../../../service/axios/instance";
+import { addCart, getSelect } from "../../../store/modules/cartSlice";
+import CarouselImage from "./components/carousel";
+import Variation from "../../../components/variation";
 
 import {
   Cart,
@@ -30,20 +34,8 @@ import safeBill from "../../../asset/image/safe_bill.png";
 import ship from "../../../asset/image/ship.png";
 
 import styles from "./information.module.scss";
-import Variation from "../../../components/variation";
-import { useSelector } from "react-redux";
-import CarouselImage from "./components/carousel";
-import { addCart, getSelect } from "../../../store/modules/cartSlice";
 
 const { Text } = Typography;
-
-const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 3,
-    slidesToSlide: 3, // optional, default to 1.
-  },
-};
 
 const ProductInformation = () => {
   const valueRef = useRef(null);
@@ -51,6 +43,9 @@ const ProductInformation = () => {
   const [productValue, setProductValue] = useState();
   const [linkImage, setLinkImage] = useState("");
   const [highlight, setHighlight] = useState();
+  const [chooseItem, setChooseItem] = useState();
+  const [errText, setErrText] = useState(false);
+
   const dispatch = useDispatch();
 
   const { select } = useSelector((state) => state.cartInfo);
@@ -72,23 +67,54 @@ const ProductInformation = () => {
   };
 
   const handleAddCart = () => {
-    const dataProduct = {
-      _id: productValue._id,
-      shopId: productValue.shopId,
-      title: productValue.title,
-      image: productValue.listImage[0],
-      price: productValue.price,
-      amount: valueRef.current.getValue(),
-      salePercent: productValue.salePercent,
-      type: 1,
-    };
-    dispatch(addCart(dataProduct));
+    if (checkLogin()) {
+      if (productValue.typeProduct.length > 0) {
+        if (chooseItem) {
+          const dataProduct = {
+            _id: nanoid(),
+            productId: productValue._id,
+            shopId: productValue.shopId,
+            title: productValue.title,
+            image: productValue.listImage[0],
+            price: productValue.price,
+            amount: valueRef.current.getValue(),
+            salePercent: productValue.salePercent,
+            type: 1,
+            typeProductDetail: {
+              ...chooseItem
+            }
+          }
+          console.log(dataProduct);
+          dispatch(addCart(dataProduct));
+          notification.success({ message: 'Sản phẩm đã được thêm vào giỏ hàng' })
+        } else {
+          setErrText(true);
+        }
+      } else {
+        const dataProduct = {
+          _id: nanoid(),
+          productId: productValue._id,
+          shopId: productValue.shopId,
+          title: productValue.title,
+          image: productValue.listImage[0],
+          price: productValue.price,
+          amount: valueRef.current.getValue(),
+          salePercent: productValue.salePercent,
+          type: 1,
+        };
+        console.log(dataProduct);
+        dispatch(addCart(dataProduct));
+        notification.success({ message: 'Sản phẩm đã được thêm vào giỏ hàng' })
+      }
+    }
   };
 
   const handleClick = (item, index) => {
     if (highlight !== index) {
       setHighlight(index);
       dispatch(getSelect(item));
+      setChooseItem(item);
+      setErrText(false);
     }
   };
 
@@ -264,6 +290,7 @@ const ProductInformation = () => {
                 data={productValue?.typeProduct}
                 handleClick={handleClick}
                 indexClick={highlight}
+                err={errText}
               />
             </Col>
           </Row>

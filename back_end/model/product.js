@@ -45,15 +45,21 @@ const productSchema = mongoose.Schema(
         image: {
           type: String,
           require: true
-        }, title: {
+        },
+        title: {
           type: String,
           require: true
-        }, price: {
+        },
+        price: {
           type: Number,
           require: true
-        }, amount: {
+        },
+        amount: {
           type: Number,
           require: true
+        },
+        salePercent: {
+          type: Number,
         }
       }
     ],

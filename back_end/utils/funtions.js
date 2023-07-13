@@ -1,9 +1,15 @@
-import User from "../model/user";
+import { userModel } from "../model/user";
 
 export const checkActiveUser = async (id) => {
-  const checkUser = await User.findOne({ _id: id });
+  try {
+    const checkUser = await userModel.findOne({ _id: id });
 
-  if (!checkUser.isActive) {
+    if (!checkUser.isActive) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
     return false;
   }
 };
