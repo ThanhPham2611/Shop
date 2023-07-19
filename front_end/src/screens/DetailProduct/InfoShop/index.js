@@ -1,22 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Col, Row, Space } from "antd";
+import { useParams } from 'react-router-dom';
 
 import logoMall from '../../../asset/image/logo_shoppe_mall.png';
-import { BsChatRightDotsFill, BsShop } from 'react-icons/bs'
+import { BsChatRightDotsFill, BsShop, BsDot } from 'react-icons/bs'
+
+import { ButtonSecond } from "../../../components/button";
+import { get } from '../../../service/axios/instance';
 
 import styles from './infoshop.module.scss';
-import { ButtonFirst, ButtonSecond } from "../../../components/button";
+import moment from "moment";
+import { formatAmoutProductSold } from "../../../utils/function";
 
 const InfoShop = () => {
+  const { id } = useParams();
+  const [infoShop, setInfoShop] = useState();
+
+  useEffect(() => {
+    (async () => {
+      await get(`shop_info/${id}`)
+        .then(data => {
+          console.log(data)
+          setInfoShop(data);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    })()
+  }, [])
+
   return (
     <Row className={styles.wrapperInfoShop} align='middle'>
       <Col className={styles.colAvatar}>
-        <Avatar size={80} src={'https://down-vn.img.susercontent.com/file/a0851f141ffc6a234a275925eb185266_tn'} style={{ border: '1px solid #ccc' }} />
-        <img src={logoMall} className={styles.logoMall} />
+        <Avatar size={80} src={infoShop?.shopInfo.avatarShop} style={{ border: '1px solid #ccc' }} />
+        {infoShop?.shopInfo.shopMall && <img src={logoMall} className={styles.logoMall} />}
       </Col>
       <Col className={styles.colAction}>
-        <h3>unilevervn_beauty</h3>
-        <h5 className={styles.textActive}>Online 4 Giờ Trước</h5>
+        <h3>{infoShop?.shopInfo?.username}</h3>
+        {infoShop?.userInfo.status ? (
+          <Row align='middle'>
+            <BsDot style={{ fontSize: 25, color: 'green' }} />
+            <span className={styles.textActive}>Online</span>
+          </Row>
+        ) : <h5 className={styles.textActive}>{`Online ${moment(infoShop?.userInfo?.lastLogin).fromNow()}`}</h5>}
+
         <Space className={styles.wrapperButton}>
           <ButtonSecond icon={<BsChatRightDotsFill size={13} style={{ marginRight: 10 }} />} title={'Chat ngay'} className={styles.buttonChat} />
           <button className={styles.buttonViewShop}>
@@ -28,11 +55,11 @@ const InfoShop = () => {
       <Col xxl={4} className={styles.colDescription}>
         <Row className={styles.wrapperDescription} justify='space-between'>
           <span className={styles.label}>Đánh giá</span>
-          <span className={styles.value}>2,1tr</span>
+          <span className={styles.value}>{formatAmoutProductSold(infoShop?.rateInfo)}</span>
         </Row>
         <Row className={styles.wrapperDescription} justify='space-between'>
           <span className={styles.label}>Sản phẩm</span>
-          <span className={styles.value}>740</span>
+          <span className={styles.value}>{infoShop?.productInfo}</span>
         </Row>
       </Col>
       <Col xxl={6} className={styles.colDescription}>
@@ -48,11 +75,11 @@ const InfoShop = () => {
       <Col xxl={5} className={styles.colDescription}>
         <Row className={styles.wrapperDescription} justify='space-between'>
           <span className={styles.label}>Tham gia</span>
-          <span className={styles.value}>3 năm trước</span>
+          <span className={styles.value}>{moment(infoShop?.shopInfo?.createdAt).fromNow()}</span>
         </Row>
         <Row className={styles.wrapperDescription} justify='space-between'>
           <span className={styles.label}>Người theo dõi</span>
-          <span className={styles.value}>289,3K</span>
+          <span className={styles.value}>{infoShop?.followerInfo}</span>
         </Row>
       </Col>
     </Row>

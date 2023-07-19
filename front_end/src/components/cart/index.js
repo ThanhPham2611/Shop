@@ -1,4 +1,4 @@
-import { Button, Col, Drawer, Empty, Row } from "antd";
+import { Button, Col, Drawer, Empty, Row, notification } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 
 import { toggleCart } from "../../store/modules/cartSlice";
-import { debounce, formatCurrency } from "../../utils/function";
+import { formatCurrency } from "../../utils/function";
 
 import styles from "./cart.module.scss";
 import InputAmount from "../input_plus_min";
@@ -27,7 +27,6 @@ const Cart = () => {
       await get('cart')
         .then(data => {
           const { cartInfo } = data;
-          console.log(cartInfo);
           setArrayCart(cartInfo);
         })
         .catch(err => {
@@ -45,10 +44,8 @@ const Cart = () => {
         const updateArrayCart = arrayCart.map((item) => {
           if (item.productId === product.productId) {
             if (item.amount + product.amount < 10) {
-              amountRef.current.setValueItem(item.amount + product.amount);
               post('update_cart', {
-                shopId: item.shopId,
-                productId: item.productId,
+                ...item,
                 amount: item.amount + product.amount
               })
               return { ...item, amount: item.amount + product.amount };
@@ -71,29 +68,35 @@ const Cart = () => {
 
   const handleDeleteItem = (item) => {
     const newArrayCart = arrayCart.filter(filter => filter.productId !== item.productId);
+    post('update_cart', {
+      ...item,
+      isDelete: true
+    })
+      .then(() => {
+        notification.success({ message: 'Xóa sản phẩm thành công' })
+      })
+      .catch(err => {
+        notification.error({ message: 'Err' })
+      })
     setArrayCart(newArrayCart);
   }
 
-  const handleTotal = (value, item) => {
+  const handleTotal = async (value, item) => {
     const existProduct = arrayCart.find((filter) => filter.productId === item.productId);
+
     if (existProduct) {
       const updateArrayCart = arrayCart.map((map) => {
         if (map.productId === item.productId) {
-          amountRef.current.setValueItem(value);
+          post('update_cart', {
+            ...item,
+            amount: value
+          })
           return { ...item, amount: value };
         }
-        return item;
+        return map;
       });
       setArrayCart(updateArrayCart);
     }
-    const callDebounce = debounce(() => {
-      return post('update_cart', {
-        shopId: item.shopId,
-        productId: item.productId,
-        amount: value
-      })
-    }, 2000);
-    callDebounce();
   };
 
   const total = arrayCart.reduce((acc, item) => {
@@ -125,14 +128,14 @@ const Cart = () => {
       extra={
         <Button>Chi tiết đơn hàng</Button>
       }
-      mask={false}
+      mask={true}
       width={450}
     >
       {arrayCart.length > 0 ? (
         <div>
-          {arrayCart?.map((items) => (
+          {arrayCart?.map((items, index) => (
             <Row
-              key={items._id}
+              key={items.productId}
               align="middle"
               justify="space-between"
               className={styles.wraperItem}
@@ -152,6 +155,7 @@ const Cart = () => {
                 <Row align="middle" justify="space-between">
                   <div className={styles.buttonCart}>
                     <InputAmount
+                      key={index}
                       ref={amountRef}
                       handleTotal={(value) => handleTotal(value, items)}
                       cart={true}

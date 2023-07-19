@@ -11,9 +11,13 @@ export const update_cart = async (req, res) => {
   try {
     const { _id } = jwt.decode(token, { complete: true }).payload;
 
-    const { shopId, productId, amount } = req.body;
+    const { shopId, productId, amount, isDelete } = req.body;
 
-    await Cart.updateOne({ userId: _id, shopId, productId }, { amount });
+    if (isDelete) {
+      await Cart.deleteOne({ userId: _id, shopId, productId })
+    } else {
+      await Cart.updateOne({ userId: _id, shopId, productId }, { amount });
+    }
 
     return res.status(201).send({ message: 'Complete' })
 

@@ -11,7 +11,8 @@ const cartSchema = mongoose.Schema(
     price: Number,
     amount: Number,
     salePercent: Number,
-    type: Number
+    type: Number,
+    typeProductDetail: Object
   },
   {
     timestamps: true,
