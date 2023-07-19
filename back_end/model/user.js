@@ -34,6 +34,8 @@ const userSchema = mongoose.Schema(
       default: false,
     },
     avatarUrl: String,
+    status: Boolean,
+    lastLogin: Date
   },
   {
     timestamps: true,

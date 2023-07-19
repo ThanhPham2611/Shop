@@ -23,7 +23,7 @@ export const login_user = async (req, res) => {
 
     const user = await userModel.findOne({
       username
-    }, 'firstName lastName')
+    }, '_id firstName lastName')
 
     const accessToken = jwt.sign(
       JSON.parse(JSON.stringify(user)),
@@ -35,6 +35,7 @@ export const login_user = async (req, res) => {
 
     return res.status(200).json({
       accessToken,
+      id: user._id
     });
 
   } catch (err) {

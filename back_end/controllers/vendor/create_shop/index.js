@@ -12,7 +12,7 @@ export const create_shop = async (req, res) => {
   try {
     const { _id } = jwt.decode(token, { complete: true }).payload;
 
-    const vendor = await userModel.findOne({ _id }, 'avatarUrl phone email _id role');
+    const vendor = await userModel.findOne({ _id }, 'avatarUrl phone email _id role username');
 
     const { shopName, address, avatarShop } = req.body;
 

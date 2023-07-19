@@ -12,7 +12,6 @@ const shopSchema = mongoose.Schema(
       type: Boolean,
       default: false
     },
-    watching: Array,
     address: String,
     linkImageBrand: String,
     brandToday: {

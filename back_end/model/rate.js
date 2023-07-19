@@ -7,7 +7,8 @@ const rateSchema = mongoose.Schema(
       type: Number,
       require: true,
     },
-    productId: ObjectId
+    productId: ObjectId,
+    shopId: ObjectId,
   },
   {
     timestamps: true,

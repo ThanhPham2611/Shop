@@ -34,6 +34,7 @@ import safeBill from "../../../asset/image/safe_bill.png";
 import ship from "../../../asset/image/ship.png";
 
 import styles from "./information.module.scss";
+import { socket } from "../../../service/socket";
 
 const { Text } = Typography;
 
@@ -71,7 +72,6 @@ const ProductInformation = () => {
       if (productValue.typeProduct.length > 0) {
         if (chooseItem) {
           const dataProduct = {
-            _id: nanoid(),
             productId: productValue._id,
             shopId: productValue.shopId,
             title: productValue.title,
@@ -84,7 +84,6 @@ const ProductInformation = () => {
               ...chooseItem
             }
           }
-          console.log(dataProduct);
           dispatch(addCart(dataProduct));
           notification.success({ message: 'Sản phẩm đã được thêm vào giỏ hàng' })
         } else {
@@ -92,7 +91,6 @@ const ProductInformation = () => {
         }
       } else {
         const dataProduct = {
-          _id: nanoid(),
           productId: productValue._id,
           shopId: productValue.shopId,
           title: productValue.title,
@@ -102,7 +100,6 @@ const ProductInformation = () => {
           salePercent: productValue.salePercent,
           type: 1,
         };
-        console.log(dataProduct);
         dispatch(addCart(dataProduct));
         notification.success({ message: 'Sản phẩm đã được thêm vào giỏ hàng' })
       }
@@ -117,6 +114,12 @@ const ProductInformation = () => {
       setErrText(false);
     }
   };
+
+  socket.on('completeFlashSale', async () => {
+    const { item } = await get(`product/${id}`);
+    setProductValue(item);
+    setLinkImage(item.listImage[0]);
+  })
 
   return (
     <Row className={styles.wrapperInformation} justify="space-between">
@@ -176,7 +179,7 @@ const ProductInformation = () => {
         {productValue?.showSale && (
           <div style={{ marginTop: 20 }}>
             {productValue?.flashSale && (
-              <FlashSale timeEnd={productValue?.timeEndSale} />
+              <FlashSale timeEnd={productValue?.timeEndSale} id={productValue?._id} />
             )}
             <Row className={styles.wrapperPrice} align="middle">
               <Text className={styles.textPriceOld} delete>

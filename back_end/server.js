@@ -6,9 +6,15 @@ import cors from "cors";
 import { Server } from "socket.io";
 import http from "http";
 import dotenv from "dotenv";
+import jwt from 'jsonwebtoken';
+import moment from 'moment';
 const stripe = require("stripe")(
   "sk_test_51Mnwu5KxJRj9jA2jTGXyNnWnzmxhokBAkLkVBHwHiBjvXNp24kJUDzb00rLR47619X4QOmyBC768iMyryzWZQZkv00LT1QZq35"
 );
+
+//model
+import { userModel } from './model/user';
+import Product from './model/product';
 
 //router
 import user from "./routes/user";
@@ -115,15 +121,27 @@ const io = new Server({
 
 io.attach(httpServer);
 
-io.on("connection", (socket) => {
-  // socket.on("connected", () => { });
-  // socket.on("disconnect", () => { });
-  // socket.on("devices_register", () => {
-  //   io.emit("success_form");
-  // });
-  // socket.on("admin_call", () => {
-  //   io.emit("user_claim");
-  // });
+io.on("connection", async (socket) => {
+  if (socket.handshake.auth.token) {
+    const { _id } = (jwt.decode(socket.handshake.auth.token));
+    await userModel.findByIdAndUpdate({ _id }, { $set: { status: true } });
+  }
+  socket.on('login', async (userId) => {
+    await userModel.findByIdAndUpdate({ _id: userId }, { $set: { status: true } });
+  })
+
+  socket.on("disconnect", async () => {
+    if (socket.handshake.auth.token) {
+      const { _id } = (jwt.decode(socket.handshake.auth.token));
+      await userModel.findByIdAndUpdate({ _id }, { $set: { status: false, lastLogin: moment().format() } })
+    }
+  });
+
+  socket.on('flashSale', async (id) => {
+    await Product.findByIdAndUpdate({ _id: id }, { flashSale: false, salePercent: 0 })
+    io.emit('completeFlashSale')
+  })
+
   socket.on("like", () => {
     io.emit("likefc");
   });

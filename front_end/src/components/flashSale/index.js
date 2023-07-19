@@ -7,10 +7,12 @@ import FlashSaleIcon from "../../asset/image/flash_sale_icon.png";
 import { OClock } from "../../asset/image/svg/oclock";
 
 import styles from "./flashSale.module.scss";
+import { socket } from "../../service/socket";
 
-export const FlashSale = ({ timeEnd }) => {
+export const FlashSale = ({ timeEnd, id }) => {
   const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
+      socket.emit('flashSale', id);
       return (
         <div className={styles.wrapperCountDown}>
           <span className={styles.textCountdown}>0{hours}</span> :

@@ -10,8 +10,7 @@ import { post } from '../service/axios/instance'
 import { STORAGEKEY, setCookie } from "../service/cookie";
 
 import styles from "../asset/scss/login.module.scss";
-
-// import axios from "axios";
+import { socket } from "../service/socket";
 
 const Login = () => {
   const [form] = Form.useForm();
@@ -23,8 +22,10 @@ const Login = () => {
       username: value.username.toLowerCase()
     })
       .then(data => {
-        const { accessToken } = data;
+        const { accessToken, id } = data;
         setCookie(STORAGEKEY.ACCESS_TOKEN, accessToken);
+        socket.emit('login', id)
+        console.log(data);
         toast.success('Đăng nhập thành công');
         window.location.href = '/home'
       })

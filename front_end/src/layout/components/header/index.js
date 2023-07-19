@@ -22,11 +22,12 @@ import {
 //local
 import logo from "../../../asset/image/logo.png";
 
+import { get } from "../../../service/axios/instance";
 import { STORAGEKEY, getCookie, removeCookie } from "../../../service/cookie";
 import { toggleCart } from "../../../store/modules/cartSlice";
+import { checkLogin } from "../../../utils/function";
 
 import styles from "../../app.module.scss";
-import { checkLogin } from "../../../utils/function";
 
 const { Search } = Input;
 
@@ -42,6 +43,19 @@ const Header = () => {
   const handleLogout = () => {
     return removeCookie(STORAGEKEY.ACCESS_TOKEN);
   };
+
+  useEffect(() => {
+    (async () => {
+      await get('cart')
+        .then(data => {
+          const { cartInfo } = data;
+          setArrayCart(cartInfo);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    })()
+  }, [])
 
   useEffect(() => {
     if (Object.keys(product).length !== 0) {

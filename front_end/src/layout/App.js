@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-
 import { useLocation } from "react-router-dom";
 import { ToastContainer } from 'react-toastify'
+import moment from 'moment';
+import 'moment/locale/vi';
 
 import Cart from "../components/cart";
 import { STORAGEKEY, getCookie } from "../service/cookie";
@@ -17,12 +18,13 @@ const App = (props) => {
   const { pathname } = useLocation();
   const getToken = getCookie(STORAGEKEY.ACCESS_TOKEN);
   const dispatch = useDispatch();
+  moment.locale('vi');
 
   useEffect(() => {
     if (getToken) {
       dispatch(myProfile());
     }
-  }, [getToken, pathname])
+  }, [getToken, pathname]);
 
   const whiteList = ['/login', '/register', '/verify_register'];
 

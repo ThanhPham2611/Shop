@@ -1,6 +1,7 @@
 import { Row } from "antd";
 import React, {
   forwardRef,
+  useEffect,
   useImperativeHandle,
   useState,
 } from "react";
@@ -11,6 +12,12 @@ import styles from "./input_amount.module.scss";
 
 const InputAmount = forwardRef((props, ref) => {
   const [value, setValue] = useState(props.value || 1);
+
+  useEffect(() => {
+    if (props.value) {
+      setValue(props.value)
+    }
+  }, [props.value])
 
   useImperativeHandle(ref, () => ({
     getValue() {
@@ -46,7 +53,7 @@ const InputAmount = forwardRef((props, ref) => {
       <button className={styles.button} onClick={handleDec}>
         <MinusOutlined />
       </button>
-      <input value={value} className={styles.input} />
+      <input disabled value={value} className={styles.input} />
       <button className={styles.button} onClick={handleInc}>
         <PlusOutlined />
       </button>
