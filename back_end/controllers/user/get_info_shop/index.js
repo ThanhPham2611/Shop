@@ -16,7 +16,7 @@ export const get_info_shop = async (req, res) => {
 
     const shopInfo = await Shop.findOne({ _id: shopInfoID.shopId });
 
-    const userInfo = await userModel.findOne({ _id: shopInfo.owner._id }, '-_id status lastLogin')
+    const userInfo = await userModel.findOne({ _id: shopInfo.owner._id }, '-_id status lastLogin avatarUrl')
 
     return res.status(200).send({ followerInfo: followerInfo.length, shopInfo, productInfo: productInfo.length, rateInfo: rateInfo.length, userInfo });
   } catch (err) {

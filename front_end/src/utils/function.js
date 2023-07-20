@@ -41,15 +41,13 @@ export const formatAfterSale = (value, percent) => {
   return formatter.format(value - (value * percent) / 100);
 };
 
-export const checkLogin = async () => {
+export const checkLogin = async (fnc) => {
   const accessToken = await getCookie(STORAGEKEY.ACCESS_TOKEN);
-
-  if (!accessToken) {
-    window.location.href = "/login";
-    return false;
+  if (accessToken !== undefined) {
+    return () => fnc();
+  } else {
+    window.location.href = '/login'
   }
-
-  return true;
 };
 
 export const debounce = (func, delay) => {

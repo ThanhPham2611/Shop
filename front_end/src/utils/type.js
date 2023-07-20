@@ -57,3 +57,18 @@ export const listReview = [
 ];
 
 export const formatTimeFull = 'YYYY-MM-DD HH:mm';
+
+export const typeMessage = [
+  {
+    title: 'Tất cả',
+    key: '0'
+  },
+  {
+    title: 'Chưa đọc',
+    key: '1'
+  },
+  {
+    title: 'Đã đọc',
+    key: '2'
+  }
+]

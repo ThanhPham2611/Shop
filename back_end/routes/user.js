@@ -15,6 +15,8 @@ import { get_cart } from "../controllers/user/get_cart";
 import { update_cart } from "../controllers/user/update_cart";
 import { update_online } from "../controllers/user/update_online";
 import { get_info_shop } from "../controllers/user/get_info_shop";
+import { room_message } from "../controllers/user/room_message";
+import { get_message } from "../controllers/user/get_message";
 
 const router = express.Router();
 
@@ -26,6 +28,8 @@ router.get("/comment/:id", get_comment_product);
 router.get("/like/:productId", get_like_comment);
 router.get('/cart', get_cart);
 router.get('/shop_info/:produtId', get_info_shop);
+router.get('/message/:to', room_message);
+router.get('/get_message/:to', get_message);
 
 //post
 router.post("/register", register_user);

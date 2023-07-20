@@ -12,6 +12,7 @@ import Variation from "../../../components/variation";
 import styles from './review.module.scss';
 import moment from "moment";
 import { socket } from "../../../service/socket";
+import { checkLogin } from "../../../utils/function";
 
 const ReviewProduct = () => {
   const [highlight, setHighlight] = useState(0);
@@ -69,7 +70,6 @@ const ReviewProduct = () => {
 
   const handleClick = (items, index) => {
     setHighlight(index);
-    console.log(items)
     get(`comment/${id}?page=${page.current}&item=${page.items}&rate=${items.type}`)
       .then(data => {
         const { comments, rates } = data;
@@ -79,17 +79,20 @@ const ReviewProduct = () => {
   }
 
   const handleLikeComment = (items, isLike) => {
-    post('like', {
-      productId: items.productId,
-      commentId: items._id,
-      isLike: !isLike
-    })
-      .then(() => {
-        socket.emit('like');
+    console.log(!isLike);
+    checkLogin(
+      post('like', {
+        productId: items.productId,
+        commentId: items._id,
+        isLike: !isLike
       })
-      .catch(err => {
-        console.log(err);
-      })
+        .then(() => {
+          socket.emit('like');
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    )
   }
 
   return (
@@ -111,8 +114,8 @@ const ReviewProduct = () => {
       </Row>
 
       {valueComment.length > 0 ? valueComment?.map(items => {
-        const arrayItemLike = valueLike.filter(filter => filter.isLike && filter.commentId === items._id);
-        const checkLike = valueUserLike.every((every) => every.commentId === items._id && every.isLike);
+        const arrayItemLike = valueLike?.filter(filter => filter.isLike && filter.commentId === items._id);
+        const checkLike = valueUserLike?.every((every) => every.commentId === items._id && every.isLike);
         return (
           <Row key={items._id}>
             <Col xxl={2}>

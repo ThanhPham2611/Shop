@@ -1,0 +1,121 @@
+.containerChat {
+  background-color: #fff;
+  border-radius: 5px;
+  width: 30vw;
+  height: 50vh;
+  .headerChat {
+    border-bottom: 1px solid #ccc;
+    padding: 5px 15px;
+    .titleChat {
+      color: #ee4d2d;
+    }
+    .icon {
+      font-size: 18px;
+      margin: 0px 10px;
+    }
+  }
+  .boxChatContainer {
+    height: 100%;
+    .contentChat {
+      border-right: 1px solid #ccc;
+      .headerLeftContentChat {
+        padding: 10px;
+      }
+      .chatBox {
+        height: 5vh;
+        // background-color: #ccc;
+        cursor: pointer;
+        padding: 5px 8px;
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.04);
+        }
+        .nameChat {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          max-width: 70px;
+          font-size: 16px;
+          color: #333;
+          font-weight: 500;
+          line-height: 18px;
+        }
+        .timeChat {
+          color: #666;
+          font-size: 12px;
+          line-height: 14px;
+          white-space: nowrap;
+        }
+        .contentChatbox {
+          color: #666;
+          font-size: 14px;
+          line-height: 16px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+
+    .textChatBox {
+      .headerRightChatBox {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        .chatUserName {
+          color: #333;
+          font-size: 14px;
+          line-height: 16px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+      }
+      .contentTextChatBox {
+        overflow-y: scroll;
+        height: 75%;
+        padding: 10px 0px 0px 5px;
+        display: flex;
+        flex-direction: column;
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: #ccc;
+          border-radius: 5px;
+        }
+        .fromChat {
+          background-color: #d7e4ff;
+          color: #333;
+          padding: 8px;
+          font-size: 14px;
+          line-height: 21px;
+          word-wrap: break-word;
+          white-space: pre-wrap;
+          border-radius: 2px;
+          max-width: 200px;
+          align-self: flex-end;
+        }
+        .toChat {
+          background-color: #f5f6f8;
+          color: #333;
+          padding: 8px;
+          font-size: 14px;
+          line-height: 21px;
+          word-wrap: break-word;
+          white-space: pre-wrap;
+          border-radius: 2px;
+          max-width: 200px;
+          align-self: flex-start;
+        }
+      }
+      .inputChatBox {
+        padding: 0 10px;
+        .inputChat {
+          width: 85%;
+        }
+        .iconSend {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}

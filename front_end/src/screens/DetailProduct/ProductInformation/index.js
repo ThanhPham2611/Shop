@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Col, Divider, Image, Rate, Row, Space, Typography, notification } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { nanoid } from 'nanoid';
 
 import { detailProduct } from "../../../utils/dummyData";
 import {

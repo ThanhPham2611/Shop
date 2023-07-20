@@ -8,6 +8,7 @@ import http from "http";
 import dotenv from "dotenv";
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
+import randomstring from 'randomstring';
 const stripe = require("stripe")(
   "sk_test_51Mnwu5KxJRj9jA2jTGXyNnWnzmxhokBAkLkVBHwHiBjvXNp24kJUDzb00rLR47619X4QOmyBC768iMyryzWZQZkv00LT1QZq35"
 );
@@ -15,6 +16,7 @@ const stripe = require("stripe")(
 //model
 import { userModel } from './model/user';
 import Product from './model/product';
+import Message from './model/message';
 
 //router
 import user from "./routes/user";
@@ -121,9 +123,20 @@ const io = new Server({
 
 io.attach(httpServer);
 
+let userOnline = []
+
 io.on("connection", async (socket) => {
   if (socket.handshake.auth.token) {
     const { _id } = (jwt.decode(socket.handshake.auth.token));
+    const exist = userOnline.findIndex(user => user.userId === _id)
+    if (exist !== -1) {
+      userOnline[exist].socketId = socket.id
+    } else {
+      userOnline.push({
+        socketId: socket.id,
+        userId: _id
+      })
+    }
     await userModel.findByIdAndUpdate({ _id }, { $set: { status: true } });
   }
   socket.on('login', async (userId) => {
@@ -134,12 +147,30 @@ io.on("connection", async (socket) => {
     if (socket.handshake.auth.token) {
       const { _id } = (jwt.decode(socket.handshake.auth.token));
       await userModel.findByIdAndUpdate({ _id }, { $set: { status: false, lastLogin: moment().format() } })
+      console.log(`disconnect ${socket.id}`)
     }
   });
 
   socket.on('flashSale', async (id) => {
     await Product.findByIdAndUpdate({ _id: id }, { flashSale: false, salePercent: 0 })
     io.emit('completeFlashSale')
+  })
+
+  socket.on('sendMessage', async (data) => {
+    if (socket.handshake.auth.token) {
+      const { _id } = jwt.decode(socket.handshake.auth.token);
+      const { to, message, roomId, username, avatarUrl, from, createdAt } = data;
+      const socketReceived = userOnline.find((filter) => filter.userId === to);
+      if (roomId) {
+        await Message.create({
+          from: _id,
+          to,
+          message,
+          roomId
+        })
+        socketReceived && io.to(socketReceived.socketId).emit('received', { message, roomId, username, avatarUrl, from, createdAt });
+      }
+    }
   })
 
   socket.on("like", () => {
