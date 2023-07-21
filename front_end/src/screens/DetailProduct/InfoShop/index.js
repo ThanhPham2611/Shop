@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, Col, Row, Space } from "antd";
 import { useParams } from 'react-router-dom';
+import moment from "moment";
+import { useDispatch } from 'react-redux';
+import randomstring from 'randomstring';
 
 import logoMall from '../../../asset/image/logo_shoppe_mall.png';
 import { BsChatRightDotsFill, BsShop, BsDot } from 'react-icons/bs'
 
+import { formatAmoutProductSold } from "../../../utils/function";
 import { ButtonSecond } from "../../../components/button";
 import { get } from '../../../service/axios/instance';
 
 import styles from './infoshop.module.scss';
-import moment from "moment";
-import { formatAmoutProductSold } from "../../../utils/function";
+import { getId } from "../../../store/modules/messageSlice";
 
 const InfoShop = () => {
   const { id } = useParams();
   const [infoShop, setInfoShop] = useState();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
@@ -28,6 +32,18 @@ const InfoShop = () => {
         })
     })()
   }, [])
+
+  const handleChatNow = () => {
+    const dataShop = {
+      id: infoShop.shopInfo.owner._id,
+      user: {
+        username: infoShop.shopInfo.username,
+        avatarUrl: infoShop.userInfo.avatarUrl,
+      },
+      roomId: randomstring.generate()
+    }
+    dispatch(getId(dataShop));
+  }
 
   return (
     <Row className={styles.wrapperInfoShop} align='middle'>
@@ -45,7 +61,7 @@ const InfoShop = () => {
         ) : <h5 className={styles.textActive}>{`Online ${moment(infoShop?.userInfo?.lastLogin).fromNow()}`}</h5>}
 
         <Space className={styles.wrapperButton}>
-          <ButtonSecond icon={<BsChatRightDotsFill size={13} style={{ marginRight: 10 }} />} title={'Chat ngay'} className={styles.buttonChat} />
+          <ButtonSecond onClick={handleChatNow} icon={<BsChatRightDotsFill size={13} style={{ marginRight: 10 }} />} title={'Chat ngay'} className={styles.buttonChat} />
           <button className={styles.buttonViewShop}>
             <BsShop size={15} style={{ marginRight: 10 }} />
             Xem shop

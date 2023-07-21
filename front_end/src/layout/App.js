@@ -3,14 +3,15 @@ import { useLocation } from "react-router-dom";
 import { ToastContainer } from 'react-toastify'
 import moment from 'moment';
 import 'moment/locale/vi';
+import { useDispatch } from "react-redux";
 
 import Cart from "../components/cart";
 import { STORAGEKEY, getCookie } from "../service/cookie";
 import Header from "./components/header";
 import { myProfile } from "../store/modules/userInfoSlice";
+import ChatComponent from "../components/chat";
 
 import styles from "./app.module.scss";
-import { useDispatch } from "react-redux";
 
 const App = (props) => {
   //components render
@@ -39,6 +40,7 @@ const App = (props) => {
       <Cart />
       <div className={styles.wrapperContent}>{renderRouter()}</div>
       <ToastContainer />
+      <ChatComponent />
     </div>
   );
 };
