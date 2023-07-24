@@ -71,10 +71,11 @@
       }
       .contentTextChatBox {
         overflow-y: scroll;
-        height: 75%;
+        height: 37vh;
         padding: 10px 0px 0px 5px;
         display: flex;
         flex-direction: column;
+        scroll-behavior: smooth;
         &::-webkit-scrollbar {
           width: 5px;
         }
