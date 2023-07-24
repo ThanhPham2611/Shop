@@ -6,17 +6,18 @@ import cors from "cors";
 import { Server } from "socket.io";
 import http from "http";
 import dotenv from "dotenv";
-import jwt from 'jsonwebtoken';
-import moment from 'moment';
-import randomstring from 'randomstring';
+import jwt from "jsonwebtoken";
+import moment from "moment";
+// import randomstring from "randomstring";
 const stripe = require("stripe")(
   "sk_test_51Mnwu5KxJRj9jA2jTGXyNnWnzmxhokBAkLkVBHwHiBjvXNp24kJUDzb00rLR47619X4QOmyBC768iMyryzWZQZkv00LT1QZq35"
 );
 
 //model
-import { userModel } from './model/user';
-import Product from './model/product';
-import Message from './model/message';
+import { userModel } from "./model/user";
+import Product from "./model/product";
+import Message from "./model/message";
+import ListRoom from "./model/listRoom";
 
 //router
 import user from "./routes/user";
@@ -83,24 +84,24 @@ app.post("/create-checkout-session", async (req, res) => {
               id: item._id,
             },
           },
-          unit_amount: item.price - (item.price * item.salePercent / 100),
+          unit_amount: item.price - (item.price * item.salePercent) / 100,
         },
         quantity: item.amount,
       };
     });
     const session = await stripe.checkout.sessions.create({
-      mode: 'payment',
-      payment_method_types: ['card'],
+      mode: "payment",
+      payment_method_types: ["card"],
       line_items,
       automatic_tax: {
         enabled: true,
       },
       allow_promotion_codes: true,
-      customer: 'cus_O2kMgMbCzT0UFp',
+      customer: "cus_O2kMgMbCzT0UFp",
       success_url: `http://localhost:3000/?success=true`,
       cancel_url: `http://localhost:3000/?canceled=true`,
     });
-    return res.status(200).json(session)
+    return res.status(200).json(session);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -123,55 +124,95 @@ const io = new Server({
 
 io.attach(httpServer);
 
-let userOnline = []
+let userOnline = [];
 
 io.on("connection", async (socket) => {
   if (socket.handshake.auth.token) {
-    const { _id } = (jwt.decode(socket.handshake.auth.token));
-    const exist = userOnline.findIndex(user => user.userId === _id)
+    const { _id } = jwt.decode(socket.handshake.auth.token);
+    const exist = userOnline.findIndex((user) => user.userId === _id);
     if (exist !== -1) {
-      userOnline[exist].socketId = socket.id
+      userOnline[exist].socketId = socket.id;
     } else {
       userOnline.push({
         socketId: socket.id,
-        userId: _id
-      })
+        userId: _id,
+      });
     }
     await userModel.findByIdAndUpdate({ _id }, { $set: { status: true } });
   }
-  socket.on('login', async (userId) => {
-    await userModel.findByIdAndUpdate({ _id: userId }, { $set: { status: true } });
-  })
+
+  socket.on("login", async (userId) => {
+    await userModel.findByIdAndUpdate(
+      { _id: userId },
+      { $set: { status: true } }
+    );
+  });
 
   socket.on("disconnect", async () => {
     if (socket.handshake.auth.token) {
-      const { _id } = (jwt.decode(socket.handshake.auth.token));
-      await userModel.findByIdAndUpdate({ _id }, { $set: { status: false, lastLogin: moment().format() } })
-      console.log(`disconnect ${socket.id}`)
+      const { _id } = jwt.decode(socket.handshake.auth.token);
+      await userModel.findByIdAndUpdate(
+        { _id },
+        { $set: { status: false, lastLogin: moment().format() } }
+      );
+      console.log(`disconnect ${socket.id}`);
     }
   });
 
-  socket.on('flashSale', async (id) => {
-    await Product.findByIdAndUpdate({ _id: id }, { flashSale: false, salePercent: 0 })
-    io.emit('completeFlashSale')
-  })
+  socket.on("flashSale", async (id) => {
+    await Product.findByIdAndUpdate(
+      { _id: id },
+      { flashSale: false, salePercent: 0 }
+    );
+    io.emit("completeFlashSale");
+  });
 
-  socket.on('sendMessage', async (data) => {
+  socket.on("sendMessage", async (data) => {
     if (socket.handshake.auth.token) {
       const { _id } = jwt.decode(socket.handshake.auth.token);
-      const { to, message, roomId, username, avatarUrl, from, createdAt } = data;
+      const { to, message, roomId, from, createdAt, id } = data;
       const socketReceived = userOnline.find((filter) => filter.userId === to);
+      const userFrom = await userModel.findOne(
+        { _id },
+        "-_id username avatarUrl"
+      );
+      const roomExist = await ListRoom.findOne({ roomId });
+      console.log(roomExist);
+      if (roomExist) {
+        await ListRoom.updateOne({ roomId }, { message });
+      } else {
+        await ListRoom.create({
+          from,
+          to,
+          roomId,
+          message,
+          flag: false,
+        });
+      }
       if (roomId) {
         await Message.create({
           from: _id,
           to,
           message,
-          roomId
-        })
-        socketReceived && io.to(socketReceived.socketId).emit('received', { message, roomId, username, avatarUrl, from, createdAt });
+          roomId,
+        });
+        socketReceived &&
+          io.to(socketReceived.socketId).emit("received", {
+            message,
+            roomId,
+            username: userFrom.username,
+            avatarUrl: userFrom.avatarUrl,
+            from,
+            createdAt,
+            to,
+            id,
+          });
       }
     }
-  })
+    return () => {
+      socket.off("sendMessage");
+    };
+  });
 
   socket.on("like", () => {
     io.emit("likefc");
