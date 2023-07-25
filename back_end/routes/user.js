@@ -17,6 +17,8 @@ import { update_online } from "../controllers/user/update_online";
 import { get_info_shop } from "../controllers/user/get_info_shop";
 import { room_message } from "../controllers/user/room_message";
 import { get_message } from "../controllers/user/get_message";
+import { forgot_password } from "../controllers/auth/forgot";
+import { change_password } from "../controllers/auth/change_password";
 
 const router = express.Router();
 
@@ -28,14 +30,16 @@ router.get("/comment/:id", get_comment_product);
 router.get("/like/:productId", get_like_comment);
 router.get('/cart', get_cart);
 router.get('/shop_info/:produtId', get_info_shop);
-router.get('/message/:to', room_message);
+router.get('/room_message', room_message);
 router.get('/get_message/:to', get_message);
 
 //post
 router.post("/register", register_user);
 router.post("/login", login_user);
+router.post('/forgot', forgot_password);
 router.post("/verify_email", verify_register);
 router.post("/verify_code", verify_code);
+router.post('/change_password', change_password);
 router.post("/comment", comment_product);
 router.post("/like", like_comment);
 router.post("/add_cart", add_cart);

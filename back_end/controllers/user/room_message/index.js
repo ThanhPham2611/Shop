@@ -1,6 +1,6 @@
 import ListRoom from "../../../model/listRoom";
 import jwt from "jsonwebtoken";
-// import randomString from "randomstring";
+import { userModel } from '../../../model/user';
 
 export const room_message = async (req, res) => {
   let token = null;
@@ -12,13 +12,24 @@ export const room_message = async (req, res) => {
   try {
     const { _id } = jwt.decode(token, { complete: true }).payload;
 
-    const { to } = req.params;
-
     const rooms = await ListRoom.find({
-      $or: [{ from: _id }, { to }, { from: to }, { to: _id }],
+      $or: [{ from: _id }, { to: _id }],
     }).exec();
 
-    return res.status(200).send({ rooms });
+    const arrayChat = await Promise.all(rooms?.map(async (room) => {
+      let condition
+      if (room.from.toString() === _id) {
+        condition = { _id: room.to }
+      } else {
+        condition = { _id: room.from }
+      }
+
+      const user = await userModel.findOne(condition, 'username _id avatarUrl')
+
+      return { user, roomId: room.roomId, message: room.message, createdAt: room.updatedAt };
+    }))
+
+    return res.status(200).send({ arrayChat })
   } catch (err) {
     return res.status(500).send({ message: "Not found" });
   }

@@ -28,7 +28,8 @@ const VerifyRegister = () => {
     setLoading(true)
     post('verify_email', {
       email: value,
-      username: username
+      username: username,
+      type: 1
     })
       .then(data => {
         setLoading(false);

@@ -91,7 +91,7 @@ const Login = () => {
               Đăng nhập
             </Button>
 
-            <a href="#">Quên mật khẩu</a>
+            <a href="/forgot_password">Quên mật khẩu</a>
 
             <Divider plain>Hoặc</Divider>
 

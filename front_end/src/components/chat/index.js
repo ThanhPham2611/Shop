@@ -3,7 +3,6 @@ import {
   Affix,
   Avatar,
   Col,
-  Dropdown,
   Empty,
   FloatButton,
   Input,
@@ -17,12 +16,10 @@ import ramdomstring from "randomstring";
 import { BsFillChatRightTextFill, BsArrowBarRight } from "react-icons/bs";
 import {
   AiOutlineDownSquare,
-  AiOutlineDown,
   AiOutlineSend,
   AiOutlineUser,
 } from "react-icons/ai";
 
-import { typeMessage } from "../../utils/type";
 import { socket } from "../../service/socket";
 import { get } from "../../service/axios/instance";
 
@@ -43,10 +40,19 @@ const ChatComponent = () => {
   const [highlight, setHighlight] = useState("");
   const boxChatRef = useRef(null);
 
+  useEffect(() => {
+    get('room_message')
+      .then(data => {
+        setArrayUser(data.arrayChat);
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }, [])
+
   //received message
   useEffect(() => {
     socket.on("received", (data) => {
-      console.log(data);
       const existUser = arrayUser.findIndex((user) => user.id === data.id);
       if (existUser === -1) {
         setArrayUser([
@@ -76,15 +82,29 @@ const ChatComponent = () => {
 
   useEffect(() => {
     if (Object.keys(infoChat).length > 0) {
-      const exist = arrayUser.findIndex((item) => item._id === infoChat.id);
-      if (exist === -1) {
-        setArrayUser([...arrayUser, infoChat]);
+      setIconChat(true);
+      if (highlight?.user?._id !== infoChat?.user?._id) {
+        const exist = arrayUser.find((item) => item?.user?._id === infoChat?.user?._id);
+        if (!exist) {
+          setArrayUser([...arrayUser, infoChat]);
+        } else {
+          setHighlight(exist);
+        }
+        get(`get_message/${infoChat.user?._id}`)
+          .then((data) => {
+            setMessage(data.message);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        return
       }
+
     }
   }, [infoChat]);
 
   useEffect(() => {
-    console.log("scrroll");
     scrollViewBottom();
   }, [message]);
 
@@ -95,8 +115,8 @@ const ChatComponent = () => {
   //send message
   const handleSendChat = (e) => {
     socket.emit("sendMessage", {
-      to: highlight.id,
-      message: e.target.value,
+      to: highlight.user._id,
+      message: e?.target?.value || e,
       roomId: highlight.roomId,
       from: _id,
       username: highlight.user.username,
@@ -109,23 +129,32 @@ const ChatComponent = () => {
       ...message,
       {
         from: _id,
-        to: highlight.id,
+        to: highlight.user._id,
         roomId: highlight.roomId,
-        message: e.target.value,
+        message: e?.target?.value || e,
         createdAt: moment().format(),
         _id: ramdomstring.generate(),
       },
     ]);
+
+    const updateArrayUser = arrayUser?.map(item => {
+      if (item.user._id === highlight.user._id) {
+        return { ...item, message: e?.target?.value || e };
+      }
+      return item;
+    })
+
+    setArrayUser(updateArrayUser);
     setValueInput("");
   };
 
   const handleRoomChat = (room) => {
     const selectItem = arrayUser.find(
-      (item) => item.roomId === room.roomId && item.id === room.id
+      (item) => item.roomId === room.roomId
     );
     setHighlight(selectItem);
-    if (highlight.id !== room.id) {
-      get(`get_message/${room.id}`)
+    if (highlight?.user?._id !== room?.user?._id) {
+      get(`get_message/${room?.user?._id}`)
         .then((data) => {
           setMessage(data.message);
         })
@@ -151,7 +180,7 @@ const ChatComponent = () => {
             </Col>
             <Col>
               <BsArrowBarRight className={styles.icon} />
-              <AiOutlineDownSquare className={styles.icon} />
+              <AiOutlineDownSquare className={styles.icon} onClick={() => setIconChat(false)} />
             </Col>
           </Row>
 
@@ -170,7 +199,7 @@ const ChatComponent = () => {
                     backgroundColor:
                       item.roomId === highlight.roomId
                         ? "rgba(0,0,0,.08)"
-                        : "none",
+                        : "transparent",
                   }}
                   onClick={() => handleRoomChat(item)}
                 >
@@ -224,9 +253,12 @@ const ChatComponent = () => {
                       message?.map((mess) => {
                         if (mess.from === _id) {
                           return (
-                            <p key={mess._id} className={styles.fromChat}>
-                              {mess.message}
-                            </p>
+                            <Row className={styles.fromChat} align='middle'>
+                              <span className={styles.time}>11:02</span>
+                              <p key={mess._id} className={styles.text}>
+                                {mess.message}
+                              </p>
+                            </Row>
                           );
                         } else {
                           return (
@@ -255,7 +287,7 @@ const ChatComponent = () => {
                     onChange={(e) => setValueInput(e.target.value)}
                     value={valueInput}
                   />
-                  <AiOutlineSend className={styles.iconSend} />
+                  <AiOutlineSend className={styles.iconSend} onClick={() => handleSendChat(valueInput)} />
                 </Row>
               </Col>
             ) : (

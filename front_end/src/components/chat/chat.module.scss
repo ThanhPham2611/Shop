@@ -12,6 +12,7 @@
     .icon {
       font-size: 18px;
       margin: 0px 10px;
+      cursor: pointer;
     }
   }
   .boxChatContainer {
@@ -84,16 +85,24 @@
           border-radius: 5px;
         }
         .fromChat {
-          background-color: #d7e4ff;
-          color: #333;
-          padding: 8px;
-          font-size: 14px;
-          line-height: 21px;
-          word-wrap: break-word;
-          white-space: pre-wrap;
-          border-radius: 2px;
-          max-width: 200px;
           align-self: flex-end;
+          .text {
+            max-width: 200px;
+            padding: 8px;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            border-radius: 2px;
+            font-size: 14px;
+            line-height: 21px;
+            background-color: #d7e4ff;
+            color: #333;
+          }
+          .time {
+            margin-right: 16px;
+            margin-bottom: 12px;
+            color: #ccc;
+            font-size: 11px;
+          }
         }
         .toChat {
           background-color: #f5f6f8;
@@ -115,6 +124,7 @@
         }
         .iconSend {
           font-size: 24px;
+          cursor: pointer;
         }
       }
     }

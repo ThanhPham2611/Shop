@@ -3,7 +3,6 @@ import { Avatar, Col, Row, Space } from "antd";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import randomstring from "randomstring";
 
 import logoMall from "../../../asset/image/logo_shoppe_mall.png";
 import { BsChatRightDotsFill, BsShop, BsDot } from "react-icons/bs";
@@ -24,7 +23,6 @@ const InfoShop = () => {
     (async () => {
       await get(`shop_info/${id}`)
         .then((data) => {
-          console.log(data);
           setInfoShop(data);
         })
         .catch((err) => {
@@ -35,12 +33,11 @@ const InfoShop = () => {
 
   const handleChatNow = () => {
     const dataShop = {
-      id: infoShop?.shopInfo?.owner?._id,
       user: {
+        _id: infoShop?.shopInfo?.owner?._id,
         username: infoShop?.userInfo?.username,
         avatarUrl: infoShop?.userInfo?.avatarUrl,
       },
-      roomId: randomstring.generate(),
     };
     dispatch(getId(dataShop));
   };
@@ -58,7 +55,7 @@ const InfoShop = () => {
         )}
       </Col>
       <Col className={styles.colAction}>
-        <h3>{infoShop?.shopInfo?.username}</h3>
+        <h3>{infoShop?.userInfo?.username}</h3>
         {infoShop?.userInfo.status ? (
           <Row align="middle">
             <BsDot style={{ fontSize: 25, color: "green" }} />
