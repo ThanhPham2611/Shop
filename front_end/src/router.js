@@ -13,6 +13,7 @@ import { checkPermission } from "./service/cookie/JWT";
 import DetailProduct from "./screens/DetailProduct";
 import Register from "./screens/Register";
 import VerifyRegister from "./screens/VerifyRegister";
+import ForgotScreen from "./screens/Forgot";
 
 export const routers = [
   {
@@ -81,6 +82,17 @@ export const routers = [
       child: false,
     },
   },
+  {
+    name: 'Forgot Password',
+    path: '/forgot_password',
+    component: ForgotScreen,
+    meta: {
+      role: '*',
+      isPrivate: false,
+      hidden: false,
+      child: false,
+    },
+  }
 ];
 
 const PrivateRouter = (props) => {
@@ -107,7 +119,7 @@ const PrivateRouter = (props) => {
 };
 
 const WhiteListRoute = (props) => {
-  const whiteList = ["/login", "/register", "/", "/detail/:id", '/verify_register'];
+  const whiteList = ["/login", "/register", "/", "/detail/:id", '/verify_register', '/forgot_password'];
   const [cookies] = useCookies([STORAGEKEY.ACCESS_TOKEN]);
   const isWhiteList = (path) =>
     !cookies[STORAGEKEY.ACCESS_TOKEN] && whiteList.indexOf(path) >= 0;
@@ -154,7 +166,7 @@ const renderRouter = (routers) => {
 };
 
 const routes = () => {
-  const whiteList = ["/login", "/register", "/", "/detail:id", '/verify_register'];
+  const whiteList = ["/login", "/register", "/", "/detail:id", '/verify_register', '/forgot_password'];
   const path = window.location.pathname;
   const isWhiteList = whiteList.includes(path);
   return (

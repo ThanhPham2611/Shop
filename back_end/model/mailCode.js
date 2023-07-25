@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
+const { ObjectId } = mongoose.Types;
 
 const mailSchema = mongoose.Schema(
   {
-    idUser: String,
+    idUser: ObjectId,
     code: String,
     type: Number,
     flag: {

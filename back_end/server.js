@@ -155,7 +155,6 @@ io.on("connection", async (socket) => {
         { _id },
         { $set: { status: false, lastLogin: moment().format() } }
       );
-      console.log(`disconnect ${socket.id}`);
     }
   });
 
@@ -177,7 +176,6 @@ io.on("connection", async (socket) => {
         "-_id username avatarUrl"
       );
       const roomExist = await ListRoom.findOne({ roomId });
-      console.log(roomExist);
       if (roomExist) {
         await ListRoom.updateOne({ roomId }, { message });
       } else {

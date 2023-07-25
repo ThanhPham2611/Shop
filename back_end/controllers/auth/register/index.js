@@ -1,6 +1,5 @@
 import { userModel } from '../../../model/user';
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken';
 
 const saltRounds = 10; // salt password
 

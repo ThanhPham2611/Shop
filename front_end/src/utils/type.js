@@ -72,3 +72,24 @@ export const typeMessage = [
     key: '2'
   }
 ]
+
+export const footerData = [
+  {
+    key: '0',
+    title: 'Chăm sóc khách hàng',
+    value: [
+      'Trung tâm trợ giúp', 'PT Blog', 'PT Mall', 'Hướng dẫn mua hàng', 'Hướng dẫn bán hàng',
+      'Thanh toán', 'PT xu', 'Vận chuyển', 'Trả hàng & hoàn tiền', 'Chăm sóc khách hàng',
+      'Chính sách bảo hành'
+    ]
+  },
+  {
+    key: '1',
+    title: 'Về Shopee',
+    value: [
+      'Giới thiệu về PT việt nam', 'Tuyển dụng', 'Điều khoản PT', 'Chính sách bảo mật',
+      'Chính hãng', 'Kênh người bán', 'Flash sales', 'Chương trình tiếp thị liên kết',
+      'Liên hệ với truyền thông'
+    ]
+  },
+]

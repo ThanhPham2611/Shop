@@ -1,0 +1,38 @@
+.bg {
+  background-color: #fbfbfb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px 0px;
+  .wrapperContent {
+    width: 1500px;
+    .title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: rgba(0, 0, 0, 0.87);
+      margin-bottom: 1.25rem;
+      text-transform: uppercase;
+    }
+    .valueTitle {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow-y: hidden;
+      color: rgba(0, 0, 0, 0.65);
+      font-size: 13px;
+      margin: 8px 0px;
+      &:hover {
+        color: #ee4d2d;
+      }
+    }
+    .groupIconPayment {
+      margin: 10px 0px;
+      img {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 5px;
+        margin-right: 8px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}

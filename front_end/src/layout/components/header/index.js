@@ -100,7 +100,7 @@ const Header = () => {
       <a onClick={(e) => e.preventDefault()}>
         <Space>
           <Avatar size={26} icon={<UserOutlined />} />
-          <span className={styles.username}>{userData.username}</span>
+          <span className={styles.username}>{userData?.username}</span>
         </Space>
       </a>
     </Dropdown>

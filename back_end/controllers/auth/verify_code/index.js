@@ -2,19 +2,18 @@ import { userModel } from '../../../model/user';
 import MailCode from '../../../model/mailCode';
 import moment from 'moment';
 import jwt from 'jsonwebtoken';
+import { TYPE_VERIFY_CODE } from '../../../utils/type';
 
 export const verify_code = async (req, res) => {
   try {
-    const { codeSubmit, username, email } = req.body;
+    const { codeSubmit, email, type, userId } = req.body;
 
-    const userInfo = await userModel.findOne({ username }, '_id');
-
-    const checkCode = await MailCode.findOne({ idUser: userInfo._id }, '_id code createdAt flag type');
+    const checkCode = await MailCode.findOne({ idUser: userId, type }, '_id code createdAt flag type').sort({ createdAt: -1 });
 
     if (moment().isBefore(moment(checkCode.createdAt).add(2, 'minutes'))) {
       if (codeSubmit === checkCode.code && !checkCode.flag) {
         await MailCode.updateOne({ _id: checkCode._id }, { flag: true })
-        if (checkCode.type === 1) {
+        if (checkCode.type === TYPE_VERIFY_CODE.basic) {
           await userModel.updateOne({ _id: userInfo._id }, { email, isActive: true });
           const user = await userModel.findOne({
             username
@@ -29,7 +28,7 @@ export const verify_code = async (req, res) => {
           );
           return res.status(201).send({ accessToken, message: 'Complete' })
         } else {
-          return res.status(401).send({ message: 'developing' })
+          return res.status(200).send({ message: 'Complete' })
         }
       } else {
         return res.status(401).send({ message: 'Wrong code or code used' });
