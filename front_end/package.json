@@ -38,7 +38,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start-server": "pm2 start npm --name pt_mall_frontend -- start --watch",
+    "restart-server": "pm2 restart pt_mall_frontend --watch"
   },
   "eslintConfig": {
     "extends": [
