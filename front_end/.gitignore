@@ -9,7 +9,6 @@ clear# See https://help.github.com/articles/ignoring-files/ for more about ignor
 /coverage
 
 # production
-/build
 
 # misc
 .DS_Store
