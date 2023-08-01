@@ -12,10 +12,9 @@ const userSchema = mongoose.Schema(
       require: true,
     },
     email: String,
-    firstName: String,
-    lastName: {
+    name: {
       type: String,
-      require: true,
+      require: true
     },
     phone: {
       type: String,
@@ -35,7 +34,8 @@ const userSchema = mongoose.Schema(
     },
     avatarUrl: String,
     status: Boolean,
-    lastLogin: Date
+    lastLogin: Date,
+    gender: Number
   },
   {
     timestamps: true,

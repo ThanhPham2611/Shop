@@ -14,6 +14,7 @@ import DetailProduct from "./screens/DetailProduct";
 import Register from "./screens/Register";
 import VerifyRegister from "./screens/VerifyRegister";
 import ForgotScreen from "./screens/Forgot";
+import LayoutMyAccout from "./screens/MyAccount";
 
 export const routers = [
   {
@@ -92,6 +93,17 @@ export const routers = [
       hidden: false,
       child: false,
     },
+  },
+  {
+    name: 'Profile',
+    path: '/user/account/profile',
+    component: LayoutMyAccout,
+    meta: {
+      role: '*',
+      isPrivate: true,
+      hidden: false,
+      child: false
+    }
   }
 ];
 

@@ -1,0 +1,42 @@
+.wrapperForm {
+  .containerLeft {
+    .input {
+      height: 40px;
+    }
+    .textChange {
+      color: #05a;
+      font-size: 0.8125rem;
+      text-transform: capitalize;
+      text-decoration: underline;
+      margin-left: 10px;
+    }
+    .buttonSave {
+      margin-left: 33%;
+      height: 40px;
+      width: 80px;
+      background-color: #f05d40;
+      color: #fff;
+    }
+  }
+  .containerRight {
+    border-left: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+
+    .buttonUpload {
+      margin-top: 15px;
+      height: 40px;
+      width: 150px;
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+
+    .description {
+      color: #999;
+      font-size: 0.85rem;
+      line-height: 1.25rem;
+    }
+  }
+}

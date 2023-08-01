@@ -30,7 +30,6 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(cors());
 app.use((error, req, res, next) => {
-  console.log(error);
   return res.sendStatus(500);
 });
 
