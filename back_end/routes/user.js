@@ -19,6 +19,7 @@ import { room_message } from "../controllers/user/room_message";
 import { get_message } from "../controllers/user/get_message";
 import { forgot_password } from "../controllers/auth/forgot";
 import { change_password } from "../controllers/auth/change_password";
+import { update_profile } from "../controllers/user/update_profile";
 
 const router = express.Router();
 
@@ -45,5 +46,6 @@ router.post("/like", like_comment);
 router.post("/add_cart", add_cart);
 router.post("/update_cart", update_cart);
 router.post('/logout', update_online);
+router.post('/update_profile', update_profile);
 
 export default router;

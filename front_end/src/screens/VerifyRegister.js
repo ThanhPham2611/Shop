@@ -7,9 +7,9 @@ import VerificationInput from "react-verification-input";
 import { post } from '../service/axios/instance'
 
 import logo from '../asset/image/logo_login.png'
+import { STORAGEKEY, setCookie } from "../service/cookie";
 
 import styles from '../asset/scss/verify.module.scss';
-import { STORAGEKEY, setCookie } from "../service/cookie";
 
 const { Search } = Input
 

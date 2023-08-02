@@ -61,3 +61,67 @@ export const debounce = (func, delay) => {
     }, delay);
   };
 };
+
+export const getItem = (label, key, icon, children, type) => {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type
+  }
+}
+
+export const getBase64 = (img, callback) => {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result));
+  reader.readAsDataURL(img);
+}
+
+export const getYear = (currentYear) => {
+  let arrayYear = []
+  for (let i = 0; i < 100; i++) {
+    arrayYear.push({
+      value: currentYear - i,
+      label: currentYear - i
+    });
+  }
+  return arrayYear;
+}
+
+export const getMonth = (arrayMonth) => {
+  const getArray = arrayMonth?.map((month, index) => {
+    return {
+      value: index + 1,
+      label: month
+    }
+  })
+  return getArray;
+}
+
+export const getDay = (startDay, endDay) => {
+  let arrayDay = [];
+  for (let i = startDay; i <= endDay; i++) {
+    arrayDay.push({
+      value: i,
+      label: i
+    })
+  }
+  return arrayDay;
+}
+
+export const hiddenEmail = (email) => {
+  const atIndex = email?.indexOf('@');
+  if (atIndex !== -1) {
+    const name = email?.substring(0, atIndex);
+    const hiddenUsername = name?.slice(0, 2) + '*'.repeat(name?.length - 3);
+    return hiddenUsername + email?.substring(atIndex);
+  }
+  return email;
+}
+
+export const hiddenPhone = (phone) => {
+  const subPhone = phone?.slice(-2);
+
+  return `****${subPhone}`
+}

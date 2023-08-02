@@ -52,3 +52,25 @@ code {
     border-color: #d0011b !important;
   }
 }
+
+.ant-menu-submenu-title,
+.ant-menu-light,
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+  background-color: transparent;
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.ant-menu-title-content {
+  font-size: 0.95rem;
+}
+
+.ant-menu-light .ant-menu-item-selected {
+  color: #ee4d2d;
+}
+
+.ant-menu-light .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  color: inherit;
+  text-transform: capitalize;
+}
