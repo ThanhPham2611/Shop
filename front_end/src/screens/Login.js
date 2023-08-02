@@ -1,55 +1,74 @@
 import React from "react";
 import { Button, Col, Divider, Form, Input, Row } from "antd";
-import { toast } from 'react-toastify';
-import { useHistory } from 'react-router-dom'
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import { FacebookAuthProvider, signInWithPopup } from "firebase/auth";
 
 import { FaFacebookSquare, FaGoogle } from "react-icons/fa";
-import logo from '../asset/image/logo_login.png';
+import logo from "../asset/image/logo_login.png";
 
-import { post } from '../service/axios/instance'
+import { post } from "../service/axios/instance";
 import { STORAGEKEY, setCookie } from "../service/cookie";
+import { socket } from "../service/socket";
+import { auth } from "../service/firebase";
 
 import styles from "../asset/scss/login.module.scss";
-import { socket } from "../service/socket";
 
 const Login = () => {
   const [form] = Form.useForm();
   const history = useHistory();
 
+  const provider = new FacebookAuthProvider();
+
+  console.log(auth);
   const handleLogin = async (value) =>
-    post('login', {
+    post("login", {
       ...value,
-      username: value.username.toLowerCase()
+      username: value.username.toLowerCase(),
     })
-      .then(data => {
+      .then((data) => {
         const { accessToken, id } = data;
         setCookie(STORAGEKEY.ACCESS_TOKEN, accessToken);
-        socket.emit('login', id)
+        socket.emit("login", id);
         console.log(data);
-        toast.success('Đăng nhập thành công');
-        window.location.href = '/home'
+        toast.success("Đăng nhập thành công");
+        window.location.href = "/home";
       })
-      .catch(err => {
-        console.log('err', err)
+      .catch((err) => {
+        console.log("err", err);
         if (err.response.status === 404) {
-          toast.error('Không tìm thấy tài khoản')
+          toast.error("Không tìm thấy tài khoản");
         } else if (err.response.status === 402) {
-          toast.error('Tài khoản hoặc mật khẩu không đúng')
+          toast.error("Tài khoản hoặc mật khẩu không đúng");
         } else if (err.response.status === 401) {
-          toast.error('Tài khoản của bạn chưa được kích hoạt')
-          history.push('/verify_register')
+          toast.error("Tài khoản của bạn chưa được kích hoạt");
+          history.push("/verify_register");
         }
+      });
+
+  const handleLoginFacebook = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        const accessToken = credential.accessToken;
+        console.log(user);
       })
+      .catch((err) => {
+        const credential = FacebookAuthProvider.credentialFromError(err);
+      });
+  };
 
   return (
     <div>
       <div className={styles.bg}>
         <div className={styles.form_container}>
-          <Row align='middle' justify='space-between'>
+          <Row align="middle" justify="space-between">
             <img
               src={logo}
               className={styles.logo}
-              onClick={() => history.push('/')}
+              onClick={() => history.push("/")}
             />
             <span className={styles.title}>Đăng nhập</span>
           </Row>
@@ -97,7 +116,7 @@ const Login = () => {
 
             <Row justify="space-between" align="middle">
               <Col span={11}>
-                <div className={styles.btnBrand}>
+                <div className={styles.btnBrand} onClick={handleLoginFacebook}>
                   <FaFacebookSquare />
                   <span>Facebook</span>
                 </div>
