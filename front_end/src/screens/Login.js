@@ -13,12 +13,16 @@ import { socket } from "../service/socket";
 import { auth } from "../service/firebase";
 
 import styles from "../asset/scss/login.module.scss";
+import { useDispatch } from "react-redux";
+import { getUsername } from "../store/modules/verifySlice";
 
 const Login = () => {
   const [form] = Form.useForm();
   const history = useHistory();
   const providerFacebook = new FacebookAuthProvider();
   const providerGmail = new GoogleAuthProvider();
+
+  const dispatch = useDispatch();
 
 
   const handleLogin = async (value) =>
@@ -35,7 +39,6 @@ const Login = () => {
         window.location.href = "/home";
       })
       .catch((err) => {
-        console.log("err", err);
         if (err.response.status === 404) {
           toast.error("Không tìm thấy tài khoản");
         } else if (err.response.status === 402) {
@@ -43,6 +46,7 @@ const Login = () => {
         } else if (err.response.status === 401) {
           toast.error("Tài khoản của bạn chưa được kích hoạt");
           history.push("/verify_register");
+          dispatch(getUsername(value.username.toLowerCase()));
         }
       });
 

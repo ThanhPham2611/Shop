@@ -23,7 +23,7 @@ export const login_user = async (req, res) => {
 
     const user = await userModel.findOne({
       username
-    }, '_id firstName lastName')
+    }, '_id')
 
     const accessToken = jwt.sign(
       JSON.parse(JSON.stringify(user)),
