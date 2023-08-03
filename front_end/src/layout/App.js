@@ -27,7 +27,7 @@ const App = (props) => {
     }
   }, [getToken, pathname]);
 
-  const whiteList = ['/login', '/register', '/verify_register', '/forgot_password'];
+  const whiteList = ['/login', '/register', '/verify_register', '/forgot_password', '/create_info'];
 
   return (whiteList.includes(pathname)) ? (
     <div>

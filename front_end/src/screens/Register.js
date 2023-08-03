@@ -42,6 +42,7 @@ const Register = () => {
               src={logo}
               className={styles.logo}
               onClick={() => history.push('/')}
+              alt='logo'
             />
             <span className={styles.title}>Đăng ký</span>
           </Row>
