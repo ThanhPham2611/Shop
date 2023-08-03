@@ -76,6 +76,7 @@ const VerifyRegister = () => {
               src={logo}
               className={styles.logo}
               onClick={() => history.push('/')}
+              alt='logo'
             />
             <span className={styles.title}>Xác thực người dùng</span>
           </Row>

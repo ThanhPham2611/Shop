@@ -15,6 +15,7 @@ import Register from "./screens/Register";
 import VerifyRegister from "./screens/VerifyRegister";
 import ForgotScreen from "./screens/Forgot";
 import LayoutMyAccout from "./screens/MyAccount";
+import InfoScreen from "./screens/Info";
 
 export const routers = [
   {
@@ -71,6 +72,17 @@ export const routers = [
       hidden: false,
       child: false,
     },
+  },
+  {
+    name: 'Create Info User',
+    path: '/create_info',
+    component: InfoScreen,
+    meta: {
+      role: '*',
+      isPrivate: false,
+      hidden: false,
+      child: false
+    }
   },
   {
     name: "Detail Product",

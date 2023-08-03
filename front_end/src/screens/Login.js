@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Col, Divider, Form, Input, Row } from "antd";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
-import { FacebookAuthProvider, signInWithPopup } from "firebase/auth";
+import { FacebookAuthProvider, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 import { FaFacebookSquare, FaGoogle } from "react-icons/fa";
 import logo from "../asset/image/logo_login.png";
@@ -17,10 +17,10 @@ import styles from "../asset/scss/login.module.scss";
 const Login = () => {
   const [form] = Form.useForm();
   const history = useHistory();
+  const providerFacebook = new FacebookAuthProvider();
+  const providerGmail = new GoogleAuthProvider();
 
-  const provider = new FacebookAuthProvider();
 
-  console.log(auth);
   const handleLogin = async (value) =>
     post("login", {
       ...value,
@@ -47,18 +47,22 @@ const Login = () => {
       });
 
   const handleLoginFacebook = () => {
-    signInWithPopup(auth, provider)
+    signInWithPopup(auth, providerFacebook)
       .then((result) => {
         const user = result.user;
 
-        const credential = FacebookAuthProvider.credentialFromResult(result);
-        const accessToken = credential.accessToken;
-        console.log(user);
       })
       .catch((err) => {
-        const credential = FacebookAuthProvider.credentialFromError(err);
+
       });
   };
+
+  const handleLoginGmail = () => {
+    signInWithPopup(auth, providerGmail)
+      .then(data => {
+        console.log('dat agmail::>>', data)
+      })
+  }
 
   return (
     <div>
@@ -69,6 +73,7 @@ const Login = () => {
               src={logo}
               className={styles.logo}
               onClick={() => history.push("/")}
+              alt='logo'
             />
             <span className={styles.title}>Đăng nhập</span>
           </Row>
@@ -122,7 +127,7 @@ const Login = () => {
                 </div>
               </Col>
               <Col span={11}>
-                <div className={styles.btnBrand}>
+                <div className={styles.btnBrand} onClick={handleLoginGmail}>
                   <FaGoogle />
                   <span>Google</span>
                 </div>
