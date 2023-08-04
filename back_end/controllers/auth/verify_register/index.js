@@ -2,7 +2,6 @@ import { userModel } from '../../../model/user';
 import MailCode from '../../../model/mailCode'
 import randomstring from 'randomstring';
 import nodemailer from 'nodemailer';
-import { TYPE_VERIFY_CODE } from '../../../utils/type';
 
 export const verify_register = async (req, res) => {
   try {

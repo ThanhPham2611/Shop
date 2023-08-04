@@ -28,6 +28,7 @@ import { toggleCart } from "../../../store/modules/cartSlice";
 import { checkLogin } from "../../../utils/function";
 
 import styles from "../../app.module.scss";
+import { socket } from "../../../service/socket";
 
 const { Search } = Input;
 
@@ -41,6 +42,7 @@ const Header = () => {
   const [arrayCart, setArrayCart] = useState([]);
 
   const handleLogout = () => {
+    socket.emit('disconnect')
     return removeCookie(STORAGEKEY.ACCESS_TOKEN);
   };
 

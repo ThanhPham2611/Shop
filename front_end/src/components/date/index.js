@@ -1,14 +1,16 @@
 import { Row, Select, Space } from "antd";
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getDay, getMonth, getYear } from "../../utils/function";
-
-import styles from './date.module.scss';
 
 const DateComponent = ({ date, setValueDate }) => {
   const [valueMonth, setValueMonth] = useState(moment(date).month() + 1);
   const [valueYear, setValueYear] = useState(moment(date).year());
   const [valueDay, setValueDay] = useState(moment(date).date());
+
+  useEffect(() => {
+    setValueDate(`${valueDay}/${valueMonth}/${valueYear}`)
+  }, [])
 
   const handleChangeDay = (value) => {
     setValueDay(value);

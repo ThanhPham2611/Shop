@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Divider, Input, Row, notification } from "antd";
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
@@ -8,6 +8,7 @@ import { post } from '../service/axios/instance'
 
 import logo from '../asset/image/logo_login.png'
 import { STORAGEKEY, setCookie } from "../service/cookie";
+import { TYPE_VERIFY_CODE } from "../utils/type";
 
 import styles from '../asset/scss/verify.module.scss';
 
@@ -23,13 +24,19 @@ const VerifyRegister = () => {
   const [nextStep, setNextStep] = useState(false);
   const [valueEmail, setValueEmail] = useState('')
 
+  useEffect(() => {
+    if (!username) {
+      history.push('/login');
+    }
+  }, [username])
+
   const handleVerify = (value) => {
     setValueEmail(value)
     setLoading(true)
     post('verify_email', {
       email: value,
       username: username,
-      type: 1
+      type: TYPE_VERIFY_CODE.basic
     })
       .then(data => {
         setLoading(false);
@@ -50,19 +57,21 @@ const VerifyRegister = () => {
     post('verify_code', {
       username: username,
       email: valueEmail,
-      codeSubmit: value
+      codeSubmit: value,
+      type: TYPE_VERIFY_CODE.basic
     })
       .then(data => {
         setLoadingSendCode(false);
         setCookie(STORAGEKEY.ACCESS_TOKEN, data.accessToken)
-        window.location.href = '/home'
+        window.location.href = '/create_info';
       })
       .catch(err => {
+        console.log(err)
         setLoadingSendCode(false);
         if (err.response.status === 401) {
           notification.error({ message: 'Mã code không đúng hoặc đã sử dụng' })
         } else if (err.response.status === 405) {
-          notification.err({ message: 'Mã code đã hết hạn' })
+          notification.error({ message: 'Mã code đã hết hạn' })
         }
       })
   }

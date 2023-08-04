@@ -10,6 +10,7 @@ import { post } from "../service/axios/instance";
 import { getUsername } from "../store/modules/verifySlice";
 
 import styles from "../asset/scss/login.module.scss";
+import { TYPE_VERIFY_CODE } from "../utils/type";
 
 const Register = () => {
   const [form] = Form.useForm();
@@ -20,7 +21,7 @@ const Register = () => {
     post('register', {
       ...value,
       username: value.username.toLowerCase(),
-      role: 1
+      type: TYPE_VERIFY_CODE.basic
     })
       .then(data => {
         dispatch(getUsername(value.username.toLowerCase()))
