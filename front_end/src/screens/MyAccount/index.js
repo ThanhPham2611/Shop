@@ -6,6 +6,7 @@ import MenuSettingComponent from "../../components/menu_setting";
 import ProfileScreen from "./Profile";
 
 import styles from '../../asset/scss/my_account.module.scss';
+import PaymentScreen from "./Payment";
 
 const LayoutMyAccout = () => {
   const { pathname } = useLocation()
@@ -18,6 +19,7 @@ const LayoutMyAccout = () => {
       </Col>
       <Col xxl={19} className={styles.wrapper}>
         {pathname === '/user/account/profile' && <ProfileScreen />}
+        {pathname === '/user/account/payment' && <PaymentScreen />}
       </Col>
     </Row>
   )

@@ -1,16 +1,16 @@
 import { Avatar, Divider, Menu, Row } from "antd";
 import React from "react";
 import { UserOutlined } from '@ant-design/icons';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 import { getItem } from "../../utils/function";
 
 import styles from './menu.module.scss';
 
 const items = [
-  getItem('Tài khoản của tôi', '/user/account/profile', <UserOutlined />, [
+  getItem('Tài khoản của tôi', '/user/account', <UserOutlined />, [
     getItem('Hồ sơ', '/user/account/profile'),
-    getItem('Ngân hàng', '/user/account/bank'),
+    getItem('Ngân hàng', '/user/account/payment'),
     getItem('Địa chỉ', '/user/account/address'),
     getItem('Đổi mật khẩu', '/user/account/change_password'),
   ])
@@ -18,9 +18,10 @@ const items = [
 
 const MenuSettingComponent = () => {
   const { pathname } = useLocation();
+  const { push } = useHistory();
 
   const onClick = (e) => {
-    console.log('clickkk', e)
+    push(e.key)
   }
 
   return (
@@ -35,7 +36,7 @@ const MenuSettingComponent = () => {
         mode='inline'
         items={items}
         defaultSelectedKeys={[pathname]}
-        defaultOpenKeys={[pathname]}
+        defaultOpenKeys={['/user/account']}
       />
     </div>
   )

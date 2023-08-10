@@ -18,6 +18,7 @@ import {
   QuestionCircleOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { useHistory } from 'react-router-dom';
 
 //local
 import logo from "../../../asset/image/logo.png";
@@ -38,6 +39,8 @@ const Header = () => {
 
   const getToken = getCookie(STORAGEKEY.ACCESS_TOKEN);
   const dispatch = useDispatch();
+  const history = useHistory();
+
 
   const [arrayCart, setArrayCart] = useState([]);
 
@@ -81,7 +84,7 @@ const Header = () => {
   const items = [
     {
       key: "info",
-      label: <a href="#">Tài khoản của tôi</a>,
+      label: <a href="/user/account/profile">Tài khoản của tôi</a>,
     },
     {
       key: "order",
@@ -99,9 +102,9 @@ const Header = () => {
 
   const avatarDiv = (
     <Dropdown menu={{ items }}>
-      <a onClick={(e) => e.preventDefault()}>
+      <a href='#' onClick={(e) => e.preventDefault()}>
         <Space>
-          <Avatar size={26} icon={<UserOutlined />} />
+          {userData?.avatarUrl ? <Avatar size={26} src={userData?.avatarUrl} /> : <Avatar size={26} icon={<UserOutlined />} />}
           <span className={styles.username}>{userData?.username}</span>
         </Space>
       </a>
@@ -168,7 +171,7 @@ const Header = () => {
         align="middle"
         className={styles.searchBarContainer}
       >
-        <Col className={styles.wrapperLogo}>
+        <Col className={styles.wrapperLogo} onClick={() => history.push('/')}>
           <Image
             src={logo}
             alt="Logo"

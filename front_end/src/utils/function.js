@@ -125,3 +125,18 @@ export const hiddenPhone = (phone) => {
 
   return `****${subPhone}`
 }
+
+export const getImageCard = (brandCard) => {
+  switch (brandCard) {
+    case 'visa':
+      return 'https://firebasestorage.googleapis.com/v0/b/pt-mall.appspot.com/o/visa-color_large.png?alt=media&token=7768a719-0e6e-485c-a8c9-d8ad27a4a9f5';
+    case 'mastercard':
+      return 'https://firebasestorage.googleapis.com/v0/b/pt-mall.appspot.com/o/mastercard-color_large.png?alt=media&token=43ad3ca0-4520-4059-95ef-ba24eb3f19bc';
+    case 'amex':
+      return 'https://firebasestorage.googleapis.com/v0/b/pt-mall.appspot.com/o/americanexpress-color-large.png?alt=media&token=7f14ef6b-275e-4bff-8de1-aeda91dc97fe';
+    case 'JCB':
+      return 'https://firebasestorage.googleapis.com/v0/b/pt-mall.appspot.com/o/jcb-color-large.png?alt=media&token=2cf97e8e-17ba-4b05-8a28-99f650304ee2';
+    default:
+      return 'https://firebasestorage.googleapis.com/v0/b/pt-mall.appspot.com/o/visa-color_large.png?alt=media&token=7768a719-0e6e-485c-a8c9-d8ad27a4a9f5';
+  }
+}

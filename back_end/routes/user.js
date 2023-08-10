@@ -20,6 +20,10 @@ import { get_message } from "../controllers/user/get_message";
 import { forgot_password } from "../controllers/auth/forgot";
 import { change_password } from "../controllers/auth/change_password";
 import { update_profile } from "../controllers/user/update_profile";
+import { create_payment_vnpay } from "../controllers/payment/vnpay";
+import { add_card } from "../controllers/user/add_card";
+import { get_card } from "../controllers/user/get_card";
+import { update_card } from "../controllers/user/update_card";
 
 const router = express.Router();
 
@@ -33,6 +37,7 @@ router.get('/cart', get_cart);
 router.get('/shop_info/:produtId', get_info_shop);
 router.get('/room_message', room_message);
 router.get('/get_message/:to', get_message);
+router.get('/card', get_card);
 
 //post
 router.post("/register", register_user);
@@ -47,5 +52,8 @@ router.post("/add_cart", add_cart);
 router.post("/update_cart", update_cart);
 router.post('/logout', update_online);
 router.post('/update_profile', update_profile);
+router.post('/add_card', add_card);
+router.post('/card/update', update_card);
+router.post('/create_payment_url', create_payment_vnpay);
 
 export default router;

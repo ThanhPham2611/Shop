@@ -1,0 +1,19 @@
+.borderInputForm {
+  border: 1px solid #ccc;
+  padding: 15px;
+}
+
+.inputName {
+  border: 1px solid #ccc;
+  padding: 15px;
+  width: 100%;
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.groupBtn {
+  justify-content: flex-end;
+  margin-top: 15px;
+  width: 100%;
+}

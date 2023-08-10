@@ -16,6 +16,7 @@ import VerifyRegister from "./screens/VerifyRegister";
 import ForgotScreen from "./screens/Forgot";
 import LayoutMyAccout from "./screens/MyAccount";
 import InfoScreen from "./screens/Info";
+import PaymentScreen from "./screens/MyAccount/Payment";
 
 export const routers = [
   {
@@ -109,6 +110,17 @@ export const routers = [
   {
     name: 'Profile',
     path: '/user/account/profile',
+    component: LayoutMyAccout,
+    meta: {
+      role: '*',
+      isPrivate: true,
+      hidden: false,
+      child: false
+    }
+  },
+  {
+    name: 'BankInfo',
+    path: '/user/account/payment',
     component: LayoutMyAccout,
     meta: {
       role: '*',
